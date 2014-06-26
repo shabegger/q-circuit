@@ -1,0 +1,57 @@
+﻿* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+#quantum-container {
+  height: 100%;
+}
+
+.quantum-gate,
+.quantum-gate  * {
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.quantum-gate rect {
+  fill: #ffeb36;
+}
+
+.quantum-gate text {
+  stroke: #164ecc;
+}
+
+.quantum-gate-factory {
+  fill: transparent;
+  stroke: #164ecc;
+  stroke-width: 2px;
+  stroke-dasharray: 3px;
+}
+
+.quantum-scroll-btn {
+  cursor: pointer;
+}
+
+.quantum-scroll-btn .quantum-scroll-btn-background {
+  fill: #333;
+}
+
+.quantum-scroll-btn .quantum-scroll-btn-arrow {
+  fill: #fff;
+}
+
+.quantum-scroll-btn-highlight {
+  stop-color: #111;
+  /*stop-color: #888;*/
+}

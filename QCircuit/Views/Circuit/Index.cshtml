@@ -1,0 +1,47 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Quantum Circuit Builder</title>
+
+    @Styles.Render("~/Content/quantum")
+  </head>
+  <body>
+    <div id="quantum-container"></div>
+
+    @Scripts.Render("~/bundles/svg")
+    @Scripts.Render("~/bundles/quantum")
+    <script>
+      ; (function (window, SVG) {
+
+        'use strict';
+
+        var workspace,
+            showroom,
+            circuit;
+
+        if (!SVG.supported) {
+          window.document.getElementById('quantum-container').innerText =
+            'SVG is not supported. Please use a modern browser.';
+          return;
+        }
+
+        workspace = new Quantum.WorkSpace('quantum-container');
+        showroom = new Quantum.FactoryShowroom(workspace, [
+          Quantum.Gate,
+          Quantum.Gate,
+          Quantum.Gate,
+          Quantum.Gate,
+          Quantum.Gate
+        ]);
+        circuit = new Quantum.Circuit(workspace, 6);
+
+      }(this, this.SVG));
+    </script>
+  </body>
+</html>
