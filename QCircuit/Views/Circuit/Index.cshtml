@@ -21,9 +21,7 @@
 
         'use strict';
 
-        var workspace,
-            showroom,
-            circuit;
+        var circuitBuilder;
 
         if (!SVG.supported) {
           window.document.getElementById('quantum-container').innerText =
@@ -31,15 +29,13 @@
           return;
         }
 
-        workspace = new Quantum.WorkSpace('quantum-container');
-        showroom = new Quantum.FactoryShowroom(workspace, [
+        circuitBuilder = new Quantum.CircuitBuilder('quantum-container', 6, [
           Quantum.Gate,
           Quantum.Gate,
           Quantum.Gate,
           Quantum.Gate,
           Quantum.Gate
         ]);
-        circuit = new Quantum.Circuit(workspace, 6);
 
       }(this, this.SVG));
     </script>

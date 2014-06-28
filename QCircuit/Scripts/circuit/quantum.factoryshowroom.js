@@ -1,5 +1,6 @@
 ﻿/// <reference path="quantum.js" />
 /// <reference path="quantum.workspace.js" />
+/// <reference path="quantum.events.js" />
 /// <reference path="quantum.gate.js" />
 /// <reference path="quantum.gatefactory.js" />
 
@@ -30,6 +31,8 @@
     self.gateConstructors = gateConstructors || [];
     self.factories = [];
 
+    Q.Events.mixinEvents(self);
+
     self.render();
   }
 
@@ -43,6 +46,7 @@
         factories = self.factories,
         svg = self.svg,
         container,
+        factory,
         i, len,
         x, y;
 
@@ -51,7 +55,7 @@
     }
 
     while (factories.length) {
-      factories.pop();
+      factories.pop().removeEventListener('dragStart');
     }
 
     // Create opacity gradient masks for buttons
@@ -154,9 +158,24 @@
       x = (_gateAndPadding * Math.floor(i / _rows)) + _padding;
       y = (_gateAndPadding * (i % _rows)) + _padding;
 
-      factories.push(new Q.GateFactory(workspace, gateConstructors[i], x, y, container));
+      factory = new Q.GateFactory(workspace, gateConstructors[i], x, y, container);
+
+      factory.addEventListener('dragStart', function (e) {
+        dragStart.apply(self, arguments);
+      });
+
+      factories.push(factory);
     }
   };
+
+
+  /* Event Handlers */
+
+  function dragStart(e) {
+    var self = this;
+
+    self.dispatchEvent('dragStart', e);
+  }
 
 
   /* Static Properties */

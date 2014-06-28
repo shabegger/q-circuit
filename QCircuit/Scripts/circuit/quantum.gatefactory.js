@@ -1,5 +1,6 @@
 ﻿/// <reference path="quantum.js" />
 /// <reference path="quantum.workspace.js" />
+/// <reference path="quantum.events.js" />
 /// <reference path="quantum.gate.js" />
 
 ; (function (window, Q, SVG, undefined) {
@@ -16,6 +17,8 @@
     self.workspace = workspace;
     self.parent = parent || null;
     self.gateConstructor = gateConstructor;
+
+    Q.Events.mixinEvents(self);
 
     self.render(x, y);
     self.generateGate();
@@ -43,14 +46,25 @@
         gate = new gateConstructor(workspace, x, y, parent);
 
     gate.addEventListener('dragStart', function () {
-      self.generateGate();
-    });
-
-    gate.addEventListener('dragEnd', function () {
-      gate.removeEventListener('dragStart');
-      gate.removeEventListener('dragEnd');
+      dragStart.apply(self, arguments);
     });
   };
+
+
+  /* Event Handlers */
+
+  function dragStart(e) {
+    var self = this,
+        gate = e.sender;
+
+    self.generateGate();
+
+    self.dispatchEvent('dragStart', {
+      gate: gate
+    });
+
+    gate.removeEventListener('dragStart');
+  }
 
 
   /* Expose */

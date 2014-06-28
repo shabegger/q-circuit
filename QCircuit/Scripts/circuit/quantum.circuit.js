@@ -48,6 +48,10 @@
     }
   };
 
+  Circuit.prototype.tryAcceptGate = function tryAcceptGate() {
+    return false;
+  };
+
 
   /* Expose */
 

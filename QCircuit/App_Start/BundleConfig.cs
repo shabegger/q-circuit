@@ -38,7 +38,8 @@ namespace QCircuit
                         "~/Scripts/circuit/quantum.gatefactory.js",
                         "~/Scripts/circuit/quantum.factoryshowroom.js",
                         "~/Scripts/circuit/quantum.slot.js",
-                        "~/Scripts/circuit/quantum.circuit.js"));
+                        "~/Scripts/circuit/quantum.circuit.js",
+                        "~/Scripts/circuit/quantum.circuitbuilder.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                         "~/Content/bootstrap.css",

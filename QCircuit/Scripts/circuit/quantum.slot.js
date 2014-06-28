@@ -14,7 +14,8 @@
       _sizeAndPadding = _size + _padding,
       _gradientSize = 10,
       _gradientFraction = _gradientSize / _size,
-      _background;
+      _background,
+      _background_radial;
 
 
   /* Constructor */
@@ -33,7 +34,8 @@
   Slot.prototype.render = function render(circuit) {
     var self = this,
         position = self.position,
-        svg = self.svg;
+        svg = self.svg,
+        leftCap, rightCap;
 
     if (svg) {
       svg.remove();
@@ -54,15 +56,42 @@
       stop.at(1, '#aaa');
     }).from(0, 0).to(0, 1);
 
+    _background_radial = _background_radial || circuit.workspace.svg.gradient('radial', function (stop) {
+      stop.at(1 - (2 * _gradientFraction), '#ccc');
+      stop.at(1, '#aaa');
+    });
+
+    // Create background
     svg.rect('100%', '100%').fill(_background);
 
-    svg.nested().attr({
+    leftCap = svg.nested().attr({
       x: 0
-    }).rect(_padding + _size_1_2x, _size).fill('#fff');
+    });
 
-    svg.nested().attr({
+    rightCap = svg.nested().attr({
       x: '100%'
-    }).rect(_padding + _size_1_2x, _size).fill('#fff');
+    });
+
+    leftCap.rect(_padding + _size_1_2x, _size).fill('#fff');
+    rightCap.rect(_padding + _size_1_2x, _size).fill('#fff').attr({
+      x: 0 - (_padding + _size_1_2x)
+    });
+
+    leftCap.circle(_size).fill(_background_radial).attr({
+      cx: _padding + _size_1_2x,
+      cy: _size_1_2x
+    }).clipWith(leftCap.rect(_padding + _size_1_2x, _size));
+
+    rightCap.circle(_size).fill(_background_radial).attr({
+      cx: 0 - (_padding + _size_1_2x),
+      cy: _size_1_2x
+    }).clipWith(rightCap.rect(_padding + _size_1_2x, _size).attr({
+      x: 0 - (_padding + _size_1_2x)
+    }));
+  };
+
+  Slot.prototype.tryAcceptGate = function tryAcceptGate() {
+    return false;
   };
 
 

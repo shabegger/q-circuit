@@ -39,9 +39,12 @@
         callbacks = events[event],
         i, len;
 
+    eventArgs = eventArgs || {};
+    eventArgs.sender = this;
+
     if (callbacks) {
       for (i = 0, len = callbacks.length; i < len; i++) {
-        callbacks[i].apply(this, eventArgs);
+        callbacks[i].call(this, eventArgs);
       }
     }
   }

@@ -116,6 +116,19 @@
 
     self.dispatchEvent('dragEnd', event);
 
+    if (!event.accepted) {
+      svg.animate(_time).attr({
+        opacity: 0
+      }).after(function () {
+        svg.dragstart = null;
+        svg.dragend = null;
+
+        svg.remove();
+      });
+
+      return;
+    }
+
     svg.animate(_time).attr(event.finalAttributes);
   }
 
