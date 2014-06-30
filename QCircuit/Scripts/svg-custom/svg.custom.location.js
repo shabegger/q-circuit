@@ -16,7 +16,7 @@
         x += rbox.x - bbox.x;
         y += rbox.y - bbox.y;
 
-        element = element.parent
+        element = element.parent;
       }
 
       return {
