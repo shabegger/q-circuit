@@ -27,7 +27,8 @@ namespace QCircuit
                         "~/Scripts/svg/svg.js",
                         "~/Scripts/svg/svg.draggable.min.js",
                         "~/Scripts/svg/svg.filter.min.js",
-                        "~/Scripts/svg-custom/svg.custom.filter.js"));
+                        "~/Scripts/svg-custom/svg.custom.filter.js",
+                        "~/Scripts/svg-custom/svg.custom.location.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/quantum").Include(
                         "~/Scripts/circuit/quantum.js",

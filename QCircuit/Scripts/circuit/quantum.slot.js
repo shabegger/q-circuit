@@ -90,7 +90,7 @@
     }));
   };
 
-  Slot.prototype.tryAcceptGate = function tryAcceptGate() {
+  Slot.prototype.tryAcceptGate = function tryAcceptGate(gate) {
     return false;
   };
 

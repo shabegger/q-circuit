@@ -214,6 +214,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\svg-custom\svg.custom.filter.js" />
+    <Content Include="Scripts\svg-custom\svg.custom.location.js" />
     <Content Include="Scripts\svg\svg.draggable.min.js" />
     <Content Include="Scripts\svg\svg.filter.min.js" />
     <Content Include="Scripts\svg\svg.js" />
