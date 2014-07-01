@@ -7,7 +7,8 @@
       var element = this,
           bbox, rbox,
           x = 0,
-          y = 0;
+          y = 0,
+          width, height;
 
       while (!(element instanceof SVG.Doc)) {
         bbox = element.bbox();
@@ -16,12 +17,22 @@
         x += rbox.x - bbox.x;
         y += rbox.y - bbox.y;
 
+        if (!width) {
+          width = rbox.width;
+        }
+
+        if (!height) {
+          height = rbox.height;
+        }
+
         element = element.parent;
       }
 
       return {
         x: x,
-        y: y
+        y: y,
+        width: width,
+        height: height
       };
     }
   });

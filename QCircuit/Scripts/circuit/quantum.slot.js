@@ -91,7 +91,17 @@
   };
 
   Slot.prototype.tryAcceptGate = function tryAcceptGate(gate) {
-    return false;
+    var self = this,
+        loc = self.svg.loc(),
+        x1 = loc.x,
+        y1 = loc.y,
+        x2 = x1 + loc.width,
+        y2 = y1 + loc.height,
+        gateLoc = gate.svg.loc(),
+        centerX = gateLoc.x + (gateLoc.width / 2),
+        centerY = gateLoc.y + (gateLoc.height / 2);
+
+    return (centerX > x1) && (centerX < x2) && (centerY > y1) && (centerY < y2);
   };
 
 
