@@ -90,18 +90,40 @@
     }));
   };
 
-  Slot.prototype.tryAcceptGate = function tryAcceptGate(gate) {
+  Slot.prototype.tryAcceptGate = function tryAcceptGate(gate, attr) {
     var self = this,
         loc = self.svg.loc(),
-        x1 = loc.x,
+        x1 = loc.x + _padding,
         y1 = loc.y,
-        x2 = x1 + loc.width,
-        y2 = y1 + loc.height,
+        x2 = loc.x + loc.width - _padding,
+        y2 = loc.y + loc.height,
         gateLoc = gate.svg.loc(),
+        gateX = gateLoc.x,
+        gateWidth = gateLoc.width,
         centerX = gateLoc.x + (gateLoc.width / 2),
-        centerY = gateLoc.y + (gateLoc.height / 2);
+        centerY = gateLoc.y + (gateLoc.height / 2),
+        offset,
+        minX, maxX;
 
-    return (centerX > x1) && (centerX < x2) && (centerY > y1) && (centerY < y2);
+    if (centerX > x1 && centerX < x2 && centerY > y1 && centerY < y2) {
+      offset = (loc.height - gateLoc.height) / 2;
+
+      attr.y = y1 + offset;
+
+      minX = x1 + offset;
+      if (gateX < minX) {
+        attr.x = minX;
+      }
+
+      maxX = x2 - offset - gateWidth;
+      if (gateX > maxX) {
+        attr.x = maxX;
+      }
+
+      return true;
+    }
+
+    return false;
   };
 
 

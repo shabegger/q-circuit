@@ -46,7 +46,7 @@
         circuit = self.circuit,
         gate = e.sender;
 
-    if (circuit.tryAcceptGate(gate)) {
+    if (circuit.tryAcceptGate(gate, e.finalAttributes)) {
       e.accepted = true;
     } else {
       gate.removeEventListener('dragEnd');

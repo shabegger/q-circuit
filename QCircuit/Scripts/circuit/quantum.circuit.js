@@ -48,13 +48,13 @@
     }
   };
 
-  Circuit.prototype.tryAcceptGate = function tryAcceptGate(gate) {
+  Circuit.prototype.tryAcceptGate = function tryAcceptGate(gate, attr) {
     var self = this,
         slots = self.slots,
         i, len;
 
     for (i = 0, len = slots.length; i < len; i++) {
-      if (slots[i].tryAcceptGate(gate)) {
+      if (slots[i].tryAcceptGate(gate, attr)) {
         return true;
       }
     }
