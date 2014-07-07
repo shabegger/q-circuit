@@ -3,6 +3,7 @@
   'use strict';
 
   SVG.SpecularLightingEffect.prototype = new SVG.Parent();
+  SVG.MergeEffect.prototype = new SVG.Parent();
 
   SVG.extend(SVG.Filter, {
     bevel: function () {
@@ -33,6 +34,30 @@
         k3: 1,
         k4: 0
       });
+    },
+
+    glow: function (color) {
+      var blur,
+          colorize,
+          offset,
+          merge;
+
+      blur = this.gaussianBlur(5).in(this.sourceAlpha);
+
+      colorize = this.colorMatrix('matrix', [ -1,   0,   0,   0,   1,
+                                               0,  -1,   0,   0,   1,
+                                               0,   0,  -1,   0,   1,
+                                               0,   0,   0, 0.8,   0]).in(blur);
+
+      merge = new SVG.MergeEffect();
+      merge.add(new SVG.Element(SVG.create('feMergeNode')).attr({
+        in: blur
+      }));
+      merge.add(new SVG.Element(SVG.create('feMergeNode')).attr({
+        in: this.source
+      }));
+
+      this.put(merge);
     }
   });
 

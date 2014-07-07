@@ -48,6 +48,19 @@
     }
   };
 
+  Circuit.prototype.gateMoved = function gateMoved(gate) {
+    var self = this,
+        slots = self.slots,
+        hit = false,
+        i, len;
+
+    for (i = 0, len = slots.length; i < len; i++) {
+      if (slots[i].gateMoved(gate, !hit)) {
+        hit = true;
+      }
+    }
+  };
+
   Circuit.prototype.tryAcceptGate = function tryAcceptGate(gate, attr) {
     var self = this,
         slots = self.slots,

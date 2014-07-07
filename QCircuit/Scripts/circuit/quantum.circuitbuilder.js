@@ -36,9 +36,21 @@
 
     workspace.svg.add(gate.svg);
 
+    gate.addEventListener('dragMove', function () {
+      gateMove.apply(self, arguments);
+    });
+
     gate.addEventListener('dragEnd', function () {
       gateDrop.apply(self, arguments);
     });
+  }
+
+  function gateMove(e) {
+    var self = this,
+        circuit = self.circuit,
+        gate = e.sender;
+
+    circuit.gateMoved(gate);
   }
 
   function gateDrop(e) {
@@ -46,11 +58,7 @@
         circuit = self.circuit,
         gate = e.sender;
 
-    if (circuit.tryAcceptGate(gate, e.finalAttributes)) {
-      e.accepted = true;
-    } else {
-      gate.removeEventListener('dragEnd');
-    }    
+    e.accepted = circuit.tryAcceptGate(gate, e.finalAttributes); 
   }
 
 

@@ -82,6 +82,10 @@
       dragStart.apply(self, arguments);
     };
 
+    svg.dragmove = function () {
+      dragMove.apply(self, arguments);
+    };
+
     svg.dragend = function () {
       dragEnd.apply(self, arguments);
     };
@@ -104,6 +108,12 @@
     svg.front().animate(_time).attr(event.finalAttributes);
   }
 
+  function dragMove(e) {
+    var self = this;
+
+    self.dispatchEvent('dragMove');
+  }
+
   function dragEnd(e) {
     var self = this,
         svg = self.svg,
@@ -121,6 +131,7 @@
         opacity: 0
       }).after(function () {
         svg.dragstart = null;
+        svg.dragmove = null;
         svg.dragend = null;
 
         svg.remove();
