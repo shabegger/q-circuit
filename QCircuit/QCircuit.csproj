@@ -193,6 +193,8 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\circuit-html\quantum.circuitbuilder.js" />
+    <Content Include="Scripts\circuit-html\quantum.js" />
     <Content Include="Scripts\circuit\quantum.circuit.js" />
     <Content Include="Scripts\circuit\quantum.circuitbuilder.js" />
     <Content Include="Scripts\circuit\quantum.events.js" />
