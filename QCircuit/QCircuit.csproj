@@ -185,15 +185,26 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\circuit-html\quantum.css" />
     <Content Include="Content\circuit\quantum.css" />
+    <Content Include="Content\Images\blue-background-bottom.png" />
+    <Content Include="Content\Images\blue-background-top.png" />
+    <Content Include="Content\Images\tan-background-bottom.png" />
+    <Content Include="Content\Images\tan-background-top.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\circuit-html\quantum.circuit.js" />
+    <Content Include="Scripts\circuit-html\quantum.gate.js" />
+    <Content Include="Content\circuit-html\quantum.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\circuit-html\quantum.circuitbuilder.js" />
+    <Content Include="Scripts\circuit-html\quantum.slot.js" />
+    <Content Include="Scripts\circuit-html\quantum.workspace.js" />
+    <Content Include="Scripts\circuit-html\quantum.factoryshowroom.js" />
+    <Content Include="Scripts\circuit-html\quantum.gatefactory.js" />
     <Content Include="Scripts\circuit-html\quantum.js" />
     <Content Include="Scripts\circuit\quantum.circuit.js" />
     <Content Include="Scripts\circuit\quantum.circuitbuilder.js" />
@@ -285,6 +296,10 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PreBuildEvent>if $(ConfigurationName) == Debug lessc $(ProjectDir)Content\circuit-html\quantum.less &gt; $(ProjectDir)Content\circuit-html\quantum.css
+if $(ConfigurationName) == Release lessc $(ProjectDir)Content\circuit-html\quantum.less -x &gt; $(ProjectDir)Content\circuit-html\quantum.min.css</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

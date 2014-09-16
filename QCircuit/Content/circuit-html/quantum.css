@@ -1,0 +1,179 @@
+/* Color Variables */
+/* Size Variables */
+/* Computed Variables */
+/* Reset and Page Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+/* Workspace */
+div.q-workspace {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+div.q-workspace.q-mod-largeShowroom div.q-factoryShowroom {
+  height: 175px;
+}
+div.q-workspace.q-mod-largeShowroom div.q-circuit {
+  top: 175px;
+}
+/* Factory Showroom */
+div.q-factoryShowroom {
+  background-color: #aaccff;
+  position: absolute;
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
+}
+div.q-factoryShowroom:before {
+  content: '';
+  background: url('../Images/blue-background-top.png') repeat-x;
+  background-image: -webkit-linear-gradient(#6584b2, #aaccff);
+  background-image: -o-linear-gradient(#6584b2, #aaccff);
+  background-image: -moz-linear-gradient(#6584b2, #aaccff);
+  background-image: linear-gradient(#6584b2, #aaccff);
+  display: block;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 10px;
+  z-index: 1000;
+}
+div.q-factoryShowroom:after {
+  content: '';
+  background: url('../Images/blue-background-bottom.png') repeat-x;
+  background-image: -webkit-linear-gradient(#aaccff, #6584b2);
+  background-image: -o-linear-gradient(#aaccff, #6584b2);
+  background-image: -moz-linear-gradient(#aaccff, #6584b2);
+  background-image: linear-gradient(#aaccff, #6584b2);
+  display: block;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 10px;
+  z-index: 1000;
+}
+div.q-factoryShowroom-content {
+  z-index: 2000;
+}
+/* Circuit */
+div.q-circuit {
+  background-color: #ffe3aa;
+  position: absolute;
+  top: 100px;
+  bottom: 0;
+  width: 100%;
+  overflow: hidden;
+}
+div.q-circuit:before {
+  content: '';
+  background: url('../Images/tan-background-top.png') repeat-x;
+  background-image: -webkit-linear-gradient(#b29353, #ffe3aa);
+  background-image: -o-linear-gradient(#b29353, #ffe3aa);
+  background-image: -moz-linear-gradient(#b29353, #ffe3aa);
+  background-image: linear-gradient(#b29353, #ffe3aa);
+  display: block;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 10px;
+  z-index: 1000;
+}
+div.q-circuit:after {
+  content: '';
+  background: url('../Images/tan-background-bottom.png') repeat-x;
+  background-image: -webkit-linear-gradient(#ffe3aa, #b29353);
+  background-image: -o-linear-gradient(#ffe3aa, #b29353);
+  background-image: -moz-linear-gradient(#ffe3aa, #b29353);
+  background-image: linear-gradient(#ffe3aa, #b29353);
+  display: block;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 10px;
+  z-index: 1000;
+}
+/* Slot */
+div.q-slot {
+  position: relative;
+  margin: 25px;
+  padding: 10px;
+  height: 70px;
+}
+div.q-slot:before {
+  content: '';
+  background-image: -webkit-radial-gradient(circle closest-side, #aaccff 71.43%, #6584b2 100%, transparent);
+  background-image: -o-radial-gradient(circle closest-side, #aaccff 71.43%, #6584b2 100%, transparent);
+  background-image: -moz-radial-gradient(circle closest-side, #aaccff 71.43%, #6584b2 100%, transparent);
+  background-image: -ms-radial-gradient(circle closest-side, #aaccff 71.43%, #6584b2 100%, transparent);
+  background-image: radial-gradient(circle farthest-side at 100% 50%, #aaccff 71.43%, #6584b2 100%, transparent);
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 35px;
+  height: 100%;
+  z-index: 2000;
+}
+div.q-slot:after {
+  content: '';
+  background-image: -webkit-radial-gradient(circle closest-side, #aaccff 71.43%, #6584b2 100%, transparent);
+  background-image: -o-radial-gradient(circle closest-side, #aaccff 71.43%, #6584b2 100%, transparent);
+  background-image: -moz-radial-gradient(circle closest-side, #aaccff 71.43%, #6584b2 100%, transparent);
+  background-image: -ms-radial-gradient(circle closest-side, #aaccff 71.43%, #6584b2 100%, transparent);
+  background-image: radial-gradient(circle farthest-side at 0% 50%, #aaccff 71.43%, #6584b2 100%, transparent);
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 35px;
+  height: 100%;
+  z-index: 2000;
+}
+div.q-slot-background {
+  background-color: #aaccff;
+  position: absolute;
+  top: 0;
+  left: 35px;
+  right: 35px;
+  bottom: 0;
+  z-index: 2000;
+}
+div.q-slot-background:before {
+  content: '';
+  background: url('../Images/blue-background-top.png') repeat-x;
+  background-image: -webkit-linear-gradient(#6584b2, #aaccff);
+  background-image: -o-linear-gradient(#6584b2, #aaccff);
+  background-image: -moz-linear-gradient(#6584b2, #aaccff);
+  background-image: linear-gradient(#6584b2, #aaccff);
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  z-index: 3000;
+}
+div.q-slot-background:after {
+  content: '';
+  background: url('../Images/blue-background-bottom.png') repeat-x;
+  background-image: -webkit-linear-gradient(#aaccff, #6584b2);
+  background-image: -o-linear-gradient(#aaccff, #6584b2);
+  background-image: -moz-linear-gradient(#aaccff, #6584b2);
+  background-image: linear-gradient(#aaccff, #6584b2);
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  z-index: 3000;
+}

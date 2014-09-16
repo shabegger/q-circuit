@@ -1,0 +1,229 @@
+﻿/* Color Variables */
+
+@blue:      #aaccff;
+@lightblue: #c3dbff;
+@darkblue:  #6584b2;
+@brown:     #b29353;
+@tan:       #ffe3aa;
+
+
+/* Size Variables */
+
+@gateSize:      50px;
+@paddingSize:   25px;
+@shadowSize:    10px;
+
+
+/* Computed Variables */
+
+@showroomHeight:        @gateSize + (2 * @paddingSize);
+@showroomHeightLarge:   (2 * @gateSize) + (3 * @paddingSize);
+
+@slotHeight:        @gateSize + (2 * @shadowSize);
+@slotHeightHalf:    @slotHeight / 2;
+@slotRadGradStop:   71.43%;
+
+
+/* Reset and Page Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* Workspace */
+
+div.q-workspace {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+div.q-workspace.q-mod-largeShowroom {
+    div.q-factoryShowroom {
+        height: @showroomHeightLarge;
+    }
+
+    div.q-circuit {
+        top: @showroomHeightLarge;
+    }
+}
+
+
+/* Factory Showroom */
+
+div.q-factoryShowroom {
+    background-color: @blue;
+    position: absolute;
+    width: 100%;
+    height: @showroomHeight;
+    overflow: hidden;
+}
+
+    div.q-factoryShowroom:before {
+        content: '';
+        background: url('../Images/blue-background-top.png') repeat-x;
+        background-image: -webkit-linear-gradient(@darkblue, @blue);
+        background-image: -o-linear-gradient(@darkblue, @blue);
+        background-image: -moz-linear-gradient(@darkblue, @blue);
+        background-image: linear-gradient(@darkblue, @blue);
+        display: block;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 10px;
+        z-index: 1000;
+    }
+
+    div.q-factoryShowroom:after {
+        content: '';
+        background: url('../Images/blue-background-bottom.png') repeat-x;
+        background-image: -webkit-linear-gradient(@blue, @darkblue);
+        background-image: -o-linear-gradient(@blue, @darkblue);
+        background-image: -moz-linear-gradient(@blue, @darkblue);
+        background-image: linear-gradient(@blue, @darkblue);
+        display: block;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 10px;
+        z-index: 1000;
+    }
+
+div.q-factoryShowroom-content {
+    z-index: 2000;
+}
+
+
+/* Circuit */
+
+div.q-circuit {
+    background-color: @tan;
+    position: absolute;
+    top: @showroomHeight;
+    bottom: 0;
+    width: 100%;
+    overflow: hidden;
+}
+
+    div.q-circuit:before {
+        content: '';
+        background: url('../Images/tan-background-top.png') repeat-x;
+        background-image: -webkit-linear-gradient(@brown, @tan);
+        background-image: -o-linear-gradient(@brown, @tan);
+        background-image: -moz-linear-gradient(@brown, @tan);
+        background-image: linear-gradient(@brown, @tan);
+        display: block;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 10px;
+        z-index: 1000;
+    }
+
+    div.q-circuit:after {
+        content: '';
+        background: url('../Images/tan-background-bottom.png') repeat-x;
+        background-image: -webkit-linear-gradient(@tan, @brown);
+        background-image: -o-linear-gradient(@tan, @brown);
+        background-image: -moz-linear-gradient(@tan, @brown);
+        background-image: linear-gradient(@tan, @brown);
+        display: block;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 10px;
+        z-index: 1000;
+    }
+
+
+/* Slot */
+
+div.q-slot {
+    position: relative;
+    margin: @paddingSize;
+    padding: @shadowSize;
+    height: @slotHeight;
+}
+
+    div.q-slot:before {
+        content: '';
+        background-image: -webkit-radial-gradient(circle closest-side, @blue 71.43%, @darkblue 100%, transparent);
+        background-image: -o-radial-gradient(circle closest-side, @blue 71.43%, @darkblue 100%, transparent);
+        background-image: -moz-radial-gradient(circle closest-side, @blue 71.43%, @darkblue 100%, transparent);
+        background-image: -ms-radial-gradient(circle closest-side, @blue 71.43%, @darkblue 100%, transparent);
+        background-image: radial-gradient(circle farthest-side at 100% 50%, @blue 71.43%, @darkblue 100%, transparent);
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: @slotHeightHalf;
+        height: 100%;
+        z-index: 2000;
+    }
+
+    div.q-slot:after {
+        content: '';
+        background-image: -webkit-radial-gradient(circle closest-side, @blue 71.43%, @darkblue 100%, transparent);
+        background-image: -o-radial-gradient(circle closest-side, @blue 71.43%, @darkblue 100%, transparent);
+        background-image: -moz-radial-gradient(circle closest-side, @blue 71.43%, @darkblue 100%, transparent);
+        background-image: -ms-radial-gradient(circle closest-side, @blue 71.43%, @darkblue 100%, transparent);
+        background-image: radial-gradient(circle farthest-side at 0% 50%, @blue 71.43%, @darkblue 100%, transparent);
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: @slotHeightHalf;
+        height: 100%;
+        z-index: 2000;
+    }
+
+div.q-slot-background {
+    background-color: @blue;
+    position: absolute;
+    top: 0;
+    left: @slotHeightHalf;
+    right: @slotHeightHalf;
+    bottom: 0;
+    z-index: 2000;
+}
+
+    div.q-slot-background:before {
+        content: '';
+        background: url('../Images/blue-background-top.png') repeat-x;
+        background-image: -webkit-linear-gradient(@darkblue, @blue);
+        background-image: -o-linear-gradient(@darkblue, @blue);
+        background-image: -moz-linear-gradient(@darkblue, @blue);
+        background-image: linear-gradient(@darkblue, @blue);
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 10px;
+        z-index: 3000;
+    }
+
+    div.q-slot-background:after {
+        content: '';
+        background: url('../Images/blue-background-bottom.png') repeat-x;
+        background-image: -webkit-linear-gradient(@blue, @darkblue);
+        background-image: -o-linear-gradient(@blue, @darkblue);
+        background-image: -moz-linear-gradient(@blue, @darkblue);
+        background-image: linear-gradient(@blue, @darkblue);
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 10px;
+        z-index: 3000;
+    }

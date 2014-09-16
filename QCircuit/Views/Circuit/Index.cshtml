@@ -12,32 +12,18 @@
     @Styles.Render("~/Content/quantum")
   </head>
   <body>
-    <div id="quantum-container"></div>
-
-    @Scripts.Render("~/bundles/svg")
+    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/quantum")
     <script>
-      ; (function (window, SVG) {
+      ; (function (window, Q) {
 
         'use strict';
 
-        var circuitBuilder;
+        var workspace = new Q.Workspace();
 
-        if (!SVG.supported) {
-          window.document.getElementById('quantum-container').innerText =
-            'SVG is not supported. Please use a modern browser.';
-          return;
-        }
+        $('body').append(workspace.element);
 
-        circuitBuilder = new Quantum.CircuitBuilder('quantum-container', 6, [
-          Quantum.Gate,
-          Quantum.Gate,
-          Quantum.Gate,
-          Quantum.Gate,
-          Quantum.Gate
-        ]);
-
-      }(this, this.SVG));
+      }(this, this.Quantum));
     </script>
   </body>
 </html>
