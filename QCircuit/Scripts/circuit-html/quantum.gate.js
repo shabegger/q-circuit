@@ -18,14 +18,20 @@
 	/* Constructor */
 
 	function Gate() {
-		var self = this;
+	  var self = this;
+
+    self.render();
 	}
 
 
 	/* Prototype Methods */
 
 	Gate.prototype.render = function render() {
-		var self = this;
+	  var self = this;
+
+	  if (!self.element) {
+	    self.element = $(_gateFactoryTmpl());
+	  }
 	};
 
 

@@ -31,9 +31,10 @@ namespace QCircuit
                         "~/Scripts/svg-custom/svg.custom.location.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/quantum").Include(
+                        "~/Scripts/mixins/mixins.js",
+                        "~/Scripts/mixins/mixins.events.js",
+                        "~/Scripts/mixins/mixins.layout.js",
                         "~/Scripts/circuit-html/quantum.js",
-                        "~/Scripts/circuit-html/quantum.mixins.js",
-                        "~/Scripts/circuit-html/quantum.events.js",
                         "~/Scripts/circuit-html/quantum.workspace.js",
                         "~/Scripts/circuit-html/quantum.gate.js",
                         "~/Scripts/circuit-html/quantum.gatefactory.js",

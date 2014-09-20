@@ -18,8 +18,13 @@
 
   /* Constructor */
 
-  function GateFactory() {
+  function GateFactory(gateConstructor) {
     var self = this;
+
+    self.gateConstructor = gateConstructor;
+
+    self.render();
+    self.generateGate();
   }
 
 
@@ -27,6 +32,20 @@
 
   GateFactory.prototype.render = function render() {
     var self = this;
+
+    if (!self.element) {
+      self.element = $(_gateFactoryTmpl());
+    }
+
+    self.element.empty();
+  };
+
+  GateFactory.prototype.generateGate = function generateGate() {
+    var self = this,
+        gateConstructor = self.gateConstructor,
+        gate = new gateConstructor();
+
+    self.element.append(gate.element);
   };
 
 
