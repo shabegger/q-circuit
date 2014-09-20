@@ -21,18 +21,16 @@
   function Slot() {
     var self = this;
 
-    self.render();
+    Q.UIElement.call(self, _slotTmpl);
   }
 
 
   /* Prototype Methods */
 
+  Slot.prototype = new Q.UIElement();
+
   Slot.prototype.render = function render() {
     var self = this;
-
-    if (!self.element) {
-      self.element = $(_slotTmpl());
-    }
 
     self.element.find(':not(".q-slot-background")').remove();
   };

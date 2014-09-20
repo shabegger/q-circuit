@@ -19,29 +19,32 @@
 
   /* Constructor */
 
-  function Workspace() {
+  function Workspace(registerSize, gateConstructors) {
     var self = this;
 
-    self.render();
+    self.registerSize = registerSize;
+    self.gateConstructors = gateConstructors;
+
+    Q.UIElement.call(self, _workspaceTmpl);
   }
 
 
   /* Prototype Methods */
 
-  Workspace.prototype.render = function render() {
-    var self = this;
+  Workspace.prototype = new Q.UIElement();
 
-    if (!self.element) {
-      self.element = $(_workspaceTmpl());
-    }
+  Workspace.prototype.render = function render() {
+    var self = this,
+        registerSize = self.registerSize,
+        gateConstructors = self.gateConstructors;
 
     self.element.empty();
 
-    self.factoryShowroom = new Q.FactoryShowroom([]);
-    self.element.append(self.factoryShowroom.element);
+    self.factoryShowroom = new Q.FactoryShowroom(gateConstructors);
+    self.appendChild(self.element, self.factoryShowroom);
 
-    self.circuit = new Q.Circuit(5);
-    self.element.append(self.circuit.element);
+    self.circuit = new Q.Circuit(registerSize);
+    self.appendChild(self.element, self.circuit);
   };
 
 

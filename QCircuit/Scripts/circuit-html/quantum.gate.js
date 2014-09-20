@@ -20,18 +20,16 @@
 	function Gate() {
 	  var self = this;
 
-    self.render();
+	  Q.UIElement.call(self, _gateTmpl);
 	}
 
 
-	/* Prototype Methods */
+  /* Prototype Methods */
+
+	Gate.prototype = new Q.UIElement();
 
 	Gate.prototype.render = function render() {
 	  var self = this;
-
-	  if (!self.element) {
-	    self.element = $(_gateFactoryTmpl());
-	  }
 	};
 
 

@@ -19,11 +19,27 @@ div.q-workspace {
   height: 100%;
   overflow: hidden;
 }
+div.q-workspace.q-mod-largeShowroom div.q-gateFactory.q-mod-secondRow {
+  top: 100px;
+}
 div.q-workspace.q-mod-largeShowroom div.q-factoryShowroom {
   height: 175px;
 }
 div.q-workspace.q-mod-largeShowroom div.q-circuit {
   top: 175px;
+}
+/* Gate */
+div.q-gate {
+  width: 50px;
+  height: 50px;
+}
+/* Gate Factory */
+div.q-gateFactory {
+  position: absolute;
+}
+div.q-gateFactory.q-mod-firstRow,
+div.q-gateFactory.q-mod-secondRow {
+  top: 25px;
 }
 /* Factory Showroom */
 div.q-factoryShowroom {
@@ -62,6 +78,11 @@ div.q-factoryShowroom:after {
   z-index: 1000;
 }
 div.q-factoryShowroom-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  overflow: visible;
   z-index: 2000;
 }
 /* Circuit */
@@ -110,11 +131,11 @@ div.q-slot {
 }
 div.q-slot:before {
   content: '';
-  background-image: -webkit-radial-gradient(circle closest-side, #aaccff 71.43%, #6584b2 100%, transparent);
-  background-image: -o-radial-gradient(circle closest-side, #aaccff 71.43%, #6584b2 100%, transparent);
-  background-image: -moz-radial-gradient(circle closest-side, #aaccff 71.43%, #6584b2 100%, transparent);
-  background-image: -ms-radial-gradient(circle closest-side, #aaccff 71.43%, #6584b2 100%, transparent);
-  background-image: radial-gradient(circle farthest-side at 100% 50%, #aaccff 71.43%, #6584b2 100%, transparent);
+  background-image: -webkit-radial-gradient(circle farthest-side, #aaccff 71.43%, #6584b2 99%, transparent);
+  background-image: -o-radial-gradient(circle farthest-side, #aaccff 71.43%, #6584b2 99%, transparent);
+  background-image: -moz-radial-gradient(circle farthest-side, #aaccff 71.43%, #6584b2 99%, transparent);
+  background-image: -ms-radial-gradient(circle farthest-side, #aaccff 71.43%, #6584b2 99%, transparent);
+  background-image: radial-gradient(circle farthest-side at 100% 50%, #aaccff 71.43%, #6584b2 99%, transparent);
   display: block;
   position: absolute;
   top: 0;
@@ -125,11 +146,11 @@ div.q-slot:before {
 }
 div.q-slot:after {
   content: '';
-  background-image: -webkit-radial-gradient(circle closest-side, #aaccff 71.43%, #6584b2 100%, transparent);
-  background-image: -o-radial-gradient(circle closest-side, #aaccff 71.43%, #6584b2 100%, transparent);
-  background-image: -moz-radial-gradient(circle closest-side, #aaccff 71.43%, #6584b2 100%, transparent);
-  background-image: -ms-radial-gradient(circle closest-side, #aaccff 71.43%, #6584b2 100%, transparent);
-  background-image: radial-gradient(circle farthest-side at 0% 50%, #aaccff 71.43%, #6584b2 100%, transparent);
+  background-image: -webkit-radial-gradient(circle farthest-side, #aaccff 71.43%, #6584b2 99%, transparent 100%);
+  background-image: -o-radial-gradient(circle farthest-side, #aaccff 71.43%, #6584b2 99%, transparent);
+  background-image: -moz-radial-gradient(circle farthest-side, #aaccff 71.43%, #6584b2 99%, transparent);
+  background-image: -ms-radial-gradient(circle farthest-side, #aaccff 71.43%, #6584b2 99%, transparent);
+  background-image: radial-gradient(circle farthest-side at 0% 50%, #aaccff 71.43%, #6584b2 99%, transparent);
   display: block;
   position: absolute;
   top: 0;

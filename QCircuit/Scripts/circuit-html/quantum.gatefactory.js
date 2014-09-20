@@ -7,6 +7,20 @@
   'use strict';
 
 
+  /* Private Variables */
+
+  var _styles = {
+    padding: 25,
+    width: 50,
+    height: 50
+  };
+
+  var _rowClasses = [
+    'q-mod-firstRow',
+    'q-mod-secondRow'
+  ];
+
+
   /* Templates */
 
   function _gateFactoryTmpl() {
@@ -23,21 +37,37 @@
 
     self.gateConstructor = gateConstructor;
 
-    self.render();
-    self.generateGate();
+    Q.UIElement.call(self, _gateFactoryTmpl);
   }
 
 
   /* Prototype Methods */
 
+  GateFactory.prototype = new Q.UIElement();
+
   GateFactory.prototype.render = function render() {
-    var self = this;
+    var self = this,
+        element = self.element,
+        parent = element.parent(),
+        padding, width, height,
+        rowCount,
+        index, left;
 
-    if (!self.element) {
-      self.element = $(_gateFactoryTmpl());
-    }
+    element.empty();
 
-    self.element.empty();
+    padding = _styles.padding;
+    width = _styles.width + padding;
+    height = _styles.height + padding;
+
+    rowCount = Math.floor((parent.innerHeight() - padding) / height);
+
+    index = element.index('.q-gateFactory');
+    left = padding + (Math.floor(index / rowCount) * width);
+
+    element
+      .removeClass(_rowClasses.join(' '))
+      .addClass(_rowClasses[index % _rowClasses.length])
+      .css('left', left);
   };
 
   GateFactory.prototype.generateGate = function generateGate() {
@@ -45,7 +75,7 @@
         gateConstructor = self.gateConstructor,
         gate = new gateConstructor();
 
-    self.element.append(gate.element);
+    self.appendChild(self.element, gate);
   };
 
 
