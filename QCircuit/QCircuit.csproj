@@ -216,6 +216,8 @@
     <Content Include="Scripts\circuit\quantum.mixins.js" />
     <Content Include="Scripts\circuit\quantum.slot.js" />
     <Content Include="Scripts\circuit\quantum.workspace.js" />
+    <Content Include="Scripts\interaction\interaction.js" />
+    <Content Include="Scripts\interaction\interaction.touch.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
