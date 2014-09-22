@@ -26,13 +26,11 @@
     self.gateConstructors = gateConstructors || [];
     self.factories = [];
 
-    Q.UIElement.call(self, _factoryShowroomTmpl);
+    self.render();
   }
 
 
   /* Prototype Methods */
-
-  FactoryShowroom.prototype = new Q.UIElement();
 
   FactoryShowroom.prototype.render = function render() {
     var self = this,
@@ -41,6 +39,10 @@
         factory,
         content,
         i, len;
+
+    if (!self.element) {
+      self.element = $(_factoryShowroomTmpl());
+    }
 
     content = self.element.find('.q-factoryShowroom-content');
     content.empty();
@@ -54,8 +56,8 @@
     for (i = 0, len = gateConstructors.length; i < len; i++) {
       factory = new Q.GateFactory(gateConstructors[i]);
       factories.push(factory);
-      self.appendChild(content, factory);
-      factory.generateGate();
+      content.append(factory.element);
+      factory.position();
     }
   };
 

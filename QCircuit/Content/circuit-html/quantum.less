@@ -24,6 +24,18 @@
 @slotRadGradStop:   71.43%;
 
 
+/* LESS Mixins */
+
+.generate-gateFactory-items(@n, @rows: 1, @i: 0) when (@i < @n) {
+    div.q-gateFactory.q-mod-item-@{i} {
+        top: @paddingSize + mod(@i, @rows) * (@paddingSize + @gateSize);
+        left: @paddingSize + floor(@i / @rows) * (@paddingSize + @gateSize);
+    }
+
+    .generate-gateFactory-items(@n, @rows, @i + 1);
+}
+
+
 /* Reset and Page Styles */
 
 * {
@@ -48,9 +60,7 @@ div.q-workspace {
 }
 
 div.q-workspace.q-mod-largeShowroom {
-    div.q-gateFactory.q-mod-secondRow {
-        top: @gateSize + (2 * @paddingSize);
-    }
+    .generate-gateFactory-items(100, 2);
 
     div.q-factoryShowroom {
         height: @showroomHeightLarge;
@@ -65,6 +75,7 @@ div.q-workspace.q-mod-largeShowroom {
 /* Gate */
 
 div.q-gate {
+    background: yellow;
     width: @gateSize;
     height: @gateSize;
 }
@@ -76,10 +87,7 @@ div.q-gateFactory {
     position: absolute;
 }
 
-    div.q-gateFactory.q-mod-firstRow,
-    div.q-gateFactory.q-mod-secondRow {
-        top: @paddingSize;
-    }
+.generate-gateFactory-items(100);
 
 
 /* Factory Showroom */
@@ -123,11 +131,8 @@ div.q-factoryShowroom {
     }
 
 div.q-factoryShowroom-content {
-    position: absolute;
-    top: 0;
-    left: 0;
+    width: 0;
     height: 100%;
-    overflow: visible;
     z-index: 2000;
 }
 
@@ -185,11 +190,11 @@ div.q-slot {
 
     div.q-slot:before {
         content: '';
-        background-image: -webkit-radial-gradient(circle farthest-side, @blue 71.43%, @darkblue 99%, transparent);
-        background-image: -o-radial-gradient(circle farthest-side, @blue 71.43%, @darkblue 99%, transparent);
-        background-image: -moz-radial-gradient(circle farthest-side, @blue 71.43%, @darkblue 99%, transparent);
-        background-image: -ms-radial-gradient(circle farthest-side, @blue 71.43%, @darkblue 99%, transparent);
-        background-image: radial-gradient(circle farthest-side at 100% 50%, @blue 71.43%, @darkblue 99%, transparent);
+        background-image: -webkit-radial-gradient(circle farthest-side at 100% 50%, @blue @slotRadGradStop, @darkblue 99%, transparent);
+        background-image: -o-radial-gradient(circle farthest-side at 100% 50%, @blue @slotRadGradStop, @darkblue 99%, transparent);
+        background-image: -moz-radial-gradient(circle farthest-side at 100% 50%, @blue @slotRadGradStop, @darkblue 99%, transparent);
+        background-image: -ms-radial-gradient(circle farthest-side at 100% 50%, @blue @slotRadGradStop, @darkblue 99%, transparent);
+        background-image: radial-gradient(circle farthest-side at 100% 50%, @blue @slotRadGradStop, @darkblue 99%, transparent);
         display: block;
         position: absolute;
         top: 0;
@@ -201,11 +206,11 @@ div.q-slot {
 
     div.q-slot:after {
         content: '';
-        background-image: -webkit-radial-gradient(circle farthest-side, @blue 71.43%, @darkblue 99%, transparent 100%);
-        background-image: -o-radial-gradient(circle farthest-side, @blue 71.43%, @darkblue 99%, transparent);
-        background-image: -moz-radial-gradient(circle farthest-side, @blue 71.43%, @darkblue 99%, transparent);
-        background-image: -ms-radial-gradient(circle farthest-side, @blue 71.43%, @darkblue 99%, transparent);
-        background-image: radial-gradient(circle farthest-side at 0% 50%, @blue 71.43%, @darkblue 99%, transparent);
+        background-image: -webkit-radial-gradient(circle farthest-side at 0% 50%, @blue @slotRadGradStop, @darkblue 99%, transparent);
+        background-image: -o-radial-gradient(circle farthest-side at 0% 50%, @blue @slotRadGradStop, @darkblue 99%, transparent);
+        background-image: -moz-radial-gradient(circle farthest-side at 0% 50%, @blue @slotRadGradStop, @darkblue 99%, transparent);
+        background-image: -ms-radial-gradient(circle farthest-side at 0% 50%, @blue @slotRadGradStop, @darkblue 99%, transparent);
+        background-image: radial-gradient(circle farthest-side at 0% 50%, @blue @slotRadGradStop, @darkblue 99%, transparent);
         display: block;
         position: absolute;
         top: 0;

@@ -19,10 +19,9 @@
 
         'use strict';
 
-        var workspace = new Q.Workspace(5, [Q.Gate, Q.Gate, Q.Gate, Q.Gate, Q.Gate]);
+        var workspace = new Q.Workspace();
 
         $('body').append(workspace.element);
-        workspace.render();
 
       }(this, this.Quantum));
     </script>

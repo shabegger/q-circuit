@@ -21,26 +21,25 @@
   function Circuit(slotCount) {
     var self = this;
 
-    self.slotCount = slotCount;
-
-    Q.UIElement.call(self, _circuitTmpl);
+    self.render(slotCount);
   }
 
 
   /* Prototype Methods */
 
-  Circuit.prototype = new Q.UIElement();
-
-  Circuit.prototype.render = function render() {
+  Circuit.prototype.render = function render(slotCount) {
     var self = this,
-        slotCount = self.slotCount,
         i, slot;
+
+    if (!self.element) {
+      self.element = $(_circuitTmpl());
+    }
 
     self.element.empty();
 
     for (i = 0; i < slotCount; i++) {
       slot = new Q.Slot();
-      self.appendChild(self.element, slot);
+      self.element.append(slot.element);
     }
   };
 
