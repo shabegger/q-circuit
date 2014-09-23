@@ -1,4 +1,7 @@
-﻿/// <reference path="quantum.js" />
+﻿/// <reference path="../interaction/interaction.js" />
+/// <reference path="../interaction/interaction.touch.js" />
+/// <reference path="../interaction/interaction.drag.js" />
+/// <reference path="quantum.js" />
 /// <reference path="../jquery-1.10.2.intellisense.js" />
 
 ; (function (window, Q, $, undefined) {
@@ -30,7 +33,7 @@
 	  var self = this;
 
 	  if (!self.element) {
-	    self.element = $(_gateTmpl());
+	    self.element = $(_gateTmpl()).draggable();
 	  }
 	};
 
