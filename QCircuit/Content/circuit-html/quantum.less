@@ -26,10 +26,10 @@
 
 /* LESS Mixins */
 
-.generate-gateFactory-items(@n, @rows: 1, @i: 0) when (@i < @n) {
-    div.q-gateFactory.q-mod-item-@{i} {
-        top: @paddingSize + mod(@i, @rows) * (@paddingSize + @gateSize);
-        left: @paddingSize + floor(@i / @rows) * (@paddingSize + @gateSize);
+.generate-gateFactory-items(@n, @rows: 1, @i: 1) when (@i =< @n) {
+    div.q-gateFactory:nth-child(@{i}) {
+        top: @paddingSize + mod((@i - 1), @rows) * (@paddingSize + @gateSize);
+        left: @paddingSize + floor((@i - 1) / @rows) * (@paddingSize + @gateSize);
     }
 
     .generate-gateFactory-items(@n, @rows, @i + 1);
