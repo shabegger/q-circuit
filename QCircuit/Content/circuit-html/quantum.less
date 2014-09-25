@@ -32,6 +32,10 @@
         left: @paddingSize + floor((@i - 1) / @rows) * (@paddingSize + @gateSize);
     }
 
+        div.q-gateFactory:nth-child(@{i}) .q-gate {
+            background: lighten(red, 15 * (@i - 1));
+        }
+
     .generate-gateFactory-items(@n, @rows, @i + 1);
 }
 
@@ -47,6 +51,7 @@
 html, body {
     width: 100%;
     height: 100%;
+    overflow: hidden;
     touch-action: none;
 }
 

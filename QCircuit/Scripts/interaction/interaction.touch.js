@@ -23,20 +23,20 @@
           touch;
 
       if ($.isNumeric(event.clientX)) {
-        callback.call(this, {
+        callback.call(this, $.extend(e, {
           x: event.clientX,
           y: event.clientY
-        });
+        }));
       } else if (touches) {
         event.preventDefault();
 
         if (touches.length === 1) {
           touch = touches[0];
 
-          callback.call(this, {
+          callback.call(this, $.extend(e, {
             x: touch.clientX,
             y: touch.clientY
-          });
+          }));
         }
       }
     };

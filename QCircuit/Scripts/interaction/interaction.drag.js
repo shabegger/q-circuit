@@ -9,76 +9,93 @@
 
   /* Private Variables */
 
-  var _namespace = 'interaction-drag';
+  var _namespace = 'interaction-drag',
+      _body = $('body'),
+      _currentDraggable = null,
+      _dragData = null;
 
 
   /* Event Handlers */
 
   function onDown(e) {
-    var self = $(this),
-        offset = self.offset(),
-        top = offset.top,
-        left = offset.left;
+    var offset, top, left;
 
-    self
+    _currentDraggable = $(this);
+
+    offset = _currentDraggable.offset();
+    top = offset.top;
+    left = offset.left;
+
+    _dragData = {
+      deltaX: left - e.x,
+      deltaY: top - e.y,
+      position: _currentDraggable.css('position'),
+      top: _currentDraggable.css('top'),
+      left: _currentDraggable.css('left'),
+      parent: _currentDraggable.parent()
+    };
+
+    _currentDraggable
       .offInteractionDown(_namespace)
       .remove()
       .css({
         'position': 'absolute',
         'top': top,
         'left': left
-      })
-      .appendTo('body')
-      .data(_namespace, {
-        deltaX: left - e.x,
-        deltaY: top - e.y,
-        position: self.css('position'),
-        top: self.css('top'),
-        left: self.css('left'),
-        parent: self.parent()
-      })
+      });
+
+    _body
       .onInteractionMove(onMove, _namespace)
       .onInteractionUp(onUp, _namespace)
-      .onInteractionCancel(onCancel, _namespace);
+      .onInteractionCancel(onCancel, _namespace)
+      .append(_currentDraggable);
   }
 
   function onMove(e) {
-    var self = $(this),
-        dragData = self.data(_namespace);
-
-    self
+    _currentDraggable
       .css({
-        'top': e.y + dragData.deltaY,
-        'left': e.x + dragData.deltaX
+        'top': e.y + _dragData.deltaY,
+        'left': e.x + _dragData.deltaX
       });
   }
 
   function onUp(e) {
-    var self = $(this);
-
-    self
+    _body
       .offInteractionMove(_namespace)
       .offInteractionUp(_namespace)
-      .offInteractionCancel(_namespace)
+      .offInteractionCancel(_namespace);
+
+    _currentDraggable
       .onInteractionDown(onDown, _namespace);
+
+    _currentDraggable = null;
+    _dragData = null;
   }
 
   function onCancel(e) {
-    var self = $(this),
-        dragData = self.data(_namespace);
+    var relatedTarget = e.originalEvent.relatedTarget;
 
-    self
+    if (relatedTarget && relatedTarget.tagName !== 'HTML') {
+      return;
+    }
+
+    _body
       .offInteractionMove(_namespace)
       .offInteractionUp(_namespace)
-      .offInteractionCancel(_namespace)
+      .offInteractionCancel(_namespace);
+
+    _currentDraggable
       .remove()
       .css({
-        'position': dragData.position,
-        'top': dragData.top,
-        'left': dragData.left
+        'position': _dragData.position,
+        'top': _dragData.top,
+        'left': _dragData.left
       })
-      .appendTo(dragData.parent)
+      .appendTo(_dragData.parent)
       .onInteractionDown(onDown, _namespace);
+
+    _currentDraggable = null;
+    _dragData = null;
   }
 
 
