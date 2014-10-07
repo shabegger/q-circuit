@@ -1,9 +1,11 @@
-﻿/// <reference path="quantum.js" />
+﻿/// <reference path="../mixins/mixins.js" />
+/// <reference path="../mixins/mixins.events.js" />s
+/// <reference path="quantum.js" />
 /// <reference path="quantum.circuit.js" />
 /// <reference path="quantum.factoryshowroom.js" />
 /// <reference path="../jquery-1.10.2.intellisense.js" />
 
-; (function (window, Q, $, undefined) {
+; (function (window, Q, M, $, undefined) {
 
   'use strict';
 
@@ -26,6 +28,11 @@
   }
 
 
+  /* Constructor Mixins */
+
+  M.Events.mixinEvents(Workspace);
+
+
   /* Prototype Methods */
 
   Workspace.prototype.render = function render() {
@@ -42,6 +49,8 @@
 
     self.circuit = new Q.Circuit(5);
     self.element.append(self.circuit.element);
+
+    Workspace.dispatchEvent('ready');
   };
 
 
@@ -49,4 +58,4 @@
 
   Q.Workspace = Workspace;
 
-}(this, this.Quantum, this.jQuery));
+}(this, this.Quantum, this.Mixins, this.jQuery));

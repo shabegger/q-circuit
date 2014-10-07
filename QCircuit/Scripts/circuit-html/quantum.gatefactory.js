@@ -29,6 +29,8 @@
 
     self.gateConstructor = gateConstructor;
 
+    self.drag = $.proxy(drag, self);
+
     self.render();
     self.generateGate();
   }
@@ -63,7 +65,21 @@
         gate = new gateConstructor();
 
     self.element.append(gate.element);
+
+    gate.addEventListener('drag', self.drag);
   };
+
+
+  /* Event Handlers */
+
+  function drag(e) {
+    var self = this,
+        gate = e.sender;
+
+    gate.removeEventListener('drag', self.drag);
+
+    self.generateGate();
+  }
 
 
   /* Expose */

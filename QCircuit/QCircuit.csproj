@@ -217,6 +217,8 @@
     <Content Include="Scripts\circuit\quantum.slot.js" />
     <Content Include="Scripts\circuit\quantum.workspace.js" />
     <Content Include="Scripts\interaction\interaction.drag.js" />
+    <Content Include="Scripts\interaction\interaction.drop.js" />
+    <Content Include="Scripts\interaction\interaction.intersect.js" />
     <Content Include="Scripts\interaction\interaction.js" />
     <Content Include="Scripts\interaction\interaction.touch.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
