@@ -30,13 +30,15 @@
       } else if (touches) {
         event.preventDefault();
 
-        if (touches.length === 1) {
+        if (touches.length > 0) {
           touch = touches[0];
 
           callback.call(this, $.extend(e, {
             x: touch.clientX,
             y: touch.clientY
           }));
+        } else {
+          callback.call(this, e);
         }
       }
     };

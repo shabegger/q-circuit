@@ -31,6 +31,7 @@
 	  self.drag = $.proxy(drag, self);
 	  self.move = $.proxy(move, self);
 	  self.drop = $.proxy(drop, self);
+	  self.cancel = $.proxy(cancel, self);
     
     self.render();
 	}
@@ -50,7 +51,8 @@
 	    self.element = $(_gateTmpl()).draggable({
 	      drag: self.drag,
 	      move: self.move,
-	      drop: self.drop
+	      drop: self.drop,
+        cancel: self.cancel
 	    });
 	  }
 	};
@@ -88,7 +90,7 @@
 	  });
 	}
 
-	function drop() {
+	function drop(e) {
 	  var self = this,
         element = self.element,
 	      event;
@@ -109,6 +111,30 @@
 	        element.remove();
 	      });
 	  }
+	}
+
+	function cancel(e) {
+	  var self = this,
+        element = self.element,
+        event;
+
+	  event = {
+      removeGate: false
+	  };
+
+	  self.dispatchEvent('cancel', event);
+
+	  if (event.removeGate) {
+	    element
+        .draggable(false)
+        .animate({
+          'opacity': 0
+        }, 200, function () {
+          element.remove();
+        });
+	  }
+
+	  return event.removeGate;
 	}
 
 

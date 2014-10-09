@@ -67,6 +67,9 @@
     self.element.append(gate.element);
 
     gate.addEventListener('drag', self.drag);
+
+    gate.addEventListener('drop', drop);
+    gate.addEventListener('cancel', cancel);
   };
 
 
@@ -79,6 +82,22 @@
     gate.removeEventListener('drag', self.drag);
 
     self.generateGate();
+  }
+
+  function drop(e) {
+    var gate = e.sender;
+
+    gate.removeEventListener('drop', drop);
+    gate.removeEventListener('cancel', cancel);
+  }
+
+  function cancel(e) {
+    var gate = e.sender;
+
+    gate.removeEventListener('drop', drop);
+    gate.removeEventListener('cancel', cancel);
+
+    e.removeGate = true;
   }
 
 
