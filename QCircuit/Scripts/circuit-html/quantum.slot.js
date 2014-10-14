@@ -73,7 +73,35 @@
   }
 
   function gateDropped(e) {
-    var self = this;
+    var self = this,
+        bounds = self._bounds = self._bounds || self.element.bounds(),
+        left = bounds.left,
+        right = bounds.right,
+        top = bounds.top,
+        bottom = bounds.bottom,
+        gate = e.gate,
+        gateElement = gate.element,
+        gateOffset = gateElement.offset(),
+        gateTop = gateOffset.top,
+        gateLeft = gateOffset.left,
+        gateWidth = gateElement.outerWidth(),
+        gateHeight = gateElement.outerHeight(),
+        x = gateLeft + (gateWidth / 2),
+        y = gateTop + (gateHeight / 2),
+        height, topDelta;
+
+    if (left < x && right > x && top < y && bottom > y) {
+      e.handled = true;
+
+      height = bottom - top;
+      topDelta = (height - gateHeight) / 2;
+      gateElement
+        .animate({
+          'top': top + topDelta
+        }, 200, function () {
+          
+        });
+    }
 
     self.element.removeClass(_classModHover);
   }

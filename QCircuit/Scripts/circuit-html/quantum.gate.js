@@ -62,25 +62,27 @@
 
 	function drag(e) {
 	  var self = this,
+        element = self.element,
 	      top = e.top,
         left = e.left,
-        w = self._w = self._w || self.element.outerWidth() / 2,
-        h = self._h = self._h || self.element.outerHeight() / 2;
+        width = element.outerWidth(),
+        height = element.outerHeight();
 
 	  self.dispatchEvent('drag');
 	  Gate.dispatchEvent('drag', {
 	    gate: self,
-	    centerX: left + w,
-      centerY: top + h
+	    centerX: left + (width / 2),
+      centerY: top + (height / 2)
 	  });
 	}
 
 	function move(e) {
 	  var self = this,
+        element = self.element,
 	      top = e.top,
         left = e.left,
-        width = self.element.outerWidth(),
-        height = self.element.outerHeight();
+        width = element.outerWidth(),
+        height = element.outerHeight();
 
 	  self.dispatchEvent('move');
 	  Gate.dispatchEvent('move', {
@@ -100,7 +102,9 @@
 	  }
 
 	  self.dispatchEvent('drop', event);
-	  Gate.dispatchEvent('drop', event);
+	  Gate.dispatchEvent('drop', $.extend(event, {
+	    gate: self
+	  }));
 
 	  if (!event.handled) {
 	    element

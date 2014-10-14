@@ -62,6 +62,8 @@
       .onInteractionCancel(onCancel, _namespace)
       .append(_currentDraggable);
 
+    _currentDraggable.data(_namespace, _options);
+
     _dragHandler && _dragHandler.call(_currentDraggable, {
       top: top,
       left: left
@@ -129,7 +131,8 @@
           'left': _dragData.left
         })
         .appendTo(_dragData.parent)
-        .onInteractionDown(onDown, _namespace);
+        .onInteractionDown(onDown, _namespace)
+        .data(_namespace, _options);
     }
 
     _currentDraggable = null;
