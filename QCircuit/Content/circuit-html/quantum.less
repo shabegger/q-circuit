@@ -5,6 +5,7 @@
 @darkblue:  #6584b2;
 @brown:     #b29353;
 @tan:       #ffe3aa;
+@highlight: #ff0000;
 
 
 /* Size Variables */
@@ -12,32 +13,47 @@
 @gateSize:      50px;
 @paddingSize:   25px;
 @shadowSize:    10px;
+@highlightSize: 5px;
 
 
 /* Computed Variables */
 
 @showroomHeight:        @gateSize + (2 * @paddingSize);
-@showroomHeightLarge:   (2 * @gateSize) + (3 * @paddingSize);
 
 @slotHeight:        @gateSize + (2 * @shadowSize);
-@slotHeightHalf:    @slotHeight / 2;
 
-@shadowSizeHalf:    @shadowSize / 2;
+@shadowSpread:      @shadowSize / 2;
+@shadowOffset:      @shadowSize + @shadowSpread;
 
 
 /* LESS Mixins */
 
-.generate-gateFactory-items(@n, @rows: 1, @i: 1) when (@i =< @n) {
-    div.q-gateFactory:nth-child(@{i}) {
-        top: @paddingSize + mod((@i - 1), @rows) * (@paddingSize + @gateSize);
-        left: @paddingSize + floor((@i - 1) / @rows) * (@paddingSize + @gateSize);
-    }
+.generate-factoryShowroom-size(@size) {
+    div.q-workspace.q-mod-showroomSize@{size} {
+        @height:    (@size * @gateSize) + ((@size + 1) * @paddingSize);
 
-        div.q-gateFactory:nth-child(@{i}) .q-gate {
-            background: lighten(red, 15 * (@i - 1));
+        .generate-factoryShowroom-size-items(@n, @i: 2) when (@i =< @n) {
+            div.q-gateFactory:nth-child(@{size}n + @{i}) {
+                margin-top: ((@i - 1) * @gateSize) + (@i * @paddingSize);
+            }
+
+            .generate-factoryShowroom-size-items(@n, @i + 1);
         }
 
-    .generate-gateFactory-items(@n, @rows, @i + 1);
+        .generate-factoryShowroom-size-items(@size);
+
+        div.q-gateFactory:not(:nth-child(@{size}n + 1)) {
+            margin-left: -@gateSize;
+        }
+
+        div.q-factoryShowroom {
+            height: @height;
+        }
+
+        div.q-circuit {
+            top: @height;
+        }
+    }
 }
 
 
@@ -71,25 +87,22 @@ div.q-workspace {
     overflow: hidden;
 }
 
-div.q-workspace.q-mod-largeShowroom {
-    .generate-gateFactory-items(100, 2);
-
-    div.q-factoryShowroom {
-        height: @showroomHeightLarge;
-    }
-
-    div.q-circuit {
-        top: @showroomHeightLarge;
-    }
-}
+.generate-factoryShowroom-size(2);
+.generate-factoryShowroom-size(3);
+.generate-factoryShowroom-size(4);
+.generate-factoryShowroom-size(5);
 
 
 /* Gate */
 
 div.q-gate {
-    background: yellow;
+    background: @tan;
     width: @gateSize;
     height: @gateSize;
+    border-radius: @gateSize / 2;
+    -moz-box-shadow: inset 0 0 @shadowSize @shadowSpread @brown;
+    -webkit-box-shadow: inset 0 0 @shadowSize @shadowSpread @brown;
+    box-shadow: inset 0 0 @shadowSize @shadowSpread @brown;
     z-index: 10000;
 }
 
@@ -97,10 +110,9 @@ div.q-gate {
 /* Gate Factory */
 
 div.q-gateFactory {
-    position: absolute;
+    float: left;
+    margin: @paddingSize 0 0 @paddingSize;
 }
-
-.generate-gateFactory-items(100);
 
 
 /* Factory Showroom */
@@ -111,42 +123,16 @@ div.q-factoryShowroom {
     width: 100%;
     height: @showroomHeight;
     overflow: hidden;
+    -moz-box-shadow: inset 0 @shadowOffset @shadowSize -@shadowSize @darkblue,
+                     inset 0 -@shadowOffset @shadowSize -@shadowSize @darkblue;
+    -webkit-box-shadow: inset 0 @shadowOffset @shadowSize -@shadowSize @darkblue,
+                        inset 0 -@shadowOffset @shadowSize -@shadowSize @darkblue;
+    box-shadow: inset 0 @shadowOffset @shadowSize -@shadowSize @darkblue,
+                inset 0 -@shadowOffset @shadowSize -@shadowSize @darkblue;
 }
 
-    div.q-factoryShowroom:before {
-        content: '';
-        background: url('../Images/blue-background-top.png') repeat-x;
-        background-image: -webkit-linear-gradient(@darkblue, @blue);
-        background-image: -o-linear-gradient(@darkblue, @blue);
-        background-image: -moz-linear-gradient(@darkblue, @blue);
-        background-image: linear-gradient(@darkblue, @blue);
-        display: block;
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 10px;
-        z-index: 1000;
-    }
-
-    div.q-factoryShowroom:after {
-        content: '';
-        background: url('../Images/blue-background-bottom.png') repeat-x;
-        background-image: -webkit-linear-gradient(@blue, @darkblue);
-        background-image: -o-linear-gradient(@blue, @darkblue);
-        background-image: -moz-linear-gradient(@blue, @darkblue);
-        background-image: linear-gradient(@blue, @darkblue);
-        display: block;
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 10px;
-        z-index: 1000;
-    }
-
 div.q-factoryShowroom-content {
-    width: 0;
     height: 100%;
-    z-index: 2000;
 }
 
 
@@ -159,37 +145,13 @@ div.q-circuit {
     bottom: 0;
     width: 100%;
     overflow: hidden;
+    -moz-box-shadow: inset 0 @shadowOffset @shadowSize -@shadowSize @brown,
+                     inset 0 -@shadowOffset @shadowSize -@shadowSize @brown;
+    -webkit-box-shadow: inset 0 @shadowOffset @shadowSize -@shadowSize @brown,
+                        inset 0 -@shadowOffset @shadowSize -@shadowSize @brown;
+    box-shadow: inset 0 @shadowOffset @shadowSize -@shadowSize @brown,
+                inset 0 -@shadowOffset @shadowSize -@shadowSize @brown;
 }
-
-    div.q-circuit:before {
-        content: '';
-        background: url('../Images/tan-background-top.png') repeat-x;
-        background-image: -webkit-linear-gradient(@brown, @tan);
-        background-image: -o-linear-gradient(@brown, @tan);
-        background-image: -moz-linear-gradient(@brown, @tan);
-        background-image: linear-gradient(@brown, @tan);
-        display: block;
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 10px;
-        z-index: 1000;
-    }
-
-    div.q-circuit:after {
-        content: '';
-        background: url('../Images/tan-background-bottom.png') repeat-x;
-        background-image: -webkit-linear-gradient(@tan, @brown);
-        background-image: -o-linear-gradient(@tan, @brown);
-        background-image: -moz-linear-gradient(@tan, @brown);
-        background-image: linear-gradient(@tan, @brown);
-        display: block;
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 10px;
-        z-index: 1000;
-    }
 
 
 /* Slot */
@@ -200,12 +162,17 @@ div.q-slot {
     margin: @paddingSize;
     padding: @shadowSize;
     height: @slotHeight;
-    border-radius: @slotHeightHalf;
-    box-shadow: inset 0 0 @shadowSize @shadowSizeHalf @darkblue;
+    border-radius: @slotHeight / 2;
+    -moz-box-shadow: inset 0 0 @shadowSize @shadowSpread @darkblue;
+    -webkit-box-shadow: inset 0 0 @shadowSize @shadowSpread @darkblue;
+    box-shadow: inset 0 0 @shadowSize @shadowSpread @darkblue;
 }
 
 div.q-slot.q-mod-hover {
-    -moz-box-shadow: 0 0 5px 6px #ff0000;
-    -webkit-box-shadow: 0 0 5px 6px #ff0000;
-    box-shadow: inset 0 0 @shadowSize @shadowSizeHalf @darkblue, 0 0 5px 6px #ff0000;
+    -moz-box-shadow: inset 0 0 @shadowSize @shadowSpread @darkblue,
+                     0 0 @highlightSize @highlightSize @highlight;
+    -webkit-box-shadow: inset 0 0 @shadowSize @shadowSpread @darkblue,
+                        0 0 @highlightSize @highlightSize @highlight;
+    box-shadow: inset 0 0 @shadowSize @shadowSpread @darkblue,
+                0 0 @highlightSize @highlightSize @highlight;
 }
