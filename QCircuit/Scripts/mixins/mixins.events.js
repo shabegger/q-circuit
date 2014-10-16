@@ -9,7 +9,14 @@
 
   function addEventListener(event, callback) {
     var events = this._events,
-        callbacks = events[event] = events[event] || [];
+        callbacks = events[event] = events[event] || [],
+        i, len;
+
+    for (i = 0, len = callbacks.length; i < len; i++) {
+      if (callbacks[i] === callback) {
+        return;
+      }
+    }
 
     callbacks.push(callback);
   }
@@ -24,7 +31,7 @@
         for (i = 0, len = callbacks.length; i < len; i++) {
           if (callbacks[i] === callback) {
             callbacks.splice(i, 1);
-            i--;
+            break;
           }
         }
       } else {
@@ -42,6 +49,7 @@
     eventArgs.sender = this;
 
     if (callbacks) {
+      callbacks = callbacks.slice();
       for (i = 0, len = callbacks.length; i < len; i++) {
         callbacks[i].call(this, eventArgs);
       }

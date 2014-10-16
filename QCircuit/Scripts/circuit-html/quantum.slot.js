@@ -26,14 +26,14 @@
   /* Constructor */
 
   function Slot() {
-    var self = this;
+    var self = this,
+        vars = {};
 
-    self.gateDragged = $.proxy(gateDragged, self);
-    self.gateDropped = $.proxy(gateDropped, self);
+    self.gateDragged = $.proxy(gateDragged, self, vars);
+    self.gateDropped = $.proxy(gateDropped, self, vars);
 
     Q.Gate.addEventListener('drag', self.gateDragged);
     Q.Gate.addEventListener('move', self.gateDragged);
-    Q.Gate.addEventListener('drop', self.gateDropped);
 
     self.render();
   }
@@ -55,55 +55,40 @@
 
   /* Event Handlers */
 
-  function gateDragged(e) {
+  function gateDragged(vars, e) {
     var self = this,
-        bounds = self._bounds = self._bounds || self.element.bounds(),
-        left = bounds.left,
-        right = bounds.right,
-        top = bounds.top,
-        bottom = bounds.bottom,
+        bounds = vars.bounds = vars.bounds || self.element.bounds(),
+        gate = e.gate,
         x = e.centerX,
         y = e.centerY;
     
-    if (left < x && right > x && top < y && bottom > y) {
+    if (bounds.left < x && bounds.right > x && bounds.top < y && bounds.bottom > y) {
       self.element.addClass(_classModHover);
+      gate.addEventListener('drop', self.gateDropped);
     } else {
       self.element.removeClass(_classModHover);
+      gate.removeEventListener('drop', self.gateDropped);
     }
   }
 
-  function gateDropped(e) {
+  function gateDropped(vars, e) {
     var self = this,
-        bounds = self._bounds = self._bounds || self.element.bounds(),
-        left = bounds.left,
-        right = bounds.right,
+        bounds = vars.bounds,
         top = bounds.top,
-        bottom = bounds.bottom,
-        gate = e.gate,
-        gateElement = gate.element,
-        gateOffset = gateElement.offset(),
-        gateTop = gateOffset.top,
-        gateLeft = gateOffset.left,
-        gateWidth = gateElement.outerWidth(),
-        gateHeight = gateElement.outerHeight(),
-        x = gateLeft + (gateWidth / 2),
-        y = gateTop + (gateHeight / 2),
-        height, topDelta;
+        gate = e.sender,
+        gateElement = gate.element;
 
-    if (left < x && right > x && top < y && bottom > y) {
-      e.handled = true;
-
-      height = bottom - top;
-      topDelta = (height - gateHeight) / 2;
-      gateElement
-        .animate({
-          'top': top + topDelta
-        }, 200, function () {
+    gateElement
+      .animate({
+        'top': top + ((bounds.bottom - top - gateElement.outerHeight()) / 2)
+      }, 200, function () {
           
-        });
-    }
+      });
 
     self.element.removeClass(_classModHover);
+    gate.removeEventListener('drop', self.gateDropped);
+
+    e.handled = true;
   }
 
 
