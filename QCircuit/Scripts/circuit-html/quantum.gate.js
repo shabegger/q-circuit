@@ -24,14 +24,15 @@
 	/* Constructor */
 
 	function Gate() {
-	  var self = this;
+	  var self = this,
+        vars = {};
 
 	  M.Events.mixinEvents(self);
 
-	  self.drag = $.proxy(drag, self);
-	  self.move = $.proxy(move, self);
-	  self.drop = $.proxy(drop, self);
-	  self.cancel = $.proxy(cancel, self);
+	  self.drag = $.proxy(drag, self, vars);
+	  self.move = $.proxy(move, self, vars);
+	  self.drop = $.proxy(drop, self, vars);
+	  self.cancel = $.proxy(cancel, self, vars);
     
     self.render();
 	}
@@ -60,13 +61,12 @@
   
   /* Event Handlers */
 
-	function drag(e) {
+	function drag(vars, e) {
 	  var self = this,
-        element = self.element,
 	      top = e.top,
         left = e.left,
-        width = element.outerWidth(),
-        height = element.outerHeight();
+        width = vars.width = vars.width || self.element.outerWidth(),
+        height = vars.height = vars.height || self.element.outerHeight();
 
 	  self.dispatchEvent('drag');
 	  Gate.dispatchEvent('drag', {
@@ -76,13 +76,12 @@
 	  });
 	}
 
-	function move(e) {
+	function move(vars, e) {
 	  var self = this,
-        element = self.element,
 	      top = e.top,
         left = e.left,
-        width = element.outerWidth(),
-        height = element.outerHeight();
+        width = vars.width = vars.width || self.element.outerWidth(),
+        height = vars.height = vars.height || self.element.outerHeight();
 
 	  self.dispatchEvent('move');
 	  Gate.dispatchEvent('move', {
@@ -92,7 +91,7 @@
 	  });
 	}
 
-	function drop(e) {
+	function drop(vars, e) {
 	  var self = this,
         element = self.element,
 	      event;
@@ -117,7 +116,7 @@
 	  }
 	}
 
-	function cancel(e) {
+	function cancel(vars, e) {
 	  var self = this,
         element = self.element,
         event;
