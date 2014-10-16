@@ -28,7 +28,7 @@
 
     _currentDraggable = $(this);
 
-    _options = _currentDraggable.data(_namespace);
+    _options = _currentDraggable.dragOptions();
     _dragHandler = $.isFunction(_options.drag) ? _options.drag : null;
     _moveHandler = $.isFunction(_options.move) ? _options.move : null;
     _dropHandler = $.isFunction(_options.drop) ? _options.drop : null;
@@ -61,8 +61,6 @@
       .onInteractionUp(onUp, _namespace)
       .onInteractionCancel(onCancel, _namespace)
       .append(_currentDraggable);
-
-    _currentDraggable.data(_namespace, _options);
 
     _dragHandler && _dragHandler.call(_currentDraggable, {
       top: top,
@@ -131,8 +129,7 @@
           'left': _dragData.left
         })
         .appendTo(_dragData.parent)
-        .onInteractionDown(onDown, _namespace)
-        .data(_namespace, _options);
+        .onInteractionDown(onDown, _namespace);
     }
 
     _currentDraggable = null;
@@ -148,6 +145,18 @@
 
   /* jQuery Plugins */
 
+  $.fn.dragOptions = function dragOptions(options) {
+    var self = this;
+
+    if (!options) {
+      return self.get(0)._dragOptions;
+    }
+
+    return self.each(function (i, element) {
+      element._dragOptions = options;
+    });
+  };
+
   //  options - if false, remove drag
   //    drag: callback function called when drag starts
   //    move: callback function called when moved
@@ -158,11 +167,10 @@
 
     if (options === false) {
       return self
-        .data(_namespace, null)
         .offInteractionDown(_namespace);
     } else {
       return self
-        .data(_namespace, options)
+        .dragOptions(options || {})
         .onInteractionDown(onDown, _namespace);
     }
   };
