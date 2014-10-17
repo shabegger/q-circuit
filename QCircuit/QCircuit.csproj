@@ -185,7 +185,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\circuit-html\quantum.css" />
+    <Content Include="Content\circuit\quantum.css" />
     <Content Include="Content\Images\blue-background-bottom.png" />
     <Content Include="Content\Images\blue-background-top.png" />
     <Content Include="Content\Images\tan-background-bottom.png" />
@@ -196,15 +196,15 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\circuit-html\quantum.circuit.js" />
-    <Content Include="Scripts\circuit-html\quantum.gate.js" />
-    <Content Include="Content\circuit-html\quantum.less" />
+    <Content Include="Scripts\circuit\quantum.circuit.js" />
+    <Content Include="Scripts\circuit\quantum.gate.js" />
+    <Content Include="Content\circuit\quantum.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\circuit-html\quantum.slot.js" />
-    <Content Include="Scripts\circuit-html\quantum.workspace.js" />
-    <Content Include="Scripts\circuit-html\quantum.factoryshowroom.js" />
-    <Content Include="Scripts\circuit-html\quantum.gatefactory.js" />
-    <Content Include="Scripts\circuit-html\quantum.js" />
+    <Content Include="Scripts\circuit\quantum.slot.js" />
+    <Content Include="Scripts\circuit\quantum.workspace.js" />
+    <Content Include="Scripts\circuit\quantum.factoryshowroom.js" />
+    <Content Include="Scripts\circuit\quantum.gatefactory.js" />
+    <Content Include="Scripts\circuit\quantum.js" />
     <Content Include="Scripts\interaction\interaction.drag.js" />
     <Content Include="Scripts\interaction\interaction.drop.js" />
     <Content Include="Scripts\interaction\interaction.intersect.js" />
