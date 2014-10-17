@@ -186,7 +186,6 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\circuit-html\quantum.css" />
-    <Content Include="Content\circuit\quantum.css" />
     <Content Include="Content\Images\blue-background-bottom.png" />
     <Content Include="Content\Images\blue-background-top.png" />
     <Content Include="Content\Images\tan-background-bottom.png" />
@@ -206,16 +205,6 @@
     <Content Include="Scripts\circuit-html\quantum.factoryshowroom.js" />
     <Content Include="Scripts\circuit-html\quantum.gatefactory.js" />
     <Content Include="Scripts\circuit-html\quantum.js" />
-    <Content Include="Scripts\circuit\quantum.circuit.js" />
-    <Content Include="Scripts\circuit\quantum.circuitbuilder.js" />
-    <Content Include="Scripts\circuit\quantum.events.js" />
-    <Content Include="Scripts\circuit\quantum.factoryshowroom.js" />
-    <Content Include="Scripts\circuit\quantum.gate.js" />
-    <Content Include="Scripts\circuit\quantum.gatefactory.js" />
-    <Content Include="Scripts\circuit\quantum.js" />
-    <Content Include="Scripts\circuit\quantum.mixins.js" />
-    <Content Include="Scripts\circuit\quantum.slot.js" />
-    <Content Include="Scripts\circuit\quantum.workspace.js" />
     <Content Include="Scripts\interaction\interaction.drag.js" />
     <Content Include="Scripts\interaction\interaction.drop.js" />
     <Content Include="Scripts\interaction\interaction.intersect.js" />
@@ -233,12 +222,6 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\svg-custom\svg.custom.filter.js" />
-    <Content Include="Scripts\svg-custom\svg.custom.location.js" />
-    <Content Include="Scripts\svg\svg.draggable.min.js" />
-    <Content Include="Scripts\svg\svg.filter.min.js" />
-    <Content Include="Scripts\svg\svg.js" />
-    <Content Include="Scripts\svg\svg.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -304,8 +287,8 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PreBuildEvent>if $(ConfigurationName) == Debug lessc $(ProjectDir)Content\circuit-html\quantum.less &gt; $(ProjectDir)Content\circuit-html\quantum.css
-if $(ConfigurationName) == Release lessc $(ProjectDir)Content\circuit-html\quantum.less -x &gt; $(ProjectDir)Content\circuit-html\quantum.min.css</PreBuildEvent>
+    <PreBuildEvent>if $(ConfigurationName) == Debug lessc $(ProjectDir)Content\circuit\quantum.less &gt; $(ProjectDir)Content\circuit\quantum.css
+if $(ConfigurationName) == Release lessc $(ProjectDir)Content\circuit\quantum.less -x &gt; $(ProjectDir)Content\circuit\quantum.min.css</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

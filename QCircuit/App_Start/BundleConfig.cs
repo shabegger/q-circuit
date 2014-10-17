@@ -23,13 +23,6 @@ namespace QCircuit
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/respond.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/svg").Include(
-                        "~/Scripts/svg/svg.js",
-                        "~/Scripts/svg/svg.draggable.min.js",
-                        "~/Scripts/svg/svg.filter.min.js",
-                        "~/Scripts/svg-custom/svg.custom.filter.js",
-                        "~/Scripts/svg-custom/svg.custom.location.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/mixins").Include(
                         "~/Scripts/mixins/mixins.js",
                         "~/Scripts/mixins/mixins.events.js"));
@@ -41,21 +34,21 @@ namespace QCircuit
                         "~/Scripts/interaction/interaction.drag.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/quantum").Include(
-                        "~/Scripts/circuit-html/quantum.js",
-                        "~/Scripts/circuit-html/quantum.workspace.js",
-                        "~/Scripts/circuit-html/quantum.gate.js",
-                        "~/Scripts/circuit-html/quantum.gatefactory.js",
-                        "~/Scripts/circuit-html/quantum.factoryshowroom.js",
-                        "~/Scripts/circuit-html/quantum.slot.js",
-                        "~/Scripts/circuit-html/quantum.circuit.js",
-                        "~/Scripts/circuit-html/quantum.circuitbuilder.js"));
+                        "~/Scripts/circuit/quantum.js",
+                        "~/Scripts/circuit/quantum.workspace.js",
+                        "~/Scripts/circuit/quantum.gate.js",
+                        "~/Scripts/circuit/quantum.gatefactory.js",
+                        "~/Scripts/circuit/quantum.factoryshowroom.js",
+                        "~/Scripts/circuit/quantum.slot.js",
+                        "~/Scripts/circuit/quantum.circuit.js",
+                        "~/Scripts/circuit/quantum.circuitbuilder.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                         "~/Content/bootstrap.css",
                         "~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/quantum").Include(
-                        "~/Content/circuit-html/quantum.css"));
+                        "~/Content/circuit/quantum.css"));
         }
     }
 }
