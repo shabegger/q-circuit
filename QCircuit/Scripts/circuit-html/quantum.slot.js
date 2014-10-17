@@ -31,6 +31,7 @@
 
     self.gateDragged = $.proxy(gateDragged, self, vars);
     self.gateDropped = $.proxy(gateDropped, self, vars);
+    self.gateCanceled = $.proxy(gateCanceled, self, vars);
 
     Q.Gate.addEventListener('drag', self.gateDragged);
     Q.Gate.addEventListener('move', self.gateDragged);
@@ -65,9 +66,11 @@
     if (bounds.left < x && bounds.right > x && bounds.top < y && bounds.bottom > y) {
       self.element.addClass(_classModHover);
       gate.addEventListener('drop', self.gateDropped);
+      gate.addEventListener('cancel', self.gateCanceled);
     } else {
       self.element.removeClass(_classModHover);
       gate.removeEventListener('drop', self.gateDropped);
+      gate.removeEventListener('cancel', self.gateCanceled);
     }
   }
 
@@ -87,8 +90,18 @@
 
     self.element.removeClass(_classModHover);
     gate.removeEventListener('drop', self.gateDropped);
+    gate.removeEventListener('cancel', self.gateCanceled);
 
     e.handled = true;
+  }
+
+  function gateCanceled(vars, e) {
+    var self = this,
+        gate = e.sender;
+
+    self.element.removeClass(_classModHover);
+    gate.removeEventListener('drop', self.gateDropped);
+    gate.removeEventListener('cancel', self.gateCanceled);
   }
 
 

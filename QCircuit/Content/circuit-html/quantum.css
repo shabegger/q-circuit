@@ -99,8 +99,6 @@ div.q-gate {
   width: 50px;
   height: 50px;
   border-radius: 25px;
-  -moz-box-shadow: inset 0 0 10px 5px #b29353;
-  -webkit-box-shadow: inset 0 0 10px 5px #b29353;
   box-shadow: inset 0 0 10px 5px #b29353;
   z-index: 10000;
 }
@@ -116,11 +114,9 @@ div.q-factoryShowroom {
   width: 100%;
   height: 100px;
   overflow: hidden;
-  -moz-box-shadow: inset 0 15px 10px -10px #6584b2, inset 0 -15px 10px -10px #6584b2;
-  -webkit-box-shadow: inset 0 15px 10px -10px #6584b2, inset 0 -15px 10px -10px #6584b2;
   box-shadow: inset 0 15px 10px -10px #6584b2, inset 0 -15px 10px -10px #6584b2;
 }
-div.q-factoryShowroom-content {
+div.q-factoryShowroom div.q-factoryShowroom-content {
   height: 100%;
 }
 /* Circuit */
@@ -131,24 +127,42 @@ div.q-circuit {
   bottom: 0;
   width: 100%;
   overflow: hidden;
-  -moz-box-shadow: inset 0 15px 10px -10px #b29353, inset 0 -15px 10px -10px #b29353;
-  -webkit-box-shadow: inset 0 15px 10px -10px #b29353, inset 0 -15px 10px -10px #b29353;
   box-shadow: inset 0 15px 10px -10px #b29353, inset 0 -15px 10px -10px #b29353;
 }
 /* Slot */
 div.q-slot {
-  background-color: #aaccff;
   position: relative;
   margin: 25px;
   padding: 10px;
   height: 70px;
+}
+div.q-slot:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   border-radius: 35px;
-  -moz-box-shadow: inset 0 0 10px 5px #6584b2;
-  -webkit-box-shadow: inset 0 0 10px 5px #6584b2;
+  box-shadow: 0 0 5px 5px #ff0000;
+  opacity: 0;
+  -ms-transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+div.q-slot:after {
+  content: '';
+  background-color: #aaccff;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 35px;
   box-shadow: inset 0 0 10px 5px #6584b2;
 }
-div.q-slot.q-mod-hover {
-  -moz-box-shadow: inset 0 0 10px 5px #6584b2, 0 0 5px 5px #ff0000;
-  -webkit-box-shadow: inset 0 0 10px 5px #6584b2, 0 0 5px 5px #ff0000;
-  box-shadow: inset 0 0 10px 5px #6584b2, 0 0 5px 5px #ff0000;
+div.q-slot.q-mod-hover:before {
+  opacity: 1;
 }

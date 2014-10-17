@@ -100,8 +100,6 @@ div.q-gate {
     width: @gateSize;
     height: @gateSize;
     border-radius: @gateSize / 2;
-    -moz-box-shadow: inset 0 0 @shadowSize @shadowSpread @brown;
-    -webkit-box-shadow: inset 0 0 @shadowSize @shadowSpread @brown;
     box-shadow: inset 0 0 @shadowSize @shadowSpread @brown;
     z-index: 10000;
 }
@@ -123,16 +121,12 @@ div.q-factoryShowroom {
     width: 100%;
     height: @showroomHeight;
     overflow: hidden;
-    -moz-box-shadow: inset 0 @shadowOffset @shadowSize -@shadowSize @darkblue,
-                     inset 0 -@shadowOffset @shadowSize -@shadowSize @darkblue;
-    -webkit-box-shadow: inset 0 @shadowOffset @shadowSize -@shadowSize @darkblue,
-                        inset 0 -@shadowOffset @shadowSize -@shadowSize @darkblue;
     box-shadow: inset 0 @shadowOffset @shadowSize -@shadowSize @darkblue,
                 inset 0 -@shadowOffset @shadowSize -@shadowSize @darkblue;
-}
 
-div.q-factoryShowroom-content {
-    height: 100%;
+    div.q-factoryShowroom-content {
+        height: 100%;
+    }
 }
 
 
@@ -145,10 +139,6 @@ div.q-circuit {
     bottom: 0;
     width: 100%;
     overflow: hidden;
-    -moz-box-shadow: inset 0 @shadowOffset @shadowSize -@shadowSize @brown,
-                     inset 0 -@shadowOffset @shadowSize -@shadowSize @brown;
-    -webkit-box-shadow: inset 0 @shadowOffset @shadowSize -@shadowSize @brown,
-                        inset 0 -@shadowOffset @shadowSize -@shadowSize @brown;
     box-shadow: inset 0 @shadowOffset @shadowSize -@shadowSize @brown,
                 inset 0 -@shadowOffset @shadowSize -@shadowSize @brown;
 }
@@ -157,22 +147,41 @@ div.q-circuit {
 /* Slot */
 
 div.q-slot {
-    background-color: @blue;
     position: relative;
     margin: @paddingSize;
     padding: @shadowSize;
     height: @slotHeight;
-    border-radius: @slotHeight / 2;
-    -moz-box-shadow: inset 0 0 @shadowSize @shadowSpread @darkblue;
-    -webkit-box-shadow: inset 0 0 @shadowSize @shadowSpread @darkblue;
-    box-shadow: inset 0 0 @shadowSize @shadowSpread @darkblue;
-}
 
-div.q-slot.q-mod-hover {
-    -moz-box-shadow: inset 0 0 @shadowSize @shadowSpread @darkblue,
-                     0 0 @highlightSize @highlightSize @highlight;
-    -webkit-box-shadow: inset 0 0 @shadowSize @shadowSpread @darkblue,
-                        0 0 @highlightSize @highlightSize @highlight;
-    box-shadow: inset 0 0 @shadowSize @shadowSpread @darkblue,
-                0 0 @highlightSize @highlightSize @highlight;
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border-radius: @slotHeight / 2;
+        box-shadow: 0 0 @highlightSize @highlightSize @highlight;
+        opacity: 0;
+        -ms-transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-transition: 0.2s;
+        transition: 0.2s;
+    }
+
+    &:after {
+        content: '';
+        background-color: @blue;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border-radius: @slotHeight / 2;
+        box-shadow: inset 0 0 @shadowSize @shadowSpread @darkblue;
+    }
+
+    &.q-mod-hover:before {
+        opacity: 1;
+    }
 }
