@@ -206,7 +206,6 @@
     <Content Include="Scripts\circuit\quantum.gatefactory.js" />
     <Content Include="Scripts\circuit\quantum.js" />
     <Content Include="Scripts\interaction\interaction.drag.js" />
-    <Content Include="Scripts\interaction\interaction.drop.js" />
     <Content Include="Scripts\interaction\interaction.intersect.js" />
     <Content Include="Scripts\interaction\interaction.js" />
     <Content Include="Scripts\interaction\interaction.touch.js" />

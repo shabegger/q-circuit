@@ -51,9 +51,10 @@
       .offInteractionDown(_namespace)
       .remove()
       .css({
+        'transform': ['translate(', left, 'px, ', top, 'px)'].join(''),
         'position': 'absolute',
-        'top': top,
-        'left': left
+        'top': 0,
+        'left': 0
       });
 
     _body
@@ -74,8 +75,7 @@
 
     _currentDraggable
       .css({
-        'top': top,
-        'left': left
+        'transform': ['translate(', left, 'px, ', top, 'px)'].join('')
       });
 
     _moveHandler && _moveHandler.call(_currentDraggable, {
@@ -85,15 +85,24 @@
   }
 
   function onUp(e) {
+    var offset = _currentDraggable.offset();
+
+    _currentDraggable
+      .css({
+        'transform': 'none',
+        'top': offset.top,
+        'left': offset.left
+      });
+
     _body
       .offInteractionMove(_namespace)
       .offInteractionUp(_namespace)
       .offInteractionCancel(_namespace);
 
+    _dropHandler && _dropHandler.call(_currentDraggable);
+
     _currentDraggable
       .onInteractionDown(onDown, _namespace);
-
-    _dropHandler && _dropHandler.call(_currentDraggable);
 
     _currentDraggable = null;
     _dragData = null;
@@ -106,11 +115,21 @@
   }
 
   function onCancel(e) {
-    var relatedTarget = e.originalEvent.relatedTarget;
+    var relatedTarget = e.originalEvent.relatedTarget,
+        offset;
 
     if (relatedTarget && relatedTarget.tagName !== 'HTML') {
       return;
     }
+
+    offset = _currentDraggable.offset();
+
+    _currentDraggable
+      .css({
+        'transform': 'none',
+        'top': offset.top,
+        'left': offset.left
+      });
 
     _body
       .offInteractionMove(_namespace)
@@ -124,6 +143,7 @@
       _currentDraggable
         .remove()
         .css({
+          'transform': 'none',
           'position': _dragData.position,
           'top': _dragData.top,
           'left': _dragData.left
