@@ -136,6 +136,7 @@ div.q-slot {
   position: relative;
   margin: 25px;
   padding: 10px;
+  padding-right: 60px;
   height: 70px;
 }
 div.q-slot:before {
@@ -167,4 +168,7 @@ div.q-slot:after {
 }
 div.q-slot.q-mod-hover:before {
   opacity: 1;
+}
+div.q-slot div.q-slot-content {
+  position: relative;
 }

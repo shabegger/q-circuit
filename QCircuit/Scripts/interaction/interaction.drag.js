@@ -24,7 +24,7 @@
   /* Event Handlers */
 
   function onDown(e) {
-    var offset, top, left;
+    var offset, top, left, transform;
 
     _currentDraggable = $(this);
 
@@ -37,6 +37,7 @@
     offset = _currentDraggable.offset();
     top = offset.top;
     left = offset.left;
+    transform = ['translate(', left, 'px, ', top, 'px)'].join('');
 
     _dragData = {
       deltaX: left - e.x,
@@ -51,7 +52,9 @@
       .offInteractionDown(_namespace)
       .remove()
       .css({
-        'transform': ['translate(', left, 'px, ', top, 'px)'].join(''),
+        '-ms-transform': transform,
+        '-webkit-transform': transform,
+        'transform': transform,
         'position': 'absolute',
         'top': 0,
         'left': 0
@@ -71,11 +74,14 @@
 
   function onMove(e) {
     var top = e.y + _dragData.deltaY,
-        left = e.x + _dragData.deltaX;
+        left = e.x + _dragData.deltaX,
+        transform = ['translate(', left, 'px, ', top, 'px)'].join('');
 
     _currentDraggable
       .css({
-        'transform': ['translate(', left, 'px, ', top, 'px)'].join('')
+        '-ms-transform': transform,
+        '-webkit-transform': transform,
+        'transform': transform
       });
 
     _moveHandler && _moveHandler.call(_currentDraggable, {
@@ -89,6 +95,8 @@
 
     _currentDraggable
       .css({
+        '-ms-transform': 'none',
+        '-webkit-transform': 'none',
         'transform': 'none',
         'top': offset.top,
         'left': offset.left
@@ -126,6 +134,8 @@
 
     _currentDraggable
       .css({
+        '-ms-transform': 'none',
+        '-webkit-transform': 'none',
         'transform': 'none',
         'top': offset.top,
         'left': offset.left
@@ -143,7 +153,6 @@
       _currentDraggable
         .remove()
         .css({
-          'transform': 'none',
           'position': _dragData.position,
           'top': _dragData.top,
           'left': _dragData.left

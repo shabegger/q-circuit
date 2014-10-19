@@ -152,6 +152,7 @@ div.q-slot {
     position: relative;
     margin: @paddingSize;
     padding: @shadowSize;
+    padding-right: @shadowSize + @gateSize;
     height: @slotHeight;
 
     &:before {
@@ -185,5 +186,9 @@ div.q-slot {
 
     &.q-mod-hover:before {
         opacity: 1;
+    }
+
+    div.q-slot-content {
+        position: relative;
     }
 }

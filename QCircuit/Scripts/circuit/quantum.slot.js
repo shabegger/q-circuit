@@ -11,7 +11,8 @@
 
   /* Private Variables */
 
-  var _classModHover = 'q-mod-hover';
+  var _classModHover = 'q-mod-hover',
+      _classContent = 'q-slot-content';
 
 
   /* Templates */
@@ -19,6 +20,7 @@
   function _slotTmpl() {
     return [
 		  '<div class="q-slot">',
+        '<div class="', _classContent, '"></div>',
 		  '</div>'].join('');
   }
 
@@ -50,7 +52,7 @@
       self.element = $(_slotTmpl());
     }
 
-    self.element.find(':not(".q-slot-background")').remove();
+    self.element.find([':not(".', _classContent, '")'].join('')).remove();
   };
 
 
@@ -76,16 +78,51 @@
 
   function gateDropped(vars, e) {
     var self = this,
-        bounds = vars.bounds,
-        top = bounds.top,
+        element = self.element.find(['.', _classContent].join('')),
         gate = e.sender,
-        gateElement = gate.element;
+        gateElement = gate.element,
+        width = element.innerWidth(),
+        beforeOffset, afterOffset,
+        top, left;
+
+    // Offset before moving gate to slot
+    beforeOffset = gateElement.offset();
+
+    gateElement
+      .remove()
+      .css({
+        'position': 'absolute',
+        'top': 'auto',
+        'left': 'auto'
+      })
+      .appendTo(element);
+
+    // Offset after moving gate to slot
+    afterOffset = gateElement.offset();
+
+    // Position needed to move gate back to where it was
+    top = beforeOffset.top - afterOffset.top;
+    left = beforeOffset.left - afterOffset.left;
+
+    gateElement
+      .css({
+        'top': top,
+        'left': left
+      });
+
+    // New position of gate in slot
+    top = 0;
+    left = Math.max(0, Math.min(width, left));
 
     gateElement
       .animate({
-        'top': top + ((bounds.bottom - top - gateElement.outerHeight()) / 2)
+        'top': top,
+        'left': left
       }, 200, function () {
-          
+        // Position gate relatively in slot
+        gateElement.css({
+          'left': (100 * (left / width)) + '%'
+        })
       });
 
     self.element.removeClass(_classModHover);
