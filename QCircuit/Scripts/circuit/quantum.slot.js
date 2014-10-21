@@ -53,8 +53,7 @@
   /* Prototype Methods */
 
   Slot.prototype.render = function render() {
-    var self = this,
-        bounds;
+    var self = this;
 
     if (!self.element) {
       self.element = $(_slotTmpl());

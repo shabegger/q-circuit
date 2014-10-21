@@ -200,6 +200,7 @@
     <Content Include="Scripts\circuit\quantum.gate.js" />
     <Content Include="Content\circuit\quantum.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\circuit\quantum.qubit.js" />
     <Content Include="Scripts\circuit\quantum.slot.js" />
     <Content Include="Scripts\circuit\quantum.workspace.js" />
     <Content Include="Scripts\circuit\quantum.factoryshowroom.js" />
