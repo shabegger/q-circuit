@@ -124,7 +124,9 @@
 
   function onCancel(e) {
     var relatedTarget = e.originalEvent.relatedTarget,
-        offset;
+        isDefaultPrevented = false,
+        offset,
+        event;
 
     if (relatedTarget && relatedTarget.tagName !== 'HTML') {
       return;
@@ -146,7 +148,15 @@
       .offInteractionUp(_namespace)
       .offInteractionCancel(_namespace);
 
-    if (_cancelHandler && _cancelHandler.call(_currentDraggable)) {
+    event = {
+      preventDefault: function preventDefault() {
+        isDefaultPrevented = true;
+      }
+    };
+
+    _cancelHandler && _cancelHandler.call(_currentDraggable, event);
+
+    if (isDefaultPrevented) {
       _currentDraggable
         .onInteractionDown(onDown, _namespace);
     } else {

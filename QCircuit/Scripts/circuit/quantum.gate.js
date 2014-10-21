@@ -118,26 +118,19 @@
 
 	function cancel(vars, e) {
 	  var self = this,
-        element = self.element,
-        event;
-
-	  event = {
-      removeGate: false
-	  };
+        element = self.element;
 
 	  self.dispatchEvent('cancel', event);
 
-	  if (event.removeGate) {
-	    element
-        .draggable(false)
-        .animate({
-          'opacity': 0
-        }, 200, function () {
-          element.remove();
-        });
-	  }
+	  element
+      .draggable(false)
+      .animate({
+        'opacity': 0
+      }, 200, function () {
+        element.remove();
+      });
 
-	  return event.removeGate;
+	  e.preventDefault();
 	}
 
 
