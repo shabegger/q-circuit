@@ -29,14 +29,22 @@
 
   function Slot() {
     var self = this,
-        vars = {};
+        vars;
+
+    vars = {
+      gates: {}
+    };
 
     self.gateDragged = $.proxy(gateDragged, self, vars);
     self.gateDropped = $.proxy(gateDropped, self, vars);
     self.gateCanceled = $.proxy(gateCanceled, self, vars);
+    self.slotGateDragged = $.proxy(slotGateDragged, self, vars);
+    self.invalidateBounds = $.proxy(invalidateBounds, self, vars);
 
     Q.Gate.addEventListener('drag', self.gateDragged);
     Q.Gate.addEventListener('move', self.gateDragged);
+
+    $(window).on('resize', self.invalidateBounds);
 
     self.render();
   }
@@ -45,8 +53,7 @@
   /* Prototype Methods */
 
   Slot.prototype.render = function render() {
-    var self = this,
-        bounds;
+    var self = this;
 
     if (!self.element) {
       self.element = $(_slotTmpl());
@@ -76,6 +83,14 @@
     }
   }
 
+  function slotGateDragged(vars, e) {
+    var self = this,
+        gate = e.sender;
+
+    removeGate(vars.gates, gate);
+    gate.removeEventListener('drag', self.slotGateDragged);
+  }
+
   function gateDropped(vars, e) {
     var self = this,
         element = self.element.find(['.', _classContent].join('')),
@@ -83,7 +98,7 @@
         gateElement = gate.element,
         width = element.innerWidth(),
         beforeOffset, afterOffset,
-        top, left;
+        top, left, position;
 
     // Offset before moving gate to slot
     beforeOffset = gateElement.offset();
@@ -114,6 +129,8 @@
     top = 0;
     left = Math.max(0, Math.min(width, left));
 
+    position = left / width;
+
     gateElement
       .animate({
         'top': top,
@@ -121,13 +138,16 @@
       }, 200, function () {
         // Position gate relatively in slot
         gateElement.css({
-          'left': (100 * (left / width)) + '%'
+          'left': (100 * position) + '%'
         })
       });
 
     self.element.removeClass(_classModHover);
     gate.removeEventListener('drop', self.gateDropped);
     gate.removeEventListener('cancel', self.gateCanceled);
+
+    insertGate(vars.gates, gate, position);
+    gate.addEventListener('drag', self.slotGateDragged);
 
     e.handled = true;
   }
@@ -139,6 +159,34 @@
     self.element.removeClass(_classModHover);
     gate.removeEventListener('drop', self.gateDropped);
     gate.removeEventListener('cancel', self.gateCanceled);
+  }
+
+  function invalidateBounds(vars, e) {
+    vars.bounds = null;
+  }
+
+
+  /* Helpers */
+
+  function insertGate(gates, gate, position) {
+    var key = Math.floor(position * 100000000);
+
+    while (gates[key]) {
+      key++;
+    }
+
+    gates[key] = gate;
+  }
+
+  function removeGate(gates, gate) {
+    var key;
+
+    for (key in gates) {
+      if (gates[key] === gate) {
+        delete gates[key];
+        break;
+      }
+    }
   }
 
 
