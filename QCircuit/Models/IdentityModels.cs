@@ -1,17 +1,29 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace QCircuit.Models
 {
-    // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        public virtual ICollection<SavedGate> Gates { get; set; }
+        public virtual ICollection<SavedCircuit> Circuits { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext()
-            : base("DefaultConnection")
+        public ApplicationDbContext() : base("DefaultConnection") { }
+
+        public DbSet<SavedGate> Gates { get; set; }
+        public DbSet<SavedCircuit> Circuits { get; set; }
+        public DbSet<SavedCircuitGate> CircuitGates { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<SavedGate>().Property(SavedGate.MatrixExpression);
+            modelBuilder.Entity<SavedGate>().Ignore(s => s.Gate);
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

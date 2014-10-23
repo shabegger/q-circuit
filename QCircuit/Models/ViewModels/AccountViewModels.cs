@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace QCircuit.Models
+namespace QCircuit.Models.ViewModels
 {
     public class ExternalLoginConfirmationViewModel
     {

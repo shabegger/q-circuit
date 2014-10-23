@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using QCircuit.Models;
+using QCircuit.Models.ViewModels;
 
 namespace QCircuit.Controllers
 {
