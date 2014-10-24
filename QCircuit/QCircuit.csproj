@@ -195,6 +195,9 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\circuit\quantum.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Fonts\fontawesome-webfont.svg" />
     <Content Include="Content\Images\blue-background-bottom.png" />
     <Content Include="Content\Images\blue-background-top.png" />
     <Content Include="Content\Images\tan-background-bottom.png" />
@@ -208,6 +211,10 @@
     <Content Include="Scripts\circuit\quantum.circuit.js" />
     <Content Include="Scripts\circuit\quantum.gate.js" />
     <Content Include="Content\circuit\quantum.less" />
+    <Content Include="Content\Fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\Fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\Fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\Fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\circuit\quantum.slot.js" />
     <Content Include="Scripts\circuit\quantum.workspace.js" />

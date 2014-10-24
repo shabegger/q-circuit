@@ -27,6 +27,9 @@ namespace QCircuit.Models
 
         #region Properties
 
+        public string Name { get; set; }
+        public string Display { get; set; }
+
         public Gate Gate
         {
             get

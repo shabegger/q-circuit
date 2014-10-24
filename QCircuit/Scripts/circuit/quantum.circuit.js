@@ -13,12 +13,9 @@
 
   /* Private Variables */
 
-  var _circuit = null,
-      _classModHover = 'q-mod-hover',
-      _slotLeft = 0,
-      _slotRight = 0,
-      _slotTop,
-      _slotBottom;
+  var _maxSlots = 6,
+      _classDeletes = 'q-circuit-deletes',
+      _classSlots = 'q-circuit-slots';
 
 
   /* Templates */
@@ -26,19 +23,32 @@
   function _circuitTmpl() {
     return [
 		  '<div class="q-circuit">',
+        '<div class="q-circuit-content">',
+          '<div class="', _classDeletes, '"></div>',
+          '<div class="', _classSlots, '"></div>',
+        '</div>',
 		  '</div>'].join('');
+  }
+
+  function _deleteTmpl() {
+    return [
+      '<span class="q-circuit-delete">',
+      '</span>'].join('');
   }
 
 
   /* Constructor */
 
   function Circuit(slotCount) {
-    var self = this;
+    var self = this,
+        vars;
 
-    //Q.Workspace.addEventListener('ready', workspaceReady);
-    //Q.Gate.addEventListener('drag', gateDragged);
-    //Q.Gate.addEventListener('move', gateDragged);
-    //Q.Gate.addEventListener('drop', gateDropped);
+    vars = {
+      slots: []
+    };
+
+    self.addSlot = $.proxy(addSlot, self, vars);
+    self.removeSlot = $.proxy(removeSlot, self, vars);
 
     self.render(slotCount);
   }
@@ -54,65 +64,65 @@
       self.element = $(_circuitTmpl());
     }
 
-    self.element.empty();
+    self.element
+      .find(['.', _classDeletes, ', .', _classSlots].join(''))
+      .empty();
 
     for (i = 0; i < slotCount; i++) {
-      slot = new Q.Slot();
-      self.element.append(slot.element);
+      self.addSlot();
     }
   };
 
 
-  /* Singleton Methods */
+  /* Instance Methods */
 
-  function getInstance(slotCount) {
-    if (_circuit === null) {
-      _circuit = new Circuit(slotCount);
+  function addSlot(vars) {
+    var self = this,
+        slots = vars.slots,
+        deletesElem, i,
+        slotsElem, slot;
+
+    if (slots.length < _maxSlots) {
+      deletesElem = self.element.find(['.', _classDeletes].join(''));
+      slotsElem = self.element.find(['.', _classSlots].join(''));
+
+      i = slots.length;
+
+      slot = new Q.Slot();
+      slots.push(slot);
+
+      slotsElem.append(slot.element);
+      $(_deleteTmpl()).appendTo(deletesElem).on('click', function () {
+        self.removeSlot(i);
+      });
     }
+  };
 
-    return _circuit;
-  }
+  function removeSlot(vars, i) {
+    var self = this,
+        slots = vars.slots,
+        deletesElem,
+        slotsElem,
+        j, len;
 
+    if (i >= 0 && i < slots.length) {
+      deletesElem = self.element.find(['.', _classDeletes].join(''));
+      slotsElem = self.element.find(['.', _classSlots].join(''));
 
-  /* Event Handlers */
+      slots.splice(i, 1);
 
-  function workspaceReady(e) {
-    var slots = _circuit.element.children(),
-        i, len,
-        slot,
-        bounds;
+      slotsElem.children().eq(i).remove();
+      deletesElem.children().eq(i).off('click').remove();
 
-    _slotTop = [];
-    _slotBottom = [];
-
-    for (i = 0, len = slots.length; i < len; i++) {
-      slot = slots[i];
-      bounds = slot.bounds();
-
-      if (i === 0) {
-        _slotLeft = bounds.left;
-        _slotRight = bounds.right;
+      for (j = i, len = slots.length; j < len; j++) {
+        slots[j].invalidateBounds();
       }
-
-      _slotTop.push(bounds.top);
-      _slotBottom.push(bounds.bottom);
     }
-  }
-
-  function gateDragged(e) {
-    var x = e.centerX,
-        y = e.centerY;
-  }
-
-  function gateDropped(e) {
-    _circuit.element.children().removeClass(_classModHover);
   }
 
 
   /* Expose */
 
-  Q.Circuit = Circuit;//{
-  //  get: getInstance
-  //};
+  Q.Circuit = Circuit;
 
 }(this, this.Quantum, this.jQuery));

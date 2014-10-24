@@ -1,4 +1,7 @@
-﻿/* Color Variables */
+﻿@import (less) "../font-awesome.css";
+
+
+/* Color Variables */
 
 @blue:      #aaccff;
 @lightblue: #c3dbff;
@@ -49,10 +52,6 @@
         div.q-factoryShowroom {
             height: @height;
         }
-
-        div.q-circuit {
-            top: @height;
-        }
     }
 }
 
@@ -83,7 +82,8 @@ html, body {
 /* Workspace */
 
 div.q-workspace {
-    position: relative;
+    display: table;
+    table-layout: fixed;
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -118,9 +118,8 @@ div.q-gateFactory {
 /* Factory Showroom */
 
 div.q-factoryShowroom {
+    display: table-row;
     background-color: @blue;
-    position: absolute;
-    width: 100%;
     height: @showroomHeight;
     overflow: hidden;
     box-shadow: inset 0 @shadowOffset @shadowSize -@shadowSize @darkblue,
@@ -135,14 +134,44 @@ div.q-factoryShowroom {
 /* Circuit */
 
 div.q-circuit {
+    display: table-row;
     background-color: @tan;
-    position: absolute;
-    top: @showroomHeight;
-    bottom: 0;
-    width: 100%;
     overflow: hidden;
     box-shadow: inset 0 @shadowOffset @shadowSize -@shadowSize @brown,
                 inset 0 -@shadowOffset @shadowSize -@shadowSize @brown;
+
+    div.q-circuit-content {
+        display: table;
+        width: 100%;
+        height: 100%;
+
+        div.q-circuit-deletes {
+            display: table-cell;
+            vertical-align: top;
+
+            span.q-circuit-delete {
+                .fa;
+                .fa-2x;
+                
+                &:before {
+                    content: "\f057";
+                }
+
+                cursor: pointer;
+                display: block;
+                height: @slotHeight;
+                line-height: @slotHeight;
+                margin: @paddingSize;
+                margin-right: 0;
+            }
+        }
+
+        div.q-circuit-slots {
+            display: table-cell;
+            width: 100%;
+            vertical-align: top;
+        }
+    }
 }
 
 

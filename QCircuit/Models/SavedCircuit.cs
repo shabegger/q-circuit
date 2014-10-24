@@ -23,6 +23,7 @@ namespace QCircuit.Models
 
         #region Properties
 
+        public string Name { get; set; }
         public int Slots { get; set; }
 
         #endregion
