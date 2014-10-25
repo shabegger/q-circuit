@@ -9,6 +9,7 @@
 @brown:     #b29353;
 @tan:       #ffe3aa;
 @highlight: #ff0000;
+@bright:    #ffffff;
 
 
 /* Size Variables */
@@ -154,15 +155,23 @@ div.q-circuit {
                 .fa-2x;
                 
                 &:before {
-                    content: "\f057";
+                    content: '\f111';
+                    color: @bright;
+                }
+
+                &:after {
+                    content: '\f057';
+                    color: @highlight;
+                    position: absolute;
+                    left: @paddingSize;
                 }
 
                 cursor: pointer;
                 display: block;
-                height: @slotHeight;
-                line-height: @slotHeight;
                 margin: @paddingSize;
                 margin-right: 0;
+                height: @slotHeight;
+                line-height: @slotHeight;
             }
         }
 

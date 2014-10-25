@@ -62,6 +62,15 @@
     self.element.find([':not(".', _classContent, '")'].join('')).remove();
   };
 
+  Slot.prototype.dispose = function dispose() {
+    var self = this;
+
+    Q.Gate.removeEventListener('drag', self.gateDragged);
+    Q.Gate.removeEventListener('move', self.gateDragged);
+
+    self.element.remove();
+  };
+
 
   /* Event Handlers */
 

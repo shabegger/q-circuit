@@ -1807,13 +1807,20 @@ div.q-circuit div.q-circuit-content div.q-circuit-deletes span.q-circuit-delete 
   font-size: 2em;
   cursor: pointer;
   display: block;
-  height: 70px;
-  line-height: 70px;
   margin: 25px;
   margin-right: 0;
+  height: 70px;
+  line-height: 70px;
 }
 div.q-circuit div.q-circuit-content div.q-circuit-deletes span.q-circuit-delete:before {
-  content: "\f057";
+  content: '\f111';
+  color: #ffffff;
+}
+div.q-circuit div.q-circuit-content div.q-circuit-deletes span.q-circuit-delete:after {
+  content: '\f057';
+  color: #ff0000;
+  position: absolute;
+  left: 25px;
 }
 div.q-circuit div.q-circuit-content div.q-circuit-slots {
   display: table-cell;

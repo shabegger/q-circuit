@@ -93,7 +93,7 @@
 
       slotsElem.append(slot.element);
       $(_deleteTmpl()).appendTo(deletesElem).on('click', function () {
-        self.removeSlot(i);
+        self.removeSlot($(this).index());
       });
     }
   };
@@ -101,6 +101,7 @@
   function removeSlot(vars, i) {
     var self = this,
         slots = vars.slots,
+        slot,
         deletesElem,
         slotsElem,
         j, len;
@@ -109,10 +110,11 @@
       deletesElem = self.element.find(['.', _classDeletes].join(''));
       slotsElem = self.element.find(['.', _classSlots].join(''));
 
+      slot = slots[i];
       slots.splice(i, 1);
 
-      slotsElem.children().eq(i).remove();
-      deletesElem.children().eq(i).off('click').remove();
+      slot.dispose();
+      deletesElem.children(':last-child').remove();
 
       for (j = i, len = slots.length; j < len; j++) {
         slots[j].invalidateBounds();
