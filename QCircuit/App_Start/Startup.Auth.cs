@@ -16,23 +16,24 @@ namespace QCircuit
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login")
             });
+
             // Use a cookie to temporarily store information about a user logging in with a third party login provider
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Uncomment the following lines to enable logging in with third party login providers
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
+            app.UseMicrosoftAccountAuthentication(
+                clientId: "0000000040133207",
+                clientSecret: "TVCYKrQswfCES8BQpKgqKhSov3a5PoJw");
 
-            //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
+            app.UseTwitterAuthentication(
+                consumerKey: "vclLWCiGOO2bntQANxUpSUzWo",
+                consumerSecret: "sUEmqGIRonzsPD4aA8ltBQ7fkH8Ah4KBfKO46xVDjiQApmtfAf");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+                appId: "843474742340551",
+                appSecret: "0791ec15cbdfe1eea08a6fe6be8425c4");
 
-            //app.UseGoogleAuthentication();
+            app.UseGoogleAuthentication();
         }
     }
 }
