@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace QCircuit.Models
 {
-    public class SavedCircuitGate
+    public class SavedCircuitSlot
     {
         public Guid Id { get; set; }
 
@@ -10,7 +11,6 @@ namespace QCircuit.Models
         #region Foreign Keys
 
         public Guid CircuitId { get; set; }
-        public Guid GateId { get; set; }
 
         #endregion
 
@@ -18,15 +18,14 @@ namespace QCircuit.Models
         #region References
 
         public virtual SavedCircuit Circuit { get; set; }
-        public virtual SavedGate Gate { get; set; }
+        public virtual ICollection<SavedGateInstance> Gates { get; set; }
 
         #endregion
 
 
         #region Properties
 
-        public int Slot { get; set; }
-        public int Position { get; set; }
+        public int SlotNumber { get; set; }
 
         #endregion
     }

@@ -183,13 +183,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201410260103438_Init.cs" />
-    <Compile Include="Migrations\201410260103438_Init.Designer.cs">
-      <DependentUpon>201410260103438_Init.cs</DependentUpon>
+    <Compile Include="Migrations\201410272231381_Init.cs" />
+    <Compile Include="Migrations\201410272231381_Init.Designer.cs">
+      <DependentUpon>201410272231381_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SavedCircuit.cs" />
-    <Compile Include="Models\SavedCircuitGate.cs" />
+    <Compile Include="Models\SavedCircuitSlot.cs" />
+    <Compile Include="Models\SavedGateInstance.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\SavedGate.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -279,8 +280,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201410260103438_Init.resx">
-      <DependentUpon>201410260103438_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201410272231381_Init.resx">
+      <DependentUpon>201410272231381_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

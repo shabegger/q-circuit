@@ -15,13 +15,23 @@ namespace QCircuit.Models
         public ApplicationDbContext() : base("DefaultConnection") { }
 
         public DbSet<SavedGate> Gates { get; set; }
+        public DbSet<SavedGateInstance> GateInstances { get; set; }
         public DbSet<SavedCircuit> Circuits { get; set; }
-        public DbSet<SavedCircuitGate> CircuitGates { get; set; }
+        public DbSet<SavedCircuitSlot> CircuitSlots { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SavedGate>().Property(SavedGate.MatrixExpression);
-            modelBuilder.Entity<SavedGate>().Ignore(s => s.Gate);
+            modelBuilder.Entity<SavedGate>().Ignore(s => s.Matrix);
+
+            modelBuilder.Entity<SavedCircuitSlot>()
+                .HasMany(s => s.Gates)
+                .WithMany(g => g.Slots)
+                .Map(a =>
+                {
+                    a.ToTable("SlotGates");
+                    a.MapLeftKey("SlotId");
+                    a.MapRightKey("GateId");
+                });
 
             base.OnModelCreating(modelBuilder);
         }

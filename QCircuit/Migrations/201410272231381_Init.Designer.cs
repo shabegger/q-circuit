@@ -13,7 +13,7 @@ namespace QCircuit.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201410260103438_Init"; }
+            get { return "201410272231381_Init"; }
         }
         
         string IMigrationMetadata.Source

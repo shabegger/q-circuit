@@ -30,43 +30,18 @@ namespace QCircuit.Models
         public string Name { get; set; }
         public string Display { get; set; }
 
-        public Gate Gate
+        public ComplexMatrix Matrix { get; set; }
+        public string SerializedMatrix
         {
             get
             {
-                return new Gate(matrix);
+                return JsonConvert.SerializeObject(Matrix);
             }
-        }
-
-        #endregion
-
-
-        #region Constructors
-
-        public SavedGate(ComplexMatrix matrix)
-        {
-            this.matrix = matrix;
-        }
-
-        #endregion
-
-
-        #region Mapping
-
-        private ComplexMatrix matrix;
-        private string serializedMatrix
-        {
-            get
+            private set
             {
-                return JsonConvert.SerializeObject(matrix);
-            }
-            set
-            {
-                matrix = JsonConvert.DeserializeObject<ComplexMatrix>(value);
+                Matrix = JsonConvert.DeserializeObject<ComplexMatrix>(value);
             }
         }
-
-        public static readonly Expression<Func<SavedGate, string>> MatrixExpression = (s => s.serializedMatrix);
 
         #endregion
     }
