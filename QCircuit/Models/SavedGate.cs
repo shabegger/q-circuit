@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using QCircuit.Models.SerializedObjects;
 using Quantum.Emulate;
 using Quantum.Math;
 using System;
@@ -35,11 +36,11 @@ namespace QCircuit.Models
         {
             get
             {
-                return JsonConvert.SerializeObject(Matrix);
+                return JsonConvert.SerializeObject(Matrix.ToSerializedComplexMatrix());
             }
-            private set
+            set
             {
-                Matrix = JsonConvert.DeserializeObject<ComplexMatrix>(value);
+                Matrix = JsonConvert.DeserializeObject<SerializedComplex[,]>(value).ToComplexMatrix();
             }
         }
 
