@@ -21,8 +21,6 @@ namespace QCircuit.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SavedGate>().Ignore(s => s.Matrix);
-
             modelBuilder.Entity<SavedCircuitSlot>()
                 .HasMany(s => s.Gates)
                 .WithMany(g => g.Slots)

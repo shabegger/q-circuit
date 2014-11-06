@@ -3,6 +3,7 @@ using QCircuit.Models.SerializedObjects;
 using Quantum.Emulate;
 using Quantum.Math;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq.Expressions;
 
 namespace QCircuit.Models
@@ -14,6 +15,7 @@ namespace QCircuit.Models
 
         #region Foreign Keys
 
+        [JsonIgnore]
         public string UserId { get; set; }
 
         #endregion
@@ -21,6 +23,7 @@ namespace QCircuit.Models
 
         #region References
 
+        [JsonIgnore]
         public virtual ApplicationUser User { get; set; }
 
         #endregion
@@ -31,16 +34,19 @@ namespace QCircuit.Models
         public string Name { get; set; }
         public string Display { get; set; }
 
-        public ComplexMatrix Matrix { get; set; }
+        [NotMapped]
+        public SerializedComplex[,] Matrix { get; set; }
+
+        [JsonIgnore]
         public string SerializedMatrix
         {
             get
             {
-                return JsonConvert.SerializeObject(Matrix.ToSerializedComplexMatrix());
+                return JsonConvert.SerializeObject(Matrix);
             }
             set
             {
-                Matrix = JsonConvert.DeserializeObject<SerializedComplex[,]>(value).ToComplexMatrix();
+                Matrix = JsonConvert.DeserializeObject<SerializedComplex[,]>(value);
             }
         }
 

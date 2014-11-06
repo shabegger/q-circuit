@@ -1,4 +1,5 @@
 ﻿using QCircuit.Models;
+using QCircuit.Models.SerializedObjects;
 using Quantum.Emulate;
 using System;
 using System.Data.Entity.Migrations;
@@ -14,19 +15,6 @@ namespace QCircuit.Migrations
 
         protected override void Seed(ApplicationDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
-
             context.Gates.AddOrUpdate(
                 g => g.Name,
                 new SavedGate
@@ -34,49 +22,49 @@ namespace QCircuit.Migrations
                     Id = Guid.NewGuid(),
                     Name = "Hadamard",
                     Display = "<span class=\"q-gate-text\">H</span>",
-                    Matrix = HadamardGate.Hadamard
+                    Matrix = HadamardGate.Hadamard.ToSerializedComplexMatrix()
                 },
                 new SavedGate
                 {
                     Id = Guid.NewGuid(),
                     Name = "PauliX",
                     Display = "<span class=\"q-gate-text\">X</span>",
-                    Matrix = PauliXGate.PauliX
+                    Matrix = PauliXGate.PauliX.ToSerializedComplexMatrix()
                 },
                 new SavedGate
                 {
                     Id = Guid.NewGuid(),
                     Name = "PauliY",
                     Display = "<span class=\"q-gate-text\">Y</span>",
-                    Matrix = PauliYGate.PauliY
+                    Matrix = PauliYGate.PauliY.ToSerializedComplexMatrix()
                 },
                 new SavedGate
                 {
                     Id = Guid.NewGuid(),
                     Name = "PauliZ",
                     Display = "<span class=\"q-gate-text\">Z</span>",
-                    Matrix = PauliZGate.PauliZ
+                    Matrix = PauliZGate.PauliZ.ToSerializedComplexMatrix()
                 },
                 new SavedGate
                 {
                     Id = Guid.NewGuid(),
                     Name = "S",
                     Display = "<span class=\"q-gate-text\">S</span>",
-                    Matrix = SGate.S
+                    Matrix = SGate.S.ToSerializedComplexMatrix()
                 },
                 new SavedGate
                 {
                     Id = Guid.NewGuid(),
                     Name = "T",
                     Display = "<span class=\"q-gate-text\">T</span>",
-                    Matrix = TGate.T
+                    Matrix = TGate.T.ToSerializedComplexMatrix()
                 },
                 new SavedGate
                 {
                     Id = Guid.NewGuid(),
                     Name = "SqrtNot",
                     Display = "<span class=\"q-gate-text\">√</span>",
-                    Matrix = SqrtNotGate.SqrtNot
+                    Matrix = SqrtNotGate.SqrtNot.ToSerializedComplexMatrix()
                 });
         }
     }

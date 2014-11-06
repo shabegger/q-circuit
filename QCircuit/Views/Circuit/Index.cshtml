@@ -21,9 +21,11 @@
 
         'use strict';
 
-        var workspace = new Q.Workspace();
+        var workspace = new Q.Workspace(function () {
 
-        $('body').append(workspace.element);
+          $('body').append(workspace.element);
+
+        });
 
       }(this, this.Quantum));
     </script>

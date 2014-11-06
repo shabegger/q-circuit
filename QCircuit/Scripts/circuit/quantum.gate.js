@@ -49,13 +49,19 @@
 	  var self = this;
 
 	  if (!self.element) {
-	    self.element = $(_gateTmpl()).draggable({
-	      drag: self.drag,
-	      move: self.move,
-	      drop: self.drop,
-        cancel: self.cancel
-	    });
+	    self.element = $(_gateTmpl())
+        .append(self.getDisplayContent())
+        .draggable({
+	        drag: self.drag,
+	        move: self.move,
+	        drop: self.drop,
+          cancel: self.cancel
+	      });
 	  }
+	};
+
+	Gate.prototype.getDisplayContent = function getDisplayContent() {
+	  return '';
 	};
   
   
@@ -132,6 +138,23 @@
 
 	  e.preventDefault();
 	}
+
+
+  /* Dynamic Class Creation */
+
+	Gate.fromSavedGate = function fromSavedGate(savedGate) {
+	  function constructor() {
+	    Gate.call(this);
+	  }
+
+	  constructor.prototype = Object.create(Gate.prototype);
+
+	  constructor.prototype.getDisplayContent = function getDisplayContent() {
+	    return savedGate.Display || '';
+	  };
+
+	  return constructor;
+	};
 
 
 	/* Expose */
