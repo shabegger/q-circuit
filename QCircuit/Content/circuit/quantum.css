@@ -1759,11 +1759,20 @@ div.q-workspace.q-mod-showroomSize5 div.q-factoryShowroom {
 /* Gate */
 div.q-gate {
   background: #ffe3aa;
+  cursor: pointer;
   width: 50px;
   height: 50px;
   border-radius: 25px;
   box-shadow: inset 0 0 10px 5px #b29353;
+  text-align: center;
   z-index: 10000;
+}
+div.q-gate span.q-gate-text {
+  color: #6584b2;
+  cursor: pointer;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 20px;
+  line-height: 50px;
 }
 /* Gate Factory */
 div.q-gateFactory {
@@ -1807,10 +1816,10 @@ div.q-circuit div.q-circuit-content div.q-circuit-deletes span.q-circuit-delete 
   font-size: 2em;
   cursor: pointer;
   display: block;
-  margin: 25px;
-  margin-right: 0;
-  height: 70px;
-  line-height: 70px;
+  margin: 65px 40px;
+  height: 10px;
+  line-height: 10px;
+  overflow: visible;
 }
 div.q-circuit div.q-circuit-content div.q-circuit-deletes span.q-circuit-delete:before {
   content: '\f111';
@@ -1820,7 +1829,7 @@ div.q-circuit div.q-circuit-content div.q-circuit-deletes span.q-circuit-delete:
   content: '\f057';
   color: #ff0000;
   position: absolute;
-  left: 25px;
+  left: 40px;
 }
 div.q-circuit div.q-circuit-content div.q-circuit-slots {
   display: table-cell;
@@ -1830,10 +1839,11 @@ div.q-circuit div.q-circuit-content div.q-circuit-slots {
 /* Slot */
 div.q-slot {
   position: relative;
-  margin: 25px;
-  padding: 10px;
-  padding-right: 60px;
-  height: 70px;
+  margin: 65px;
+  margin-left: 0;
+  padding: 5px;
+  padding-right: 55px;
+  height: 0;
 }
 div.q-slot:before {
   content: '';
@@ -1842,7 +1852,7 @@ div.q-slot:before {
   right: 0;
   bottom: 0;
   left: 0;
-  border-radius: 35px;
+  border-radius: 5px;
   box-shadow: 0 0 5px 5px #ff0000;
   opacity: 0;
   -ms-transform: translateZ(0);
@@ -1853,18 +1863,26 @@ div.q-slot:before {
 }
 div.q-slot:after {
   content: '';
-  background-color: #aaccff;
+  background-color: #6584b2;
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  border-radius: 35px;
-  box-shadow: inset 0 0 10px 5px #6584b2;
+  border-radius: 5px;
 }
-div.q-slot.q-mod-hover:before {
+div.q-slot.q-mod-add:after {
+  opacity: 0.2;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+div.q-slot.q-mod-hover:before,
+div.q-slot.q-mod-hover:after {
   opacity: 1;
 }
 div.q-slot div.q-slot-content {
   position: relative;
+}
+div.q-slot div.q-slot-content div.q-gate {
+  top: -25px;
 }

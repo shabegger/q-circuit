@@ -14,6 +14,7 @@
   /* Private Variables */
 
   var _maxSlots = 6,
+      _classDelete = 'q-circuit-delete',
       _classDeletes = 'q-circuit-deletes',
       _classSlots = 'q-circuit-slots';
 
@@ -32,7 +33,7 @@
 
   function _deleteTmpl() {
     return [
-      '<span class="q-circuit-delete">',
+      '<span class="', _classDelete, '">',
       '</span>'].join('');
   }
 
@@ -49,6 +50,9 @@
 
     self.addSlot = $.proxy(addSlot, self, vars);
     self.removeSlot = $.proxy(removeSlot, self, vars);
+
+    self.slotAdded = $.proxy(slotAdded, self, vars);
+    self.deleteClicked = $.proxy(deleteClicked, self, vars);
 
     self.render(slotCount);
   }
@@ -68,33 +72,48 @@
       .find(['.', _classDeletes, ', .', _classSlots].join(''))
       .empty();
 
+    self.element
+      .find(['.', _classDeletes].join(''))
+      .on('click', ['.', _classDelete].join(''), self.deleteClicked);
+
     for (i = 0; i < slotCount; i++) {
       self.addSlot();
     }
+
+    self.addSlot(true);
   };
 
 
   /* Instance Methods */
 
-  function addSlot(vars) {
+  function addSlot(vars, addSlot) {
     var self = this,
         slots = vars.slots,
-        deletesElem, i,
-        slotsElem, slot;
+        deletesElem, slotsElem,
+        slot, lastSlot;
 
     if (slots.length < _maxSlots) {
       deletesElem = self.element.find(['.', _classDeletes].join(''));
       slotsElem = self.element.find(['.', _classSlots].join(''));
 
-      i = slots.length;
+      lastSlot = slots.length && slots[slots.length - 1];
+      if (addSlot) {
+        if (!lastSlot || !lastSlot.isAddSlot()) {
+          slot = new Q.Slot(true);
+          slot.addEventListener('added', self.slotAdded);
+        }
+      } else {
+        slot = new Q.Slot();
+      }
 
-      slot = new Q.Slot();
-      slots.push(slot);
+      if (slot) {
+        slots.push(slot);
+        slotsElem.append(slot.element);
 
-      slotsElem.append(slot.element);
-      $(_deleteTmpl()).appendTo(deletesElem).on('click', function () {
-        self.removeSlot($(this).index());
-      });
+        $(_deleteTmpl()).appendTo(deletesElem).css({
+          'visibility': addSlot ? 'hidden' : 'visible'  
+        });
+      }
     }
   };
 
@@ -119,7 +138,39 @@
       for (j = i, len = slots.length; j < len; j++) {
         slots[j].invalidateBounds();
       }
+
+      // If previously at the max slot count, we now need an add slot
+      self.addSlot(true);
+
+      // If there's an add slot, make sure it's delete is hidden
+      if (slots[slots.length - 1].isAddSlot()) {
+        self.element.find(['.', _classDelete, ':last'].join('')).css({
+          'visibility': 'hidden'
+        });
+      }
     }
+  }
+
+
+  /* Event Handlers */
+
+  function slotAdded(vars, e) {
+    var self = this,
+        slot = e.sender;
+
+    self.element.find(['.', _classDelete].join('')).css({
+      'visibility': 'visible'
+    });
+
+    slot.removeEventListener('added');
+    self.addSlot(true);
+  }
+
+  function deleteClicked(vars, e) {
+    var self = this,
+        btn = $(e.target);
+
+    self.removeSlot(btn.index());
   }
 
 

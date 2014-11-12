@@ -77,8 +77,10 @@
 	  self.dispatchEvent('drag');
 	  Gate.dispatchEvent('drag', {
 	    gate: self,
-	    centerX: left + (width / 2),
-      centerY: top + (height / 2)
+	    top: top,
+	    left: left,
+	    height: height,
+      width: width
 	  });
 	}
 
@@ -92,8 +94,10 @@
 	  self.dispatchEvent('move');
 	  Gate.dispatchEvent('move', {
 	    gate: self,
-	    centerX: left + (width / 2),
-	    centerY: top + (height / 2)
+	    top: top,
+	    left: left,
+	    height: height,
+	    width: width
 	  });
 	}
 

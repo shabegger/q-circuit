@@ -25,7 +25,7 @@
   function Workspace(callback) { // TODO: Break initialization into a separate function returning a promise
     var self = this;
 
-    $.get('api/gates')
+    $.get('/api/gates')
       .done(function (savedGates) {
         var gates = [],
             i, len;

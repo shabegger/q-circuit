@@ -14,17 +14,21 @@
 
 /* Size Variables */
 
-@gateSize:      50px;
-@paddingSize:   25px;
-@shadowSize:    10px;
-@highlightSize: 5px;
+@gateSize:          50px;
+@highlightSize:     5px;
+@paddingSize:       25px;
+@shadowSize:        10px;
+@slotSize:          10px;
+@smallPaddingSize:  15px;
+
+@gateFontSize:  20px;
 
 
 /* Computed Variables */
 
-@showroomHeight:        @gateSize + (2 * @paddingSize);
+@slotMargin:        @gateSize + @smallPaddingSize;
 
-@slotHeight:        @gateSize + (2 * @shadowSize);
+@showroomHeight:    @gateSize + (2 * @paddingSize);
 
 @shadowSpread:      @shadowSize / 2;
 @shadowOffset:      @shadowSize + @shadowSpread;
@@ -100,11 +104,21 @@ div.q-workspace {
 
 div.q-gate {
     background: @tan;
+    cursor: pointer;
     width: @gateSize;
     height: @gateSize;
     border-radius: @gateSize / 2;
     box-shadow: inset 0 0 @shadowSize @shadowSpread @brown;
+    text-align: center;
     z-index: 10000;
+
+    span.q-gate-text {
+        color: @darkblue;
+        cursor: pointer;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-size: @gateFontSize;
+        line-height: @gateSize;
+    }
 }
 
 
@@ -163,15 +177,15 @@ div.q-circuit {
                     content: '\f057';
                     color: @highlight;
                     position: absolute;
-                    left: @paddingSize;
+                    left: (@gateSize / 2) + @smallPaddingSize;
                 }
 
                 cursor: pointer;
                 display: block;
-                margin: @paddingSize;
-                margin-right: 0;
-                height: @slotHeight;
-                line-height: @slotHeight;
+                margin: @slotMargin ((@gateSize / 2) + @smallPaddingSize);
+                height: @slotSize;
+                line-height: @slotSize;
+                overflow: visible;
             }
         }
 
@@ -188,10 +202,11 @@ div.q-circuit {
 
 div.q-slot {
     position: relative;
-    margin: @paddingSize;
-    padding: @shadowSize;
-    padding-right: @shadowSize + @gateSize;
-    height: @slotHeight;
+    margin: @slotMargin;
+    margin-left: 0;
+    padding: @slotSize / 2;
+    padding-right: (@slotSize / 2) + @gateSize;
+    height: 0;
 
     &:before {
         content: '';
@@ -200,7 +215,7 @@ div.q-slot {
         right: 0;
         bottom: 0;
         left: 0;
-        border-radius: @slotHeight / 2;
+        border-radius: @slotSize / 2;
         box-shadow: 0 0 @highlightSize @highlightSize @highlight;
         opacity: 0;
         -ms-transform: translateZ(0);
@@ -212,21 +227,35 @@ div.q-slot {
 
     &:after {
         content: '';
-        background-color: @blue;
+        background-color: @darkblue;
         position: absolute;
         top: 0;
         right: 0;
         bottom: 0;
         left: 0;
-        border-radius: @slotHeight / 2;
-        box-shadow: inset 0 0 @shadowSize @shadowSpread @darkblue;
+        border-radius: @slotSize / 2;
     }
 
-    &.q-mod-hover:before {
-        opacity: 1;
+    &.q-mod-add {
+        &:after {
+            opacity: 0.2;
+            -webkit-transition: 0.2s;
+            transition: 0.2s;
+        }
+    }
+
+    &.q-mod-hover {
+        &:before,
+        &:after {
+            opacity: 1;
+        }
     }
 
     div.q-slot-content {
         position: relative;
+
+        div.q-gate {
+            top: 0 - (@gateSize / 2);
+        }
     }
 }
