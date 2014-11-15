@@ -38,24 +38,10 @@
 
 .generate-factoryShowroom-size(@size) {
     div.q-workspace.q-mod-showroomSize@{size} {
-        @height:    (@size * @gateSize) + ((@size + 1) * @paddingSize);
-
-        .generate-factoryShowroom-size-items(@n, @i: 2) when (@i =< @n) {
-            div.q-gateFactory:nth-child(@{size}n + @{i}) {
-                margin-top: ((@i - 1) * @gateSize) + (@i * @paddingSize);
-            }
-
-            .generate-factoryShowroom-size-items(@n, @i + 1);
-        }
-
-        .generate-factoryShowroom-size-items(@size);
-
-        div.q-gateFactory:not(:nth-child(@{size}n + 1)) {
-            margin-left: -@gateSize;
-        }
-
         div.q-factoryShowroom {
-            height: @height;
+            div.q-factoryShowroom-content {
+                height: (@size * @gateSize) + ((@size + 1) * @paddingSize);
+            }
         }
     }
 }
@@ -125,7 +111,7 @@ div.q-gate {
 /* Gate Factory */
 
 div.q-gateFactory {
-    float: left;
+    display: inline-block;
     margin: @paddingSize 0 0 @paddingSize;
 }
 
@@ -133,16 +119,22 @@ div.q-gateFactory {
 /* Factory Showroom */
 
 div.q-factoryShowroom {
-    display: table-row;
+    display: table-cell;
     background-color: @blue;
-    height: @showroomHeight;
+    width: 100%;
     overflow: hidden;
     box-shadow: inset 0 @shadowOffset @shadowSize -@shadowSize @darkblue,
                 inset 0 -@shadowOffset @shadowSize -@shadowSize @darkblue;
 
     div.q-factoryShowroom-content {
-        display: inline-block;
-        height: 100%;
+        display: -webkit-inline-box;
+        display: -moz-inline-box;
+        display: -ms-inline-flexbox;
+        display: -webkit-inline-flex;
+        display: inline-flex;
+        flex-flow: column wrap;
+        padding: 0 @paddingSize 0 0;
+        height: @showroomHeight;
     }
 }
 
@@ -152,9 +144,8 @@ div.q-factoryShowroom {
 div.q-circuit {
     display: table-row;
     background-color: @tan;
+    height: 100%;
     overflow: hidden;
-    box-shadow: inset 0 @shadowOffset @shadowSize -@shadowSize @brown,
-                inset 0 -@shadowOffset @shadowSize -@shadowSize @brown;
 
     div.q-circuit-content {
         display: table;

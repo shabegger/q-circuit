@@ -1702,58 +1702,16 @@ div.q-workspace {
   height: 100%;
   overflow: hidden;
 }
-div.q-workspace.q-mod-showroomSize2 div.q-gateFactory:nth-child( 2n + 2) {
-  margin-top: 100px;
-}
-div.q-workspace.q-mod-showroomSize2 div.q-gateFactory:not( :nth-child( 2n + 1)) {
-  margin-left: -50px;
-}
-div.q-workspace.q-mod-showroomSize2 div.q-factoryShowroom {
+div.q-workspace.q-mod-showroomSize2 div.q-factoryShowroom div.q-factoryShowroom-content {
   height: 175px;
 }
-div.q-workspace.q-mod-showroomSize3 div.q-gateFactory:nth-child( 3n + 2) {
-  margin-top: 100px;
-}
-div.q-workspace.q-mod-showroomSize3 div.q-gateFactory:nth-child( 3n + 3) {
-  margin-top: 175px;
-}
-div.q-workspace.q-mod-showroomSize3 div.q-gateFactory:not( :nth-child( 3n + 1)) {
-  margin-left: -50px;
-}
-div.q-workspace.q-mod-showroomSize3 div.q-factoryShowroom {
+div.q-workspace.q-mod-showroomSize3 div.q-factoryShowroom div.q-factoryShowroom-content {
   height: 250px;
 }
-div.q-workspace.q-mod-showroomSize4 div.q-gateFactory:nth-child( 4n + 2) {
-  margin-top: 100px;
-}
-div.q-workspace.q-mod-showroomSize4 div.q-gateFactory:nth-child( 4n + 3) {
-  margin-top: 175px;
-}
-div.q-workspace.q-mod-showroomSize4 div.q-gateFactory:nth-child( 4n + 4) {
-  margin-top: 250px;
-}
-div.q-workspace.q-mod-showroomSize4 div.q-gateFactory:not( :nth-child( 4n + 1)) {
-  margin-left: -50px;
-}
-div.q-workspace.q-mod-showroomSize4 div.q-factoryShowroom {
+div.q-workspace.q-mod-showroomSize4 div.q-factoryShowroom div.q-factoryShowroom-content {
   height: 325px;
 }
-div.q-workspace.q-mod-showroomSize5 div.q-gateFactory:nth-child( 5n + 2) {
-  margin-top: 100px;
-}
-div.q-workspace.q-mod-showroomSize5 div.q-gateFactory:nth-child( 5n + 3) {
-  margin-top: 175px;
-}
-div.q-workspace.q-mod-showroomSize5 div.q-gateFactory:nth-child( 5n + 4) {
-  margin-top: 250px;
-}
-div.q-workspace.q-mod-showroomSize5 div.q-gateFactory:nth-child( 5n + 5) {
-  margin-top: 325px;
-}
-div.q-workspace.q-mod-showroomSize5 div.q-gateFactory:not( :nth-child( 5n + 1)) {
-  margin-left: -50px;
-}
-div.q-workspace.q-mod-showroomSize5 div.q-factoryShowroom {
+div.q-workspace.q-mod-showroomSize5 div.q-factoryShowroom div.q-factoryShowroom-content {
   height: 400px;
 }
 /* Gate */
@@ -1776,26 +1734,29 @@ div.q-gate span.q-gate-text {
 }
 /* Gate Factory */
 div.q-gateFactory {
-  float: left;
+  display: inline-block;
   margin: 25px 0 0 25px;
 }
 /* Factory Showroom */
 div.q-factoryShowroom {
-  display: table-row;
+  display: table-cell;
   background-color: #aaccff;
-  height: 100px;
+  width: 100%;
   overflow: hidden;
   box-shadow: inset 0 15px 10px -10px #6584b2, inset 0 -15px 10px -10px #6584b2;
 }
 div.q-factoryShowroom div.q-factoryShowroom-content {
-  height: 100%;
+  display: inline-flex;
+  flex-flow: column wrap;
+  padding: 0 25px 0 0;
+  height: 100px;
 }
 /* Circuit */
 div.q-circuit {
   display: table-row;
   background-color: #ffe3aa;
+  height: 100%;
   overflow: hidden;
-  box-shadow: inset 0 15px 10px -10px #b29353, inset 0 -15px 10px -10px #b29353;
 }
 div.q-circuit div.q-circuit-content {
   display: table;
