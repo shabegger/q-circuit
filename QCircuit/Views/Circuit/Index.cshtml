@@ -21,11 +21,15 @@
 
         'use strict';
 
-        var workspace = new Q.Workspace(function () {
-
-          $('body').append(workspace.element);
-
-        });
+        var workspace = new Q.Workspace();
+        
+        workspace.init()
+          .done(function () {
+            $('body').append(workspace.element);
+          })
+          .fail(function () {
+            // TODO: Handle error
+          });
 
       }(this, this.Quantum));
     </script>

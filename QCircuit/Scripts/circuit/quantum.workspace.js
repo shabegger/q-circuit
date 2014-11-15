@@ -22,11 +22,15 @@
 
   /* Constructor */
 
-  function Workspace(callback) { // TODO: Break initialization into a separate function returning a promise
+  function Workspace() { }
+
+
+  /* Prototype Methods */
+
+  Workspace.prototype.init = function init() {
     var self = this;
 
-    $.get('/api/gates')
-      .done(function (savedGates) {
+    return $.get('/api/gates').done(function (savedGates) {
         var gates = [],
             i, len;
 
@@ -35,16 +39,8 @@
         }
 
         self.render(gates);
-
-        callback(); // TODO: Per above, use promises instead
-      })
-      .fail(function () {
-        // TODO: Handle error
       });
-  }
-
-
-  /* Prototype Methods */
+  };
 
   Workspace.prototype.render = function render(gates) {
     var self = this;
