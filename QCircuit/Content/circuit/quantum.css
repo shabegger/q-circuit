@@ -1746,6 +1746,10 @@ div.q-factoryShowroom {
   box-shadow: inset 0 15px 10px -10px #6584b2, inset 0 -15px 10px -10px #6584b2;
 }
 div.q-factoryShowroom div.q-factoryShowroom-content {
+  display: -webkit-inline-box;
+  display: -moz-inline-box;
+  display: -ms-inline-flexbox;
+  display: -webkit-inline-flex;
   display: inline-flex;
   flex-flow: column wrap;
   padding: 0 25px 0 0;

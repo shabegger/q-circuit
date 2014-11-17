@@ -229,9 +229,11 @@
     <Content Include="Scripts\circuit\quantum.factoryshowroom.js" />
     <Content Include="Scripts\circuit\quantum.gatefactory.js" />
     <Content Include="Scripts\circuit\quantum.js" />
+    <Content Include="Scripts\interaction\interaction.animation.js" />
     <Content Include="Scripts\interaction\interaction.drag.js" />
     <Content Include="Scripts\interaction\interaction.intersect.js" />
     <Content Include="Scripts\interaction\interaction.js" />
+    <Content Include="Scripts\interaction\interaction.scroll.js" />
     <Content Include="Scripts\interaction\interaction.touch.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -1,7 +1,7 @@
 ﻿/// <reference path="interaction.js" />
 /// <reference path="../jquery-1.10.2.intellisense.js" />
 
-; (function (window, UI, $, undefined) {
+; (function (window, $, undefined) {
 
   'use strict';
 
@@ -62,8 +62,8 @@
     } else if (window.navigator.msPointerEnabled) {
       return self.on(namespaceEvent('MSPointerDown', namespace), handler);
     } else {
-      self.on(namespaceEvent('touchstart', namespace), handler);
-      return self.on(namespaceEvent('mousedown', namespace), handler);
+      return self.on(namespaceEvent('touchstart', namespace), handler)
+        .on(namespaceEvent('mousedown', namespace), handler);
     }
   };
 
@@ -75,8 +75,8 @@
     } else if (window.navigator.msPointerEnabled) {
       return self.off(namespaceEvent('MSPointerDown', namespace));
     } else {
-      self.off(namespaceEvent('touchstart', namespace));
-      return self.off(namespaceEvent('mousedown', namespace));
+      return self.off(namespaceEvent('touchstart', namespace))
+        .off(namespaceEvent('mousedown', namespace));
     }
   };
 
@@ -95,8 +95,8 @@
     } else if (window.navigator.msPointerEnabled) {
       return self.on(namespaceEvent('MSPointerMove', namespace), handler);
     } else {
-      self.on(namespaceEvent('touchmove', namespace), handler);
-      return self.on(namespaceEvent('mousemove', namespace), handler);
+      return self.on(namespaceEvent('touchmove', namespace), handler)
+        .on(namespaceEvent('mousemove', namespace), handler);
     }
   };
 
@@ -108,8 +108,8 @@
     } else if (window.navigator.msPointerEnabled) {
       return self.off(namespaceEvent('MSPointerMove', namespace));
     } else {
-      self.off(namespaceEvent('touchmove', namespace));
-      return self.off(namespaceEvent('mousemove', namespace));
+      return self.off(namespaceEvent('touchmove', namespace))
+        .off(namespaceEvent('mousemove', namespace));
     }
   };
 
@@ -128,8 +128,8 @@
     } else if (window.navigator.msPointerEnabled) {
       return self.on(namespaceEvent('MSPointerUp', namespace), handler);
     } else {
-      self.on(namespaceEvent('touchend', namespace), handler);
-      return self.on(namespaceEvent('mouseup', namespace), handler);
+      return self.on(namespaceEvent('touchend', namespace), handler)
+        .on(namespaceEvent('mouseup', namespace), handler);
     }
   };
 
@@ -141,8 +141,8 @@
     } else if (window.navigator.msPointerEnabled) {
       return self.off(namespaceEvent('MSPointerUp', namespace));
     } else {
-      self.off(namespaceEvent('touchend', namespace));
-      return self.off(namespaceEvent('mouseup', namespace));
+      return self.off(namespaceEvent('touchend', namespace))
+        .off(namespaceEvent('mouseup', namespace));
     }
   };
 
@@ -161,9 +161,9 @@
     } else if (window.navigator.msPointerEnabled) {
       return self.on(namespaceEvent('MSPointerOut', namespace), handler);
     } else {
-      self.on(namespaceEvent('touchleave', namespace), handler);
-      self.on(namespaceEvent('touchcancel', namespace), handler);
-      return self.on(namespaceEvent('mouseout', namespace), handler);
+      return self.on(namespaceEvent('touchleave', namespace), handler)
+        .on(namespaceEvent('touchcancel', namespace), handler)
+        .on(namespaceEvent('mouseout', namespace), handler);
     }
   };
 
@@ -175,10 +175,10 @@
     } else if (window.navigator.msPointerEnabled) {
       return self.off(namespaceEvent('MSPointerOut', namespace));
     } else {
-      self.off(namespaceEvent('touchleave', namespace));
-      self.off(namespaceEvent('touchcancel', namespace));
-      return self.off(namespaceEvent('mouseout', namespace));
+      return self.off(namespaceEvent('touchleave', namespace))
+        .off(namespaceEvent('touchcancel', namespace))
+        .off(namespaceEvent('mouseout', namespace));
     }
   };
 
-}(this, this.Interaction, this.jQuery));
+}(this, this.jQuery));
