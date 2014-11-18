@@ -17,6 +17,8 @@
 @gateSize:          50px;
 @highlightSize:     5px;
 @paddingSize:       25px;
+@scrollBtnWidth:    50px;
+@scrollBtnHeight:   70px;
 @shadowSize:        10px;
 @slotSize:          10px;
 @smallPaddingSize:  15px;
@@ -120,6 +122,7 @@ div.q-gateFactory {
 
 div.q-factoryShowroom {
     display: table-cell;
+    position: relative;
     background-color: @blue;
     width: 100%;
     overflow: hidden;
@@ -135,6 +138,25 @@ div.q-factoryShowroom {
         flex-flow: column wrap;
         padding: 0 @paddingSize 0 0;
         height: @showroomHeight;
+    }
+
+    div.q-factoryShowroom-left,
+    div.q-factoryShowroom-right {
+        position: absolute;
+        background: #f00;
+        border-radius: 50%;
+        margin: (-@scrollBtnHeight / 2) 0 0 0;
+        width: @scrollBtnWidth;
+        height: @scrollBtnHeight;
+        top: 50%;
+    }
+
+    div.q-factoryShowroom-left {
+        left: @smallPaddingSize;
+    }
+
+    div.q-factoryShowroom-right {
+        right: @smallPaddingSize;
     }
 }
 

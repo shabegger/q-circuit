@@ -43,15 +43,15 @@
   function onDown(options, e) {
     var button = this;
 
-    if (button.filter(options.left).length ||
-        button.filter(options.right).length) {
+    if ((options.left && options.left.filter(button).length) ||
+        (options.right && options.right.filter(button).length)) {
       options.scrollFn = _horzScrollFn;
     } else {
       options.scrollFn = _vertScrollFn;
     }
 
-    if (button.filter(options.left).length ||
-        button.filter(options.up).length) {
+    if ((options.left && options.left.filter(button).length) ||
+        (options.up && options.up.filter(button).length)) {
       options.direction = -1;
     } else {
       options.direction = 1;
@@ -70,7 +70,7 @@
     var button = this;
 
     // If scrolling hasn't started, take one big step
-    if (!options.scrolling) {
+    if (!options.scrolling && options.scrollFn) {
       options.scrollPos += options.direction * _bigStep;
       $(options.container)[options.scrollFn](options.scrollPos);
     }

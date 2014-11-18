@@ -1,4 +1,5 @@
-﻿/// <reference path="quantum.js" />
+﻿/// <reference path="../interaction/interaction.scroll.js" />
+/// <reference path="quantum.js" />
 /// <reference path="quantum.gatefactory.js" />
 /// <reference path="../jquery-1.10.2.intellisense.js" />
 
@@ -7,13 +8,21 @@
   'use strict';
 
 
+  /* Private Variables */
+
+  var _classLeft = 'q-factoryShowroom-left',
+      _classRight = 'q-factoryShowroom-right',
+      _classContent = 'q-factoryShowroom-content';
+
+
   /* Templates */
 
   function _factoryShowroomTmpl() {
     return [
       '<div class="q-factoryShowroom">',
-        '<div class="q-factoryShowroom-content">',
-        '</div>',
+        '<div class="', _classContent, '"></div>',
+        '<div class="', _classLeft, '"></div>',
+        '<div class="', _classRight, '"></div>',
       '</div>'].join('');
   }
 
@@ -44,7 +53,7 @@
       self.element = $(_factoryShowroomTmpl());
     }
 
-    content = self.element.find('.q-factoryShowroom-content');
+    content = self.element.find(['.', _classContent].join(''));
     content.empty();
 
     // Remove old factories
@@ -59,6 +68,11 @@
       content.append(factory.element);
       factory.position();
     }
+
+    self.element.scrollable({
+      left: self.element.find(['.', _classLeft].join('')),
+      right: self.element.find(['.', _classRight].join(''))
+    });
   };
 
 
