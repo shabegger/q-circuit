@@ -12,6 +12,7 @@
 
   var _classLeft = 'q-factoryShowroom-left',
       _classRight = 'q-factoryShowroom-right',
+      _classScroller = 'q-factoryShowroom-scroller',
       _classContent = 'q-factoryShowroom-content';
 
 
@@ -20,9 +21,11 @@
   function _factoryShowroomTmpl() {
     return [
       '<div class="q-factoryShowroom">',
-        '<div class="', _classContent, '"></div>',
-        '<div class="', _classLeft, '"></div>',
-        '<div class="', _classRight, '"></div>',
+        '<div class="', _classScroller, '">',
+          '<div class="', _classContent, '"></div>',
+        '</div>',
+        '<a class="', _classLeft, '"></a>',
+        '<a class="', _classRight, '"></a>',
       '</div>'].join('');
   }
 
@@ -69,7 +72,7 @@
       factory.position();
     }
 
-    self.element.scrollable({
+    self.element.find(['.', _classScroller].join('')).scrollable({
       left: self.element.find(['.', _classLeft].join('')),
       right: self.element.find(['.', _classRight].join(''))
     });
