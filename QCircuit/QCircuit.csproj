@@ -200,22 +200,16 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\circuit\quantum.css" />
+    <Content Include="Content\circuit\quantum.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Fonts\fontawesome-webfont.svg" />
-    <Content Include="Content\Images\blue-background-bottom.png" />
-    <Content Include="Content\Images\blue-background-top.png" />
-    <Content Include="Content\Images\tan-background-bottom.png" />
-    <Content Include="Content\Images\tan-background-top.png" />
+    <Content Include="Content\main.css" />
+    <Content Include="Content\main.min.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\validation.css" />
     <Content Include="Scripts\circuit\quantum.circuit.js" />
     <Content Include="Scripts\circuit\quantum.gate.js" />
     <Content Include="Content\circuit\quantum.less" />
@@ -223,6 +217,8 @@
     <Content Include="Content\Fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\Fonts\fontawesome-webfont.woff" />
     <Content Include="Content\Fonts\FontAwesome.otf" />
+    <Content Include="Content\main.less" />
+    <Content Include="Content\variables.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\circuit\quantum.slot.js" />
     <Content Include="Scripts\circuit\quantum.workspace.js" />
@@ -245,8 +241,6 @@
     <Content Include="Scripts\mixins\mixins.events.js" />
     <Content Include="Scripts\mixins\mixins.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -277,9 +271,6 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
@@ -317,8 +308,13 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PreBuildEvent>if $(ConfigurationName) == Debug lessc $(ProjectDir)Content\circuit\quantum.less &gt; $(ProjectDir)Content\circuit\quantum.css
-if $(ConfigurationName) == Release lessc $(ProjectDir)Content\circuit\quantum.less -x &gt; $(ProjectDir)Content\circuit\quantum.min.css</PreBuildEvent>
+    <PreBuildEvent>if $(ConfigurationName) == Debug (
+  lessc $(ProjectDir)Content\circuit\quantum.less &gt; $(ProjectDir)Content\circuit\quantum.css
+  lessc $(ProjectDir)Content\main.less &gt; $(ProjectDir)Content\main.css
+) else (
+  lessc $(ProjectDir)Content\circuit\quantum.less -x &gt; $(ProjectDir)Content\circuit\quantum.min.css
+  lessc $(ProjectDir)Content\main.less -x &gt; $(ProjectDir)Content\main.min.css
+)</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

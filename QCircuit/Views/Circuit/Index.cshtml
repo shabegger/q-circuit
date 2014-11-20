@@ -1,43 +1,38 @@
 ﻿@{
-    Layout = null;
+  ViewBag.Title = "Circuit Builder";
 }
 
-<!DOCTYPE html>
+@section styles {
+  @Styles.Render("~/Content/quantum")
+  <style>
+    div.q-factoryShowroom-content {
+      <!-- [if lte IE 9]>display: inline-block !important;<![endif] -->
+      <!-- [if lte IE 9]>height: 100px !important;<![endif] -->
+    }
+  </style>
+}
 
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Quantum Circuit Builder</title>
+@section scripts {
+  @Scripts.Render("~/bundles/mixins")
+  @Scripts.Render("~/bundles/interaction")
+  @Scripts.Render("~/bundles/quantum")
+  <script>
+    ; (function (window, Q) {
 
-    @Styles.Render("~/Content/quantum")
-    <style>
-      div.q-factoryShowroom-content {
-        <!--[if lte IE 9]>display: inline-block !important;<![endif]-->
-        <!--[if lte IE 9]>height: 100px !important;<![endif]-->
-      }
-    </style>
-  </head>
-  <body>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/mixins")
-    @Scripts.Render("~/bundles/interaction")
-    @Scripts.Render("~/bundles/quantum")
-    <script>
-      ; (function (window, Q) {
+      'use strict';
 
-        'use strict';
+      var workspace = new Q.Workspace();
 
-        var workspace = new Q.Workspace();
-        
-        workspace.init()
-          .done(function () {
-            $('body').append(workspace.element);
-          })
-          .fail(function () {
-            // TODO: Handle error
-          });
+      workspace.init()
+        .done(function () {
+          $('#circuit').append(workspace.element);
+        })
+        .fail(function () {
+          // TODO: Handle error
+        });
 
-      }(this, this.Quantum));
-    </script>
-  </body>
-</html>
+    }(this, this.Quantum));
+  </script>
+}
+
+<section id="circuit"></section>

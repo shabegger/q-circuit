@@ -1,0 +1,80 @@
+﻿@import "variables.less";
+
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: @font;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    background: @headerBackground;
+    padding: 0 @mainPadding;
+    width: 100%;
+    height: @headerHeight;
+    line-height: @headerHeight;
+
+    ul {
+        display: inline-block;
+        list-style: none;
+
+        &.login {
+            float: right;
+        }
+
+        li {
+            display: inline;
+
+            &.header-link-home {
+                font-weight: @fontWeightHeavy;
+            }
+
+            &:last-child {
+                a {
+                    margin-right: 0;
+                }
+            }
+
+            a {
+                color: @lightText;
+                cursor: pointer;
+                font-size: @menuFontSize;
+                margin: 0 @menuSpacing 0 0;
+                text-decoration: none;
+
+                &:active,
+                &:hover,
+                &:link,
+                &:visited {
+                    color: @lightText;
+                }
+            }
+        }
+    }
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    background: @footerBackground;
+    color: @lightText;
+    padding: 0 @mainPadding;
+    font-size: @footerFontSize;
+    width: 100%;
+    height: @footerHeight;
+    line-height: @footerHeight;
+
+    p {
+        float: right;
+    }
+}
