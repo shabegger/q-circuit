@@ -1762,7 +1762,7 @@ div.q-factoryShowroom a.q-factoryShowroom-right {
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  display: block;
+  display: none;
   position: absolute;
   top: 50%;
   cursor: pointer;
@@ -1782,6 +1782,10 @@ div.q-factoryShowroom a.q-factoryShowroom-right:before {
 div.q-factoryShowroom a.q-factoryShowroom-left:hover,
 div.q-factoryShowroom a.q-factoryShowroom-right:hover {
   opacity: 0.5;
+}
+div.q-factoryShowroom a.q-factoryShowroom-left:hover:active,
+div.q-factoryShowroom a.q-factoryShowroom-right:hover:active {
+  opacity: 1;
 }
 div.q-factoryShowroom a.q-factoryShowroom-left {
   left: 0;

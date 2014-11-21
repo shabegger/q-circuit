@@ -22,15 +22,37 @@
 
   /* Constructor */
 
-  function Workspace() { }
+  function Workspace(container) {
+    var self = this;
+
+    self.render(container);
+    self.init();
+  }
 
 
   /* Prototype Methods */
 
+  Workspace.prototype.render = function render(container) {
+    var self = this;
+
+    if (!self.element) {
+      self.element = $(_workspaceTmpl()).appendTo(container);
+    }
+
+    self.element.empty();
+
+    self.factoryShowroom = new Q.FactoryShowroom();
+    self.element.append(self.factoryShowroom.element);
+
+    self.circuit = new Q.Circuit(5);
+    self.element.append(self.circuit.element);
+  };
+
   Workspace.prototype.init = function init() {
     var self = this;
 
-    return $.get('/api/gates').done(function (savedGates) {
+    $.get('/api/gates')
+      .done(function (savedGates) {
         var gates = [],
             i, len;
 
@@ -38,24 +60,11 @@
           gates.push(Q.Gate.fromSavedGate(savedGates[i]));
         }
 
-        self.render(gates);
+        self.factoryShowroom.addGates(gates);
+      })
+      .fail(function () {
+        // TODO: Handle error
       });
-  };
-
-  Workspace.prototype.render = function render(gates) {
-    var self = this;
-
-    if (!self.element) {
-      self.element = $(_workspaceTmpl());
-    }
-
-    self.element.empty();
-
-    self.factoryShowroom = new Q.FactoryShowroom(gates);
-    self.element.append(self.factoryShowroom.element);
-
-    self.circuit = new Q.Circuit(5);
-    self.element.append(self.circuit.element);
   };
 
 

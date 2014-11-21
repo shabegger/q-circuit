@@ -32,11 +32,14 @@
 
   /* Constructor */
 
-  function FactoryShowroom(gateConstructors) {
-    var self = this;
+  function FactoryShowroom() {
+    var self = this,
+        vars = {};
 
-    self.gateConstructors = gateConstructors || [];
     self.factories = [];
+
+    self.calculateScrollMax = $.proxy(calculateScrollMax, self, vars);
+    self.updateScrollButtons = $.proxy(updateScrollButtons, self, vars);
 
     self.render();
   }
@@ -46,37 +49,91 @@
 
   FactoryShowroom.prototype.render = function render() {
     var self = this,
-        gateConstructors = self.gateConstructors,
-        factories = self.factories,
-        factory,
-        content,
-        i, len;
+        factories = self.factories;
 
     if (!self.element) {
       self.element = $(_factoryShowroomTmpl());
     }
-
-    content = self.element.find(['.', _classContent].join(''));
-    content.empty();
-
+    
     // Remove old factories
+    self.element.find(['.', _classContent].join('')).empty();
     while (factories.length) {
       factories.pop();
     }
 
-    // Create new factories
-    for (i = 0, len = gateConstructors.length; i < len; i++) {
-      factory = new Q.GateFactory(gateConstructors[i]);
-      factories.push(factory);
-      content.append(factory.element);
-      factory.position();
+    self.element.find(['.', _classScroller].join(''))
+      .scrollable({
+        left: self.element.find(['.', _classLeft].join('')),
+        right: self.element.find(['.', _classRight].join(''))
+      })
+      .on('scroll', self.updateScrollButtons);
+
+    self.calculateScrollMax();
+    $(window).on('resize', self.calculateScrollMax);
+  };
+
+  FactoryShowroom.prototype.addGates = function addGates(gateConstructors) {
+    var self = this,
+        factories = self.factories,
+        content = self.element.find(['.', _classContent].join('')),
+        gateConstructor,
+        factory,
+        i, len;
+
+    if (!$.isArray(gateConstructors)) {
+      gateConstructors = [gateConstructors];
     }
 
-    self.element.find(['.', _classScroller].join('')).scrollable({
-      left: self.element.find(['.', _classLeft].join('')),
-      right: self.element.find(['.', _classRight].join(''))
-    });
+    for (i = 0, len = gateConstructors.length; i < len; i++) {
+      gateConstructor = gateConstructors[i];
+
+      if ($.isFunction(gateConstructor)) {
+        factory = new Q.GateFactory(gateConstructor);
+        factories.push(factory);
+        content.append(factory.element);
+        factory.position();
+      }
+    }
+
+    self.calculateScrollMax();
   };
+
+
+  /* Event Handlers */
+
+  function calculateScrollMax(vars) {
+    var self = this,
+        scrollerWidth,
+        scrolleeWidth;
+
+    scrollerWidth =
+      self.element.find(['.', _classScroller].join('')).innerWidth();
+    scrolleeWidth =
+      self.element.find(['.', _classContent].join('')).outerWidth();
+
+    vars.scrollMax = Math.max(0, scrolleeWidth - scrollerWidth);
+    self.updateScrollButtons();
+  }
+
+  function updateScrollButtons(vars) {
+    var self = this,
+        scrollValue;
+
+    scrollValue =
+      self.element.find(['.', _classScroller].join('')).scrollLeft();
+
+    if (scrollValue === 0) {
+      self.element.find(['.', _classLeft].join('')).hide();
+    } else {
+      self.element.find(['.', _classLeft].join('')).show();
+    }
+
+    if (scrollValue === vars.scrollMax) {
+      self.element.find(['.', _classRight].join('')).hide();
+    } else {
+      self.element.find(['.', _classRight].join('')).show();
+    }
+  }
 
 
   /* Expose */

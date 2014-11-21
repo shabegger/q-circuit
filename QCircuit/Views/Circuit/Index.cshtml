@@ -21,15 +21,7 @@
 
       'use strict';
 
-      var workspace = new Q.Workspace();
-
-      workspace.init()
-        .done(function () {
-          $('#circuit').append(workspace.element);
-        })
-        .fail(function () {
-          // TODO: Handle error
-        });
+      var workspace = new Q.Workspace('#circuit');
 
     }(this, this.Quantum));
   </script>

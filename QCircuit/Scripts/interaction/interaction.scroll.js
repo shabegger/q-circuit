@@ -113,6 +113,8 @@
         .onInteractionUp($.proxy(onUp, null, options))
         .onInteractionCancel($.proxy(onUp, null, options));
     }
+
+    return this;
   };
 
 }(this, this.jQuery));
