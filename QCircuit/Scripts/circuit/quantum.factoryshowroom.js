@@ -68,7 +68,6 @@
       })
       .on('scroll', self.updateScrollButtons);
 
-    self.calculateScrollMax();
     $(window).on('resize', self.calculateScrollMax);
   };
 

@@ -1719,7 +1719,8 @@ div.q-workspace {
   position: relative;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 div.q-workspace.q-mod-showroomSize2 div.q-factoryShowroom {
   height: 175px;
@@ -1843,6 +1844,7 @@ div.q-circuit {
   bottom: 0;
   background-color: #ffffff;
   width: 100%;
+  min-height: 140px;
 }
 div.q-circuit div.q-circuit-scroller {
   width: 100%;

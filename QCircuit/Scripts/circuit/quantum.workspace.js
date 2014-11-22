@@ -43,9 +43,13 @@
 
     self.factoryShowroom = new Q.FactoryShowroom();
     self.element.append(self.factoryShowroom.element);
+    self.factoryShowroom.calculateScrollMax();
 
     self.circuit = new Q.Circuit(5);
     self.element.append(self.circuit.element);
+    self.circuit.calculateScrollMax();
+
+    self.element.on('scroll', self.circuit.scrolled);
   };
 
   Workspace.prototype.init = function init() {
