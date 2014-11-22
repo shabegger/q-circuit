@@ -14,6 +14,10 @@
   /* Private Variables */
 
   var _maxSlots = 6,
+      _classUp = 'q-circuit-up',
+      _classDown = 'q-circuit-down',
+      _classScroller = 'q-circuit-scroller',
+      _classContent = 'q-circuit-content',
       _classDelete = 'q-circuit-delete',
       _classDeletes = 'q-circuit-deletes',
       _classSlots = 'q-circuit-slots';
@@ -23,11 +27,15 @@
 
   function _circuitTmpl() {
     return [
-		  '<div class="q-circuit">',
-        '<div class="q-circuit-content">',
-          '<div class="', _classDeletes, '"></div>',
-          '<div class="', _classSlots, '"></div>',
+      '<div class="q-circuit">',
+        '<div class="', _classScroller, '">',
+          '<div class="', _classContent, '">',
+            '<div class="', _classDeletes, '"></div>',
+            '<div class="', _classSlots, '"></div>',
+          '</div>',
         '</div>',
+        '<a class="', _classUp, '"></a>',
+        '<a class="', _classDown, '"></a>',
 		  '</div>'].join('');
   }
 
@@ -75,6 +83,12 @@
     self.element
       .find(['.', _classDeletes].join(''))
       .on('click', ['.', _classDelete].join(''), self.deleteClicked);
+
+    self.element.find(['.', _classScroller].join(''))
+      .scrollable({
+        up: self.element.find(['.', _classUp].join('')),
+        down: self.element.find(['.', _classDown].join(''))
+      });
 
     for (i = 0; i < slotCount; i++) {
       self.addSlot();

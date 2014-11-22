@@ -1677,6 +1677,29 @@
 /* Size Variables */
 /* Computed Variables */
 /* LESS Mixins */
+.scroll-button {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: none;
+  cursor: pointer;
+  background: #888888;
+  font-size: 24px;
+  text-align: center;
+  opacity: 0.3;
+}
+.scroll-button:before {
+  color: #ffffff;
+}
+.scroll-button:hover {
+  opacity: 0.5;
+}
+.scroll-button:hover:active {
+  opacity: 1;
+}
 /* Page Styles */
 html,
 body {
@@ -1693,23 +1716,34 @@ body {
 }
 /* Workspace */
 div.q-workspace {
-  display: table;
-  table-layout: fixed;
+  position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
-div.q-workspace.q-mod-showroomSize2 div.q-factoryShowroom div.q-factoryShowroom-content {
+div.q-workspace.q-mod-showroomSize2 div.q-factoryShowroom {
   height: 175px;
 }
-div.q-workspace.q-mod-showroomSize3 div.q-factoryShowroom div.q-factoryShowroom-content {
+div.q-workspace.q-mod-showroomSize2 div.q-circuit {
+  top: 175px;
+}
+div.q-workspace.q-mod-showroomSize3 div.q-factoryShowroom {
   height: 250px;
 }
-div.q-workspace.q-mod-showroomSize4 div.q-factoryShowroom div.q-factoryShowroom-content {
+div.q-workspace.q-mod-showroomSize3 div.q-circuit {
+  top: 250px;
+}
+div.q-workspace.q-mod-showroomSize4 div.q-factoryShowroom {
   height: 325px;
 }
-div.q-workspace.q-mod-showroomSize5 div.q-factoryShowroom div.q-factoryShowroom-content {
+div.q-workspace.q-mod-showroomSize4 div.q-circuit {
+  top: 325px;
+}
+div.q-workspace.q-mod-showroomSize5 div.q-factoryShowroom {
   height: 400px;
+}
+div.q-workspace.q-mod-showroomSize5 div.q-circuit {
+  top: 400px;
 }
 /* Gate */
 div.q-gate {
@@ -1735,13 +1769,16 @@ div.q-gateFactory {
 }
 /* Factory Showroom */
 div.q-factoryShowroom {
-  display: table-cell;
-  position: relative;
+  position: absolute;
+  top: 0;
   background-color: #eeeeee;
+  width: 100%;
+  height: 100px;
   box-shadow: inset 0 15px 10px -10px #aaaaaa, inset 0 -15px 10px -10px #aaaaaa;
 }
 div.q-factoryShowroom div.q-factoryShowroom-scroller {
   width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 div.q-factoryShowroom div.q-factoryShowroom-scroller div.q-factoryShowroom-content {
@@ -1752,7 +1789,7 @@ div.q-factoryShowroom div.q-factoryShowroom-scroller div.q-factoryShowroom-conte
   display: inline-flex;
   flex-flow: column wrap;
   padding: 0 25px 0 0;
-  height: 100px;
+  height: 100%;
 }
 div.q-factoryShowroom a.q-factoryShowroom-left,
 div.q-factoryShowroom a.q-factoryShowroom-right {
@@ -1763,17 +1800,17 @@ div.q-factoryShowroom a.q-factoryShowroom-right {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: none;
-  position: absolute;
-  top: 50%;
   cursor: pointer;
   background: #888888;
+  font-size: 24px;
+  text-align: center;
+  opacity: 0.3;
+  position: absolute;
+  top: 50%;
   margin: -20px 0 0 0;
   width: 30px;
   height: 40px;
   line-height: 40px;
-  font-size: 24px;
-  text-align: center;
-  opacity: 0.3;
 }
 div.q-factoryShowroom a.q-factoryShowroom-left:before,
 div.q-factoryShowroom a.q-factoryShowroom-right:before {
@@ -1801,21 +1838,26 @@ div.q-factoryShowroom a.q-factoryShowroom-right:before {
 }
 /* Circuit */
 div.q-circuit {
-  display: table-row;
+  position: absolute;
+  top: 100px;
+  bottom: 0;
   background-color: #ffffff;
+  width: 100%;
+}
+div.q-circuit div.q-circuit-scroller {
+  width: 100%;
   height: 100%;
   overflow: hidden;
 }
-div.q-circuit div.q-circuit-content {
+div.q-circuit div.q-circuit-scroller div.q-circuit-content {
   display: table;
   width: 100%;
-  height: 100%;
 }
-div.q-circuit div.q-circuit-content div.q-circuit-deletes {
+div.q-circuit div.q-circuit-scroller div.q-circuit-content div.q-circuit-deletes {
   display: table-cell;
   vertical-align: top;
 }
-div.q-circuit div.q-circuit-content div.q-circuit-deletes span.q-circuit-delete {
+div.q-circuit div.q-circuit-scroller div.q-circuit-content div.q-circuit-deletes span.q-circuit-delete {
   display: inline-block;
   font: normal normal normal 14px/1 FontAwesome;
   font-size: inherit;
@@ -1830,14 +1872,60 @@ div.q-circuit div.q-circuit-content div.q-circuit-deletes span.q-circuit-delete 
   line-height: 10px;
   overflow: visible;
 }
-div.q-circuit div.q-circuit-content div.q-circuit-deletes span.q-circuit-delete:before {
+div.q-circuit div.q-circuit-scroller div.q-circuit-content div.q-circuit-deletes span.q-circuit-delete:before {
   content: '\f057';
   color: #ff0000;
 }
-div.q-circuit div.q-circuit-content div.q-circuit-slots {
+div.q-circuit div.q-circuit-scroller div.q-circuit-content div.q-circuit-slots {
   display: table-cell;
   width: 100%;
   vertical-align: top;
+}
+div.q-circuit a.q-circuit-up,
+div.q-circuit a.q-circuit-down {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: none;
+  cursor: pointer;
+  background: #888888;
+  font-size: 24px;
+  text-align: center;
+  opacity: 0.3;
+  display: block;
+  position: absolute;
+  left: 50%;
+  margin: 0 0 0 -20px;
+  width: 40px;
+  height: 30px;
+  line-height: 30px;
+}
+div.q-circuit a.q-circuit-up:before,
+div.q-circuit a.q-circuit-down:before {
+  color: #ffffff;
+}
+div.q-circuit a.q-circuit-up:hover,
+div.q-circuit a.q-circuit-down:hover {
+  opacity: 0.5;
+}
+div.q-circuit a.q-circuit-up:hover:active,
+div.q-circuit a.q-circuit-down:hover:active {
+  opacity: 1;
+}
+div.q-circuit a.q-circuit-up {
+  top: 0;
+}
+div.q-circuit a.q-circuit-up:before {
+  content: '\f077';
+}
+div.q-circuit a.q-circuit-down {
+  bottom: 0;
+}
+div.q-circuit a.q-circuit-down:before {
+  content: '\f078';
 }
 /* Slot */
 div.q-slot {

@@ -91,7 +91,6 @@
         factory = new Q.GateFactory(gateConstructor);
         factories.push(factory);
         content.append(factory.element);
-        factory.position();
       }
     }
 
@@ -128,7 +127,7 @@
       self.element.find(['.', _classLeft].join('')).show();
     }
 
-    if (scrollValue === vars.scrollMax) {
+    if (scrollValue >= vars.scrollMax) {
       self.element.find(['.', _classRight].join('')).hide();
     } else {
       self.element.find(['.', _classRight].join('')).show();

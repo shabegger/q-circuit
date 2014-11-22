@@ -29,7 +29,7 @@
     if (options.scrolling) {
       options.scrollPos +=
         options.direction * _smallStep * (now - options.lastFrame);
-      $(options.container)[options.scrollFn](options.scrollPos);
+      options.container[options.scrollFn](options.scrollPos);
     }
 
     options.lastFrame = now;
@@ -59,7 +59,7 @@
 
     options.start = options.lastFrame = (new Date()).valueOf();
     options.scrolling = false;
-    options.scrollPos = $(options.container)[options.scrollFn]();
+    options.scrollPos = options.container[options.scrollFn]();
     options.requestId =
       window.requestAnimationFrame($.proxy(scrollStep, null, options));
 
@@ -71,8 +71,9 @@
 
     // If scrolling hasn't started, take one big step
     if (!options.scrolling && options.scrollFn) {
+      options.scrolling = true;
       options.scrollPos += options.direction * _bigStep;
-      $(options.container)[options.scrollFn](options.scrollPos);
+      options.container[options.scrollFn](options.scrollPos);
     }
 
     window.cancelAnimationFrame(options.requestId);

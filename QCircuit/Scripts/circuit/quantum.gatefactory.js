@@ -9,8 +9,7 @@
 
   /* Private Variables */
 
-  var _className = 'q-gateFactory',
-      _classModItemPrefix = 'q-mod-item-';
+  var _className = 'q-gateFactory';
 
 
   /* Templates */
@@ -46,17 +45,6 @@
     }
 
     self.element.empty();
-  };
-
-  GateFactory.prototype.position = function position() {
-    var self = this,
-        element = self.element,
-        i = element.index();
-
-    element.removeClass().addClass([
-      _className,
-      _classModItemPrefix + i
-    ].join(' '));
   };
 
   GateFactory.prototype.generateGate = function generateGate() {

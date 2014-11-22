@@ -43,12 +43,39 @@
 
 .generate-factoryShowroom-size(@size) {
     div.q-workspace.q-mod-showroomSize@{size} {
+        @height: (@size * @gateSize) + ((@size + 1) * @paddingSize);
+
         div.q-factoryShowroom {
-            div.q-factoryShowroom-content {
-                height: (@size * @gateSize) + ((@size + 1) * @paddingSize);
-            }
+            height: @height;
+        }
+
+        div.q-circuit {
+            top: @height;
         }
     }
+}
+
+.scroll-button {
+    .fa;
+                
+    &:before {
+        color: @text;
+    }
+
+    &:hover {
+        opacity: 0.5;
+
+        &:active {
+            opacity: 1;
+        }
+    }
+
+    display: none;
+    cursor: pointer;
+    background: @controlFocus;
+    font-size: @scrollBtnFontSize;
+    text-align: center;
+    opacity: 0.3;
 }
 
 
@@ -72,8 +99,7 @@ html, body {
 /* Workspace */
 
 div.q-workspace {
-    display: table;
-    table-layout: fixed;
+    position: relative;
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -117,14 +143,17 @@ div.q-gateFactory {
 /* Factory Showroom */
 
 div.q-factoryShowroom {
-    display: table-cell;
-    position: relative;
+    position: absolute;
+    top: 0;
     background-color: @background2;
+    width: 100%;
+    height: @showroomHeight;
     box-shadow: inset 0 @shadowOffset @shadowSize -@shadowSize @shadow,
                 inset 0 -@shadowOffset @shadowSize -@shadowSize @shadow;
 
     div.q-factoryShowroom-scroller {
         width: 100%;
+        height: 100%;
         overflow: hidden;
 
         div.q-factoryShowroom-content {
@@ -135,38 +164,20 @@ div.q-factoryShowroom {
             display: inline-flex;
             flex-flow: column wrap;
             padding: 0 @paddingSize 0 0;
-            height: @showroomHeight;
+            height: 100%;
         }
     }
 
     a.q-factoryShowroom-left,
     a.q-factoryShowroom-right {
-        .fa;
-                
-        &:before {
-            color: @text;
-        }
+        .scroll-button;
 
-        &:hover {
-            opacity: 0.5;
-
-            &:active {
-                opacity: 1;
-            }
-        }
-
-        display: none;
         position: absolute;
         top: 50%;
-        cursor: pointer;
-        background: @controlFocus;
         margin: (-@scrollBtnHeight / 2) 0 0 0;
         width: @scrollBtnWidth;
         height: @scrollBtnHeight;
         line-height: @scrollBtnHeight;
-        font-size: @scrollBtnFontSize;
-        text-align: center;
-        opacity: 0.3;
     }
 
     a.q-factoryShowroom-left {
@@ -190,43 +201,78 @@ div.q-factoryShowroom {
 /* Circuit */
 
 div.q-circuit {
-    display: table-row;
+    position: absolute;
+    top: @showroomHeight;
+    bottom: 0;
     background-color: @background1;
-    height: 100%;
-    overflow: hidden;
+    width: 100%;
 
-    div.q-circuit-content {
-        display: table;
+    div.q-circuit-scroller {
         width: 100%;
         height: 100%;
+        overflow: hidden;
 
-        div.q-circuit-deletes {
-            display: table-cell;
-            vertical-align: top;
+        div.q-circuit-content {
+            display: table;
+            width: 100%;
 
-            span.q-circuit-delete {
-                .fa;
-                .fa-2x;
+            div.q-circuit-deletes {
+                display: table-cell;
+                vertical-align: top;
+
+                span.q-circuit-delete {
+                    .fa;
+                    .fa-2x;
                 
-                &:before {
-                    content: '\f057';
-                    color: @highlight;
-                }
+                    &:before {
+                        content: '\f057';
+                        color: @highlight;
+                    }
 
-                cursor: pointer;
-                display: block;
-                margin: @slotMargin ((@gateSize / 2) + @smallPaddingSize);
-                height: @slotSize;
-                line-height: @slotSize;
-                overflow: visible;
+                    cursor: pointer;
+                    display: block;
+                    margin: @slotMargin ((@gateSize / 2) + @smallPaddingSize);
+                    height: @slotSize;
+                    line-height: @slotSize;
+                    overflow: visible;
+                }
+            }
+
+            div.q-circuit-slots {
+                display: table-cell;
+                width: 100%;
+                vertical-align: top;
             }
         }
+    }
 
-        div.q-circuit-slots {
-            display: table-cell;
-            width: 100%;
-            vertical-align: top;
+    a.q-circuit-up,
+    a.q-circuit-down {
+        .scroll-button;
+
+        display: block;
+        position: absolute;
+        left: 50%;
+        margin: 0 0 0 (-@scrollBtnHeight / 2);
+        width: @scrollBtnHeight;
+        height: @scrollBtnWidth;
+        line-height: @scrollBtnWidth;
+    }
+
+    a.q-circuit-up {
+        &:before {
+            content: '\f077';
         }
+
+        top: 0;
+    }
+
+    a.q-circuit-down {
+        &:before {
+            content: '\f078';
+        }
+
+        bottom: 0;
     }
 }
 
