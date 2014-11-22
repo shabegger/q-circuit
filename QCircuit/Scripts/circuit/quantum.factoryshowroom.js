@@ -98,7 +98,7 @@
   };
 
 
-  /* Event Handlers */
+  /* Instance Methods */
 
   function calculateScrollMax(vars) {
     var self = this,

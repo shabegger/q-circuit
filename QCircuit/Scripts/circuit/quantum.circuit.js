@@ -61,6 +61,8 @@
 
     self.slotAdded = $.proxy(slotAdded, self, vars);
     self.deleteClicked = $.proxy(deleteClicked, self, vars);
+    self.calculateScrollMax = $.proxy(calculateScrollMax, self, vars);
+    self.updateScrollButtons = $.proxy(updateScrollButtons, self, vars);
 
     self.render(slotCount);
   }
@@ -84,17 +86,20 @@
       .find(['.', _classDeletes].join(''))
       .on('click', ['.', _classDelete].join(''), self.deleteClicked);
 
-    self.element.find(['.', _classScroller].join(''))
-      .scrollable({
-        up: self.element.find(['.', _classUp].join('')),
-        down: self.element.find(['.', _classDown].join(''))
-      });
-
     for (i = 0; i < slotCount; i++) {
       self.addSlot();
     }
 
     self.addSlot(true);
+
+    self.element.find(['.', _classScroller].join(''))
+      .scrollable({
+        up: self.element.find(['.', _classUp].join('')),
+        down: self.element.find(['.', _classDown].join(''))
+      })
+      .on('scroll', self.updateScrollButtons);
+
+    $(window).on('resize', self.calculateScrollMax);
   };
 
 
@@ -129,6 +134,8 @@
         });
       }
     }
+
+    self.calculateScrollMax();
   };
 
   function removeSlot(vars, i) {
@@ -162,6 +169,40 @@
           'visibility': 'hidden'
         });
       }
+    }
+  }
+
+  function calculateScrollMax(vars) {
+    var self = this,
+        scrollerHeight,
+        scrolleeHeight;
+
+    scrollerHeight =
+      self.element.find(['.', _classScroller].join('')).innerHeight();
+    scrolleeHeight =
+      self.element.find(['.', _classContent].join('')).outerHeight();
+
+    vars.scrollMax = Math.max(0, scrolleeHeight - scrollerHeight);
+    self.updateScrollButtons();
+  }
+
+  function updateScrollButtons(vars) {
+    var self = this,
+        scrollValue;
+
+    scrollValue =
+      self.element.find(['.', _classScroller].join('')).scrollTop();
+
+    if (scrollValue === 0) {
+      self.element.find(['.', _classUp].join('')).hide();
+    } else {
+      self.element.find(['.', _classUp].join('')).show();
+    }
+
+    if (scrollValue >= vars.scrollMax) {
+      self.element.find(['.', _classDown].join('')).hide();
+    } else {
+      self.element.find(['.', _classDown].join('')).show();
     }
   }
 
