@@ -58,11 +58,12 @@
 
     self.addSlot = $.proxy(addSlot, self, vars);
     self.removeSlot = $.proxy(removeSlot, self, vars);
+    self.calculateScrollMax = $.proxy(calculateScrollMax, self, vars);
+    self.updateScrollButtons = $.proxy(updateScrollButtons, self, vars);
 
     self.slotAdded = $.proxy(slotAdded, self, vars);
     self.deleteClicked = $.proxy(deleteClicked, self, vars);
-    self.calculateScrollMax = $.proxy(calculateScrollMax, self, vars);
-    self.updateScrollButtons = $.proxy(updateScrollButtons, self, vars);
+    self.scrolled = $.proxy(scrolled, self, vars);
 
     self.render(slotCount);
   }
@@ -97,7 +98,7 @@
         up: self.element.find(['.', _classUp].join('')),
         down: self.element.find(['.', _classDown].join(''))
       })
-      .on('scroll', self.updateScrollButtons);
+      .on('scroll', self.scrolled);
 
     $(window).on('resize', self.calculateScrollMax);
   };
@@ -226,6 +227,18 @@
         btn = $(e.target);
 
     self.removeSlot(btn.index());
+  }
+
+  function scrolled(vars, e) {
+    var self = this,
+        slots = vars.slots,
+        i, len;
+
+    for (i = 0, len = slots.length; i < len; i++) {
+      slots[i].invalidateBounds();
+    }
+
+    self.updateScrollButtons();
   }
 
 
