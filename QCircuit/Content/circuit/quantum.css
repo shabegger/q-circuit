@@ -1747,7 +1747,7 @@ div.q-workspace.q-mod-showroomSize5 div.q-circuit {
 }
 /* Gate */
 div.q-gate {
-  background: #ffe3aa;
+  background: #6584b2;
   cursor: pointer;
   width: 50px;
   height: 50px;
@@ -1756,7 +1756,7 @@ div.q-gate {
   z-index: 10000;
 }
 div.q-gate span.q-gate-text {
-  color: #6584b2;
+  color: #ffffff;
   cursor: pointer;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 20px;
@@ -1954,7 +1954,7 @@ div.q-slot:before {
 }
 div.q-slot:after {
   content: '';
-  background-color: #6584b2;
+  background-color: #666666;
   position: absolute;
   top: 0;
   right: 0;

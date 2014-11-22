@@ -9,6 +9,7 @@
 @foreground1:       #6584b2;
 @foreground2:       #ffe3aa;
 @highlight:         #f00;
+@control:           #666;
 @controlFocus:      #888;
 @text:              #fff;
 @shadow:            #aaa;
@@ -114,7 +115,7 @@ div.q-workspace {
 /* Gate */
 
 div.q-gate {
-    background: @foreground2;
+    background: @foreground1;
     cursor: pointer;
     width: @gateSize;
     height: @gateSize;
@@ -123,7 +124,7 @@ div.q-gate {
     z-index: 10000;
 
     span.q-gate-text {
-        color: @foreground1;
+        color: @text;
         cursor: pointer;
         font-family: @font;
         font-size: @gateFontSize;
@@ -306,7 +307,7 @@ div.q-slot {
 
     &:after {
         content: '';
-        background-color: @foreground1;
+        background-color: @control;
         position: absolute;
         top: 0;
         right: 0;
