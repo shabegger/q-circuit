@@ -18,6 +18,10 @@ namespace QCircuit
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/bugfix").Include(
+                        "~/Scripts/bugfix/bugfix.js",
+                        "~/Scripts/bugfix/bugfix.flex.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/mixins").Include(
                         "~/Scripts/mixins/mixins.js",
                         "~/Scripts/mixins/mixins.events.js"));

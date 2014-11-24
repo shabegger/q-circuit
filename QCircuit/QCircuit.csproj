@@ -210,6 +210,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\validation.css" />
+    <Content Include="Scripts\bugfix\bugfix.flex.js" />
+    <Content Include="Scripts\bugfix\bugfix.js" />
     <Content Include="Scripts\circuit\quantum.circuit.js" />
     <Content Include="Scripts\circuit\quantum.gate.js" />
     <Content Include="Content\circuit\quantum.less" />
