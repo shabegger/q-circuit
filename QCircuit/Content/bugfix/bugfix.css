@@ -1,0 +1,25 @@
+﻿div.bugfix-flex-container {
+    position: absolute;
+    left: -1000px;
+    display: -webkit-inline-box;
+    display: -moz-inline-box;
+    display: -ms-inline-flexbox;
+    display: -webkit-inline-flex;
+    display: inline-flex;
+    flex-flow: column wrap;
+    margin: 0;
+    padding: 0;
+    height: 1px;
+}
+
+    div.bugfix-flex-container.bugfix-mod-height {
+        height: 1px;
+    }
+
+div.bugfix-flex-item {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    width: 1px;
+    height: 1px;
+}

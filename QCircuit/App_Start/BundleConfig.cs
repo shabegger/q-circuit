@@ -44,6 +44,9 @@ namespace QCircuit
                         "~/Scripts/circuit/quantum.circuit.js",
                         "~/Scripts/circuit/quantum.circuitbuilder.js"));
 
+            bundles.Add(new StyleBundle("~/Content/bugfix").Include(
+                        "~/Content/bugfix/bugfix.css"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                         "~/Content/main.css",
                         "~/Content/validation.css"));

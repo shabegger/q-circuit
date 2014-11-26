@@ -200,6 +200,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bugfix\bugfix.css" />
     <Content Include="Content\circuit\quantum.css" />
     <Content Include="Content\circuit\quantum.min.css" />
     <Content Include="Content\font-awesome.css" />

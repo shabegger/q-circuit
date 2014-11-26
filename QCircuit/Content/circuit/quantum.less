@@ -43,14 +43,12 @@
 /* LESS Mixins */
 
 .generate-factoryShowroom-size(@size) {
-    div.q-workspace.q-mod-showroomSize@{size} {
-        @height: (@size * @gateSize) + ((@size + 1) * @paddingSize);
+    @height: (@size * @gateSize) + ((@size + 1) * @paddingSize);
 
-        div.q-factoryShowroom {
-            height: @height;
-        }
+    div.q-factoryShowroom.q-mod-size-@{size} {
+        height: @height;
 
-        div.q-circuit {
+        & ~ div.q-circuit {
             top: @height;
         }
     }
@@ -106,11 +104,6 @@ div.q-workspace {
     overflow-x: hidden;
     overflow-y: auto;
 }
-
-.generate-factoryShowroom-size(2);
-.generate-factoryShowroom-size(3);
-.generate-factoryShowroom-size(4);
-.generate-factoryShowroom-size(5);
 
 
 /* Gate */
@@ -198,6 +191,11 @@ div.q-factoryShowroom {
         right: 0;
     }
 }
+
+.generate-factoryShowroom-size(2);
+.generate-factoryShowroom-size(3);
+.generate-factoryShowroom-size(4);
+.generate-factoryShowroom-size(5);
 
 
 /* Circuit */

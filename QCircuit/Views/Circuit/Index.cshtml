@@ -3,6 +3,7 @@
 }
 
 @section styles {
+  @Styles.Render("~/Content/bugfix")
   @Styles.Render("~/Content/quantum")
   <style>
     div.q-factoryShowroom-content {
@@ -18,13 +19,18 @@
   @Scripts.Render("~/bundles/interaction")
   @Scripts.Render("~/bundles/quantum")
   <script>
-    ; (function (window, Q) {
+    ; (function (window, Q, Bug, undefined) {
 
       'use strict';
 
-      var workspace = new Q.Workspace('#circuit');
+      var workspace;
 
-    }(this, this.Quantum));
+      Bug.Flex.fixFlexWidth();
+      Bug.Flex.fixFlexWidthReset();
+
+      workspace = new Q.Workspace('#circuit');
+
+    }(this, this.Quantum, this.Bugfix));
   </script>
 }
 
