@@ -34,6 +34,10 @@ namespace QCircuit
                         "~/Scripts/interaction/interaction.drag.js",
                         "~/Scripts/interaction/interaction.scroll.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/utility").Include(
+                        "~/Scripts/utility/utility.js",
+                        "~/Scripts/utility/utility.fn.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/quantum").Include(
                         "~/Scripts/circuit/quantum.js",
                         "~/Scripts/circuit/quantum.workspace.js",

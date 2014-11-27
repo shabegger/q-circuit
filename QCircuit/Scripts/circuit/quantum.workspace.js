@@ -25,6 +25,8 @@
   function Workspace(container) {
     var self = this;
 
+    self.setShowroomSize = $.proxy(setShowroomSize, self);
+
     self.render(container);
     self.init();
   }
@@ -45,11 +47,14 @@
     self.element.append(self.factoryShowroom.element);
     self.factoryShowroom.calculateScrollMax();
 
-    self.circuit = new Q.Circuit(5);
+    self.circuit = new Q.Circuit();
     self.element.append(self.circuit.element);
     self.circuit.calculateScrollMax();
 
     self.element.on('scroll', self.circuit.scrolled);
+
+    $(window).on('resize', self.setShowroomSize);
+    self.circuit.addEventListener('slotsChanged', self.setShowroomSize);
   };
 
   Workspace.prototype.init = function init() {
@@ -65,11 +70,38 @@
         }
 
         self.factoryShowroom.addGates(gates);
+        self.setShowroomSize();
       })
       .fail(function () {
         // TODO: Handle error
       });
   };
+
+
+  /* Event Handlers */
+
+  function setShowroomSize(e) {
+    var self = this,
+        showroom = self.factoryShowroom,
+        circuit = self.circuit,
+        currentSize, currentHeight,
+        availableHeight, maxSize,
+        showroomRatio;
+
+    showroomRatio = showroom.desiredWidth() / showroom.actualWidth();
+    if (showroomRatio <= 1) {
+      showroom.size(1);
+      return;
+    }
+
+    currentSize = showroom.size();
+    currentHeight = showroom.heightForSize(currentSize);
+
+    availableHeight = circuit.actualHeight() - circuit.desiredHeight();
+    maxSize = showroom.sizeForHeight(availableHeight + currentHeight);
+
+    showroom.size(Math.min(maxSize, showroomRatio));
+  }
 
 
   /* Expose */

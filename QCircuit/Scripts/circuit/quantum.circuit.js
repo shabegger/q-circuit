@@ -1,12 +1,15 @@
 ﻿/// <reference path="../interaction/interaction.js" />
 /// <reference path="../interaction/interaction.intersect.js" />
+/// <reference path="../interaction/interaction.scroll.js" />
+/// <reference path="../mixins/mixins.js" />
+/// <reference path="../mixins/mixins.events.js" />s
 /// <reference path="quantum.js" />
 /// <reference path="quantum.gate.js" />
 /// <reference path="quantum.slot.js" />
 /// <reference path="quantum.workspace.js" />
 /// <reference path="../jquery-1.10.2.intellisense.js" />
 
-; (function (window, Q, $, undefined) {
+; (function (window, Q, M, $, undefined) {
 
   'use strict';
 
@@ -51,6 +54,8 @@
   function Circuit(slotCount) {
     var self = this,
         vars;
+
+    M.Events.mixinEvents(self);
 
     vars = {
       slots: []
@@ -103,6 +108,20 @@
     $(window).on('resize', self.calculateScrollMax);
   };
 
+  Circuit.prototype.desiredHeight = function desiredHeight() {
+    var self = this,
+        content = self.element.find(['.', _classContent].join(''));
+
+    return content.outerHeight();
+  };
+
+  Circuit.prototype.actualHeight = function actualHeight() {
+    var self = this,
+        element = self.element;
+
+    return element.innerHeight();
+  };
+
 
   /* Instance Methods */
 
@@ -134,6 +153,8 @@
           'visibility': addSlot ? 'hidden' : 'visible'  
         });
       }
+
+      self.dispatchEvent('slotsChanged');
     }
 
     self.calculateScrollMax();
@@ -246,4 +267,4 @@
 
   Q.Circuit = Circuit;
 
-}(this, this.Quantum, this.jQuery));
+}(this, this.Quantum, this.Mixins, this.jQuery));

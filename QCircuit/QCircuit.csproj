@@ -244,6 +244,8 @@
     <Content Include="Scripts\mixins\mixins.events.js" />
     <Content Include="Scripts\mixins\mixins.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\utility\utility.fn.js" />
+    <Content Include="Scripts\utility\utility.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

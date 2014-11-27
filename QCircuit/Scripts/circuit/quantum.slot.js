@@ -203,7 +203,7 @@
   }
 
 
-  /* Helpers */
+  /* Private Helpers */
 
   function insertGate(gates, gate, position) {
     var key = Math.floor(position * 100000000);

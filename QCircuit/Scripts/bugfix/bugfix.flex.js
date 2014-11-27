@@ -1,4 +1,4 @@
-﻿/// <reference path="mixins.js" />
+﻿/// <reference path="bugfix.js" />
 
 ; (function (window, Bugfix, undefined) {
 
