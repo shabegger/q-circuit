@@ -51,8 +51,12 @@
     self.calculateScrollMax = $.proxy(calculateScrollMax, self, vars);
     self.updateScrollButtons = $.proxy(updateScrollButtons, self, vars);
 
-    self.factorySize = U.Fn.once($.proxy(factorySize, self));
-    self.factoryMargin = U.Fn.once($.proxy(factoryMargin, self));
+    self.factoryHeight = U.Fn.once($.proxy(factoryHeight, self), true);
+    self.factoryWidth = U.Fn.once($.proxy(factoryWidth, self), true);
+    self.factoryMarginHeight =
+      U.Fn.once($.proxy(factoryMarginHeight, self), true);
+    self.factoryMarginWidth =
+      U.Fn.once($.proxy(factoryMarginWidth, self), true);
 
     self.render();
   }
@@ -109,20 +113,6 @@
     self.calculateScrollMax();
   };
 
-  FactoryShowroom.prototype.desiredWidth = function desiredWidth() {
-    var self = this,
-        count = self.factories.length;
-
-    return (self.factorySize() * count) + (self.factoryMargin() * (count + 1));
-  };
-
-  FactoryShowroom.prototype.actualWidth = function actualWidth() {
-    var self = this,
-        element = self.element;
-
-    return element.innerWidth();
-  };
-
   FactoryShowroom.prototype.size = function size(newSize) {
     var self = this,
         element = self.element,
@@ -159,17 +149,33 @@
     return newSize;
   };
 
+  FactoryShowroom.prototype.desiredWidth = function desiredWidth() {
+    var self = this,
+        count = self.factories.length;
+
+    return (self.factoryWidth() * count) +
+      (self.factoryMarginWidth() * (count + 1));
+  };
+
+  FactoryShowroom.prototype.actualWidth = function actualWidth() {
+    var self = this,
+        element = self.element;
+
+    return element.innerWidth();
+  };
+
   FactoryShowroom.prototype.heightForSize = function heightForSize(size) {
     var self = this;
 
-    return (self.factorySize() * size) + (self.factoryMargin() * (size + 1));
+    return (self.factoryHeight() * size) +
+      (self.factoryMarginHeight() * (size + 1));
   };
 
   FactoryShowroom.prototype.sizeForHeight = function sizeForHeight(height) {
     var self = this;
 
-    return Math.floor((height - self.factoryMargin()) /
-      (self.factorySize() + self.factoryMargin()));
+    return Math.floor((height - self.factoryMarginHeight()) /
+      (self.factoryHeight() + self.factoryMarginHeight()));
   };
 
 
@@ -209,24 +215,40 @@
     }
   }
 
-  function factorySize() {
+  function factoryHeight() {
     var self = this,
         element = self.element,
         factory;
-    
+
     factory = element.find(['.', _classContent].join('')).children().first();
-    return factory.height();
+    return factory.outerHeight(false);
   }
 
-  function factoryMargin() {
+  function factoryWidth() {
     var self = this,
         element = self.element,
-        factory, margin;
+        factory;
 
     factory = element.find(['.', _classContent].join('')).children().first();
-    margin = parseInt(factory.css('margin-top'));
+    return factory.outerWidth(false);
+  }
 
-    return isNaN(margin) ? 0 : margin;
+  function factoryMarginHeight() {
+    var self = this,
+        element = self.element,
+        factory;
+
+    factory = element.find(['.', _classContent].join('')).children().first();
+    return factory.outerHeight(true) - self.factoryHeight();
+  }
+
+  function factoryMarginWidth() {
+    var self = this,
+        element = self.element,
+        factory;
+
+    factory = element.find(['.', _classContent].join('')).children().first();
+    return factory.outerWidth(true) - self.factoryWidth();
   }
 
 
