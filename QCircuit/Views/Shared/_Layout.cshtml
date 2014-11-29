@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>@ViewBag.Title - QCircuit</title>
+    <title>@ViewBag.Title - Quorithm</title>
 
     @Styles.Render("~/Content/css")
     @RenderSection("styles", required: false)
@@ -14,7 +14,7 @@
   <body>
     <header>
       <ul>
-        <li class="header-link-home">@Html.ActionLink("QCircuit", "Index", "Home")</li>
+        <li class="header-link-home">@Html.ActionLink("Quorithm", "Index", "Home")</li>
         <li>@Html.ActionLink("Circuit Builder", "Index", "Circuit")</li>
       </ul>
       @Html.Partial("_LoginPartial")
@@ -23,7 +23,7 @@
     @RenderBody()
 
     <footer>
-      <p>&copy; @DateTime.Now.Year - QCircuit</p>
+      <p>&copy; @DateTime.Now.Year - Quorithm</p>
     </footer>
 
     @Scripts.Render("~/bundles/jquery")

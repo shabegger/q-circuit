@@ -221,6 +221,7 @@
   /* Expose */
 
   Bugfix.Flex = {
+    isFlexContainer: isFlexContainer,
     isBugFlexWidth: isBugFlexWidth,
     fixFlexWidth: fixFlexWidth,
     isBugFlexWidthReset: isBugFlexWidthReset,

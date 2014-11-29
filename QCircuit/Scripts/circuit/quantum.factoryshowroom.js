@@ -1,4 +1,6 @@
-﻿/// <reference path="../interaction/interaction.js" />
+﻿/// <reference path="../bugfix/bugfix.js" />
+/// <reference path="../bugfix/bugfix.flex.js" />
+/// <reference path="../interaction/interaction.js" />
 /// <reference path="../interaction/interaction.scroll.js" />
 /// <reference path="../utility/utility.js" />
 /// <reference path="../utility/utility.fn.js" />
@@ -7,7 +9,7 @@
 /// <reference path="quantum.gatefactory.js" />
 /// <reference path="../jquery-1.10.2.intellisense.js" />
 
-; (function (window, Q, U, $, undefined) {
+; (function (window, Q, U, B, $, undefined) {
 
   'use strict';
 
@@ -113,6 +115,15 @@
     self.calculateScrollMax();
   };
 
+  FactoryShowroom.prototype.canResize = function canResize() {
+    var self = this,
+        element = self.element,
+        content;
+
+    content = element.find(['.', _classContent].join(''));
+    return B.Flex.isFlexContainer(content);
+  };
+
   FactoryShowroom.prototype.size = function size(newSize) {
     var self = this,
         element = self.element,
@@ -136,6 +147,10 @@
     newSize = Math.min(_maxPrefixSize, newSize);
 
     if (size !== newSize) {
+      if (!self.canResize()) {
+        return 1;
+      }
+
       element.removeClass();
       element.addClass(_class);
 
@@ -256,4 +271,4 @@
 
   Q.FactoryShowroom = FactoryShowroom;
 
-}(this, this.Quantum, this.Utility, this.jQuery));
+}(this, this.Quantum, this.Utility, this.Bugfix, this.jQuery));

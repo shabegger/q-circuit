@@ -152,6 +152,7 @@ div.q-factoryShowroom {
         overflow: hidden;
 
         div.q-factoryShowroom-content {
+            display: inline-block;
             display: -webkit-inline-box;
             display: -moz-inline-box;
             display: -ms-inline-flexbox;
@@ -160,6 +161,7 @@ div.q-factoryShowroom {
             flex-flow: column wrap;
             padding: 0 @paddingSize 0 0;
             height: 100%;
+            white-space: nowrap;
         }
     }
 
@@ -257,6 +259,7 @@ div.q-circuit {
         width: @scrollBtnHeight;
         height: @scrollBtnWidth;
         line-height: @scrollBtnWidth;
+        z-index: 10000;
     }
 
     a.q-circuit-up {

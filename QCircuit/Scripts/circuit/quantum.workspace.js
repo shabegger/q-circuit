@@ -53,8 +53,10 @@
 
     self.element.on('scroll', self.circuit.scrolled);
 
-    $(window).on('resize', self.setShowroomSize);
-    self.circuit.addEventListener('slotsChanged', self.setShowroomSize);
+    if (self.factoryShowroom.canResize()) {
+      $(window).on('resize', self.setShowroomSize);
+      self.circuit.addEventListener('slotsChanged', self.setShowroomSize);
+    }
   };
 
   Workspace.prototype.init = function init() {
@@ -70,7 +72,10 @@
         }
 
         self.factoryShowroom.addGates(gates);
-        self.setShowroomSize();
+
+        if (self.factoryShowroom.canResize()) {
+          self.setShowroomSize();
+        }
       })
       .fail(function () {
         // TODO: Handle error
