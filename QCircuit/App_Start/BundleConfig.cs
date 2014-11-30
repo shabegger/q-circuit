@@ -7,8 +7,9 @@ namespace QCircuit
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+            bundles.Add(new ScriptBundle("~/bundles/main").Include(
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/main.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -52,7 +53,7 @@ namespace QCircuit
                         "~/Content/bugfix/bugfix.css"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                        "~/Content/main.css",
+                        "~/Content/main/main.css",
                         "~/Content/validation.css"));
 
             bundles.Add(new StyleBundle("~/Content/quantum").Include(
