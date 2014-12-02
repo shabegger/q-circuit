@@ -1722,6 +1722,48 @@ div.q-workspace {
   overflow-x: hidden;
   overflow-y: auto;
 }
+/* Toolbar */
+div.q-toolbar {
+  position: absolute;
+  top: 0;
+  background: #aaaaaa;
+  width: 100%;
+  height: 30px;
+}
+div.q-toolbar a.q-toolbar-tool {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  cursor: pointer;
+  margin-left: 20px;
+  line-height: 30px;
+}
+div.q-toolbar a.q-toolbar-tool:after {
+  content: attr(data-name);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin-left: 5px;
+}
+div.q-toolbar a.q-toolbar-tool.q-toolbar-new:before {
+  content: '\f016';
+}
+div.q-toolbar a.q-toolbar-tool.q-toolbar-open:before {
+  content: '\f115';
+}
+div.q-toolbar a.q-toolbar-tool.q-toolbar-save:before {
+  content: '\f0c7';
+}
+div.q-toolbar a.q-toolbar-tool.q-toolbar-copy:before {
+  content: '\f0c5';
+}
+div.q-toolbar a.q-toolbar-tool.q-toolbar-delete:before {
+  content: '\f05c';
+}
+div.q-toolbar a.q-toolbar-tool.q-toolbar-execute:before {
+  content: '\f18e';
+}
 /* Gate */
 div.q-gate {
   background: #6584b2;
@@ -1747,7 +1789,7 @@ div.q-gateFactory {
 /* Factory Showroom */
 div.q-factoryShowroom {
   position: absolute;
-  top: 0;
+  top: 30px;
   background-color: #eeeeee;
   width: 100%;
   height: 100px;
@@ -1819,30 +1861,30 @@ div.q-factoryShowroom.q-mod-size-2 {
   height: 175px;
 }
 div.q-factoryShowroom.q-mod-size-2 ~ div.q-circuit {
-  top: 175px;
+  top: 205px;
 }
 div.q-factoryShowroom.q-mod-size-3 {
   height: 250px;
 }
 div.q-factoryShowroom.q-mod-size-3 ~ div.q-circuit {
-  top: 250px;
+  top: 280px;
 }
 div.q-factoryShowroom.q-mod-size-4 {
   height: 325px;
 }
 div.q-factoryShowroom.q-mod-size-4 ~ div.q-circuit {
-  top: 325px;
+  top: 355px;
 }
 div.q-factoryShowroom.q-mod-size-5 {
   height: 400px;
 }
 div.q-factoryShowroom.q-mod-size-5 ~ div.q-circuit {
-  top: 400px;
+  top: 430px;
 }
 /* Circuit */
 div.q-circuit {
   position: absolute;
-  top: 100px;
+  top: 130px;
   bottom: 0;
   background-color: #ffffff;
   width: 100%;

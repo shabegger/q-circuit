@@ -1780,7 +1780,7 @@ footer p {
   header.main-login-show ul:last-child li {
     display: block;
     border-top: 1px solid #cccccc;
-    border-bottom: 1px solid #bbbbbb;
+    border-bottom: 1px solid #888888;
     padding: 0 20px;
   }
   header.main-login-show span.main-login-disclosure {

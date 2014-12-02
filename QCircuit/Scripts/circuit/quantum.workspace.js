@@ -4,6 +4,7 @@
 /// <reference path="quantum.circuit.js" />
 /// <reference path="quantum.factoryshowroom.js" />
 /// <reference path="quantum.gate.js" />
+/// <reference path="quantum.toolbar.js" />
 /// <reference path="../jquery-1.10.2.intellisense.js" />
 
 ; (function (window, Q, M, $, undefined) {
@@ -42,6 +43,9 @@
     }
 
     self.element.empty();
+
+    self.toolbar = new Q.Toolbar();
+    self.element.append(self.toolbar.element);
 
     self.factoryShowroom = new Q.FactoryShowroom();
     self.element.append(self.factoryShowroom.element);

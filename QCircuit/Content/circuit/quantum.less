@@ -18,6 +18,8 @@
 /* Size Variables */
 
 @gateSize:          50px;
+@toolbarSize:       30px;
+@toolbarPadding:    5px;
 @highlightSize:     5px;
 @paddingSize:       25px;
 @scrollBtnWidth:    30px;
@@ -49,7 +51,7 @@
         height: @height;
 
         & ~ div.q-circuit {
-            top: @height;
+            top: @toolbarSize + @height;
         }
     }
 }
@@ -106,6 +108,67 @@ div.q-workspace {
 }
 
 
+/* Toolbar */
+
+div.q-toolbar {
+    position: absolute;
+    top: 0;
+    background: @footerBackground;
+    width: 100%;
+    height: @toolbarSize;
+
+    a.q-toolbar-tool {
+        .fa;
+        
+        cursor: pointer;
+        margin-left: @mainPadding;
+        line-height: @toolbarSize;
+
+        &:after {
+            content: attr(data-name);
+            font-family: @font;
+            margin-left: @toolbarPadding;
+        }
+
+        &.q-toolbar-new {
+            &:before {
+                content: '\f016';
+            }
+        }
+
+        &.q-toolbar-open {
+            &:before {
+                content: '\f115';
+            }
+        }
+
+        &.q-toolbar-save {
+            &:before {
+                content: '\f0c7';
+            }
+        }
+
+        &.q-toolbar-copy {
+            &:before {
+                content: '\f0c5';
+            }
+        }
+
+        &.q-toolbar-delete {
+            &:before {
+                content: '\f05c';
+            }
+        }
+
+        &.q-toolbar-execute {
+            &:before {
+                content: '\f18e';
+            }
+        }
+    }
+}
+
+
 /* Gate */
 
 div.q-gate {
@@ -139,7 +202,7 @@ div.q-gateFactory {
 
 div.q-factoryShowroom {
     position: absolute;
-    top: 0;
+    top: @toolbarSize;
     background-color: @background2;
     width: 100%;
     height: @showroomHeight;
@@ -204,7 +267,7 @@ div.q-factoryShowroom {
 
 div.q-circuit {
     position: absolute;
-    top: @showroomHeight;
+    top: @toolbarSize + @showroomHeight;
     bottom: 0;
     background-color: @background1;
     width: 100%;
