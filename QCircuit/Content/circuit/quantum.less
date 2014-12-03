@@ -28,8 +28,10 @@
 @slotSize:          10px;
 @smallPaddingSize:  15px;
 
-@gateFontSize:      20px;
-@scrollBtnFontSize: 24px;
+@gateFontSize:          20px;
+@toolbarIconFontSize:   16px;
+@toolbarTextFontSize:   14px;
+@scrollBtnFontSize:     24px;
 
 
 /* Computed Variables */
@@ -113,7 +115,7 @@ div.q-workspace {
 div.q-toolbar {
     position: absolute;
     top: 0;
-    background: @footerBackground;
+    background: @foreground1;
     width: 100%;
     height: @toolbarSize;
 
@@ -121,12 +123,18 @@ div.q-toolbar {
         .fa;
         
         cursor: pointer;
+        color: @text;
         margin-left: @mainPadding;
         line-height: @toolbarSize;
+
+        &:before {
+            @font-size: @toolbarIconFontSize;
+        }
 
         &:after {
             content: attr(data-name);
             font-family: @font;
+            font-size: @toolbarTextFontSize;
             margin-left: @toolbarPadding;
         }
 
@@ -156,13 +164,13 @@ div.q-toolbar {
 
         &.q-toolbar-delete {
             &:before {
-                content: '\f05c';
+                content: '\f00d';
             }
         }
 
         &.q-toolbar-execute {
             &:before {
-                content: '\f18e';
+                content: '\f061';
             }
         }
     }

@@ -1726,7 +1726,7 @@ div.q-workspace {
 div.q-toolbar {
   position: absolute;
   top: 0;
-  background: #aaaaaa;
+  background: #6584b2;
   width: 100%;
   height: 30px;
 }
@@ -1738,12 +1738,14 @@ div.q-toolbar a.q-toolbar-tool {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   cursor: pointer;
+  color: #ffffff;
   margin-left: 20px;
   line-height: 30px;
 }
 div.q-toolbar a.q-toolbar-tool:after {
   content: attr(data-name);
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 14px;
   margin-left: 5px;
 }
 div.q-toolbar a.q-toolbar-tool.q-toolbar-new:before {
@@ -1759,10 +1761,10 @@ div.q-toolbar a.q-toolbar-tool.q-toolbar-copy:before {
   content: '\f0c5';
 }
 div.q-toolbar a.q-toolbar-tool.q-toolbar-delete:before {
-  content: '\f05c';
+  content: '\f00d';
 }
 div.q-toolbar a.q-toolbar-tool.q-toolbar-execute:before {
-  content: '\f18e';
+  content: '\f061';
 }
 /* Gate */
 div.q-gate {

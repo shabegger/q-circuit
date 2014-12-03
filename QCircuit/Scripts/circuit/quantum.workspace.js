@@ -46,6 +46,9 @@
 
     self.toolbar = new Q.Toolbar();
     self.element.append(self.toolbar.element);
+    self.toolbar.addEventListener('itemSelect', function (e) {
+      alert(e.action);
+    });
 
     self.factoryShowroom = new Q.FactoryShowroom();
     self.element.append(self.factoryShowroom.element);
