@@ -46,9 +46,8 @@
 
     self.toolbar = new Q.Toolbar();
     self.element.append(self.toolbar.element);
-    self.toolbar.addEventListener('itemSelect', function (e) {
-      alert(e.action);
-    });
+    self.toolbar.addEventListener('itemSelect',
+      $.proxy(toolbarItemSelected, self));
 
     self.factoryShowroom = new Q.FactoryShowroom();
     self.element.append(self.factoryShowroom.element);
@@ -113,6 +112,16 @@
     maxSize = showroom.sizeForHeight(availableHeight + currentHeight);
 
     showroom.size(Math.min(maxSize, showroomRatio));
+  }
+
+  function toolbarItemSelected(e) {
+    var self = this;
+
+    switch (e.action) {
+      case 'save':
+        self.circuit.save();
+        break;
+    }
   }
 
 

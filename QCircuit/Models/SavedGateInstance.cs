@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QCircuit.Models
 {
     public class SavedGateInstance
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
 
@@ -17,7 +20,10 @@ namespace QCircuit.Models
 
         #region References
 
-        public virtual SavedGateInstance Gate { get; set; }
+        [JsonIgnore]
+        public virtual SavedGate Gate { get; set; }
+
+        [JsonIgnore]
         public virtual ICollection<SavedCircuitSlot> Slots { get; set; }
 
         #endregion
@@ -25,7 +31,7 @@ namespace QCircuit.Models
 
         #region Properties
 
-        public int Position { get; set; }
+        public double Position { get; set; }
 
         #endregion
     }

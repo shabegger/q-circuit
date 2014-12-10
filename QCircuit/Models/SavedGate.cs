@@ -10,6 +10,7 @@ namespace QCircuit.Models
 {
     public class SavedGate
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
 

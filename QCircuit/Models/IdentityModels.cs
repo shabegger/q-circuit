@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
+using System.Web;
 
 namespace QCircuit.Models
 {
@@ -14,24 +17,33 @@ namespace QCircuit.Models
     {
         public ApplicationDbContext() : base("DefaultConnection") { }
 
-        public DbSet<SavedGate> Gates { get; set; }
-        public DbSet<SavedGateInstance> GateInstances { get; set; }
-        public DbSet<SavedCircuit> Circuits { get; set; }
-        public DbSet<SavedCircuitSlot> CircuitSlots { get; set; }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        private ApplicationUser _user = null;
+        public ApplicationUser User
         {
-            modelBuilder.Entity<SavedCircuitSlot>()
-                .HasMany(s => s.Gates)
-                .WithMany(g => g.Slots)
-                .Map(a =>
-                {
-                    a.ToTable("SlotGates");
-                    a.MapLeftKey("SlotId");
-                    a.MapRightKey("GateId");
-                });
+            get
+            {
+                var user = HttpContext.Current.User;
+                var userName = user == null ? null : user.Identity.Name;
 
-            base.OnModelCreating(modelBuilder);
+                if (_user == null || _user.UserName != userName)
+                {
+                    _user = Users.FirstOrDefault(u => u.UserName == userName);
+                }
+                
+                return _user;
+            }
         }
+
+        [JsonIgnore]
+        public DbSet<SavedGate> Gates { get; set; }
+
+        [JsonIgnore]
+        public DbSet<SavedGateInstance> GateInstances { get; set; }
+
+        [JsonIgnore]
+        public DbSet<SavedCircuit> Circuits { get; set; }
+
+        [JsonIgnore]
+        public DbSet<SavedCircuitSlot> CircuitSlots { get; set; }
     }
 }

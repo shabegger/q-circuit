@@ -1695,6 +1695,10 @@ header {
   height: 40px;
   line-height: 40px;
 }
+header form#logoutForm {
+  display: inline-block;
+  float: right;
+}
 header ul {
   display: inline-block;
   list-style: none;

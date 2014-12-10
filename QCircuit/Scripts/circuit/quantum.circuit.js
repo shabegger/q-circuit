@@ -63,6 +63,7 @@
 
     self.addSlot = $.proxy(addSlot, self, vars);
     self.removeSlot = $.proxy(removeSlot, self, vars);
+    self.save = $.proxy(save, self, vars);
     self.calculateScrollMax = $.proxy(calculateScrollMax, self, vars);
     self.updateScrollButtons = $.proxy(updateScrollButtons, self, vars);
 
@@ -192,6 +193,43 @@
         });
       }
     }
+  }
+
+  function save(vars) {
+    var self = this,
+        slots = vars.slots,
+        serialized;
+
+    serialized = {
+      Name: 'My Circuit',
+      Slots: [
+        {
+          SlotNumber: 0,
+          Gates: [
+            {
+              GateId: '3ee38ad3-2280-e411-afd3-00249b0a1c56',
+              Position: 0.4
+            },
+            {
+              GateId: '44e38ad3-2280-e411-afd3-00249b0a1c56',
+              Position: 0.75
+            }
+          ]
+        },
+        {
+          SlotNumber: 1
+        }
+      ]
+    };
+
+    $.post('api/circuits', serialized)
+      .done(function () {
+        debugger;
+      })
+      .fail(function () {
+        debugger;
+        // TODO: Handle error
+      });
   }
 
   function calculateScrollMax(vars) {

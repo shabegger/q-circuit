@@ -9,14 +9,23 @@ using System.Web.Http.Description;
 
 namespace QCircuit.Controllers.Api
 {
+    [Authorize]
     public class GatesController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Gates
+        [AllowAnonymous]
         public IQueryable<SavedGate> GetGates()
         {
-            return db.Gates.Where(g => string.IsNullOrEmpty(g.UserId) || g.UserId == User.Identity.Name);
+            if (db.User != null)
+            {
+                return db.Gates.Where(g => string.IsNullOrEmpty(g.UserId) || g.UserId == db.User.Id);
+            }
+            else
+            {
+                return db.Gates.Where(g => string.IsNullOrEmpty(g.UserId));
+            }
         }
 
         // GET: api/Gates/5
@@ -24,9 +33,14 @@ namespace QCircuit.Controllers.Api
         public IHttpActionResult GetSavedGate(Guid id)
         {
             SavedGate savedGate = db.Gates.Find(id);
-            if (savedGate == null)
+            if (savedGate == null || savedGate.UserId != User.Identity.Name)
             {
                 return NotFound();
+            }
+
+            if (string.IsNullOrEmpty(savedGate.UserId) || savedGate.UserId != db.User.Id)
+            {
+                return Unauthorized();
             }
 
             return Ok(savedGate);
@@ -47,7 +61,7 @@ namespace QCircuit.Controllers.Api
             }
 
             SavedGate existingGate = db.Gates.Find(id);
-            if (string.IsNullOrEmpty(existingGate.UserId) || existingGate.UserId != User.Identity.Name)
+            if (string.IsNullOrEmpty(existingGate.UserId) || existingGate.UserId != db.User.Id)
             {
                 return Unauthorized();
             }
@@ -82,7 +96,7 @@ namespace QCircuit.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            savedGate.UserId = User.Identity.Name;
+            savedGate.User = db.User;
             db.Gates.Add(savedGate);
 
             try
@@ -114,7 +128,7 @@ namespace QCircuit.Controllers.Api
                 return NotFound();
             }
 
-            if (string.IsNullOrEmpty(savedGate.UserId) || savedGate.UserId != User.Identity.Name)
+            if (string.IsNullOrEmpty(savedGate.UserId) || savedGate.UserId != db.User.Id)
             {
                 return Unauthorized();
             }

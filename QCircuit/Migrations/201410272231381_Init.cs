@@ -11,9 +11,47 @@ namespace QCircuit.Migrations
                 "dbo.SavedCircuits",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         UserId = c.String(maxLength: 128),
                         Name = c.String(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId)
+                .Index(t => t.UserId);
+            
+            CreateTable(
+                "dbo.SavedCircuitSlots",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false, identity: true),
+                        CircuitId = c.Guid(nullable: false),
+                        SlotNumber = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.SavedCircuits", t => t.CircuitId, cascadeDelete: true)
+                .Index(t => t.CircuitId);
+            
+            CreateTable(
+                "dbo.SavedGateInstances",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false, identity: true),
+                        GateId = c.Guid(nullable: false),
+                        Position = c.Double(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.SavedGates", t => t.GateId, cascadeDelete: true)
+                .Index(t => t.GateId);
+            
+            CreateTable(
+                "dbo.SavedGates",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false, identity: true),
+                        UserId = c.String(maxLength: 128),
+                        Name = c.String(),
+                        Display = c.String(),
+                        SerializedMatrix = c.String(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId)
@@ -79,89 +117,51 @@ namespace QCircuit.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.SavedGates",
+                "dbo.SavedGateInstanceSavedCircuitSlots",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
-                        UserId = c.String(maxLength: 128),
-                        Name = c.String(),
-                        Display = c.String(),
-                        SerializedMatrix = c.String(),
+                        SavedGateInstance_Id = c.Guid(nullable: false),
+                        SavedCircuitSlot_Id = c.Guid(nullable: false),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.AspNetUsers", t => t.UserId)
-                .Index(t => t.UserId);
-            
-            CreateTable(
-                "dbo.SavedCircuitSlots",
-                c => new
-                    {
-                        Id = c.Guid(nullable: false),
-                        CircuitId = c.Guid(nullable: false),
-                        SlotNumber = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.SavedCircuits", t => t.CircuitId, cascadeDelete: true)
-                .Index(t => t.CircuitId);
-            
-            CreateTable(
-                "dbo.SavedGateInstances",
-                c => new
-                    {
-                        Id = c.Guid(nullable: false),
-                        GateId = c.Guid(nullable: false),
-                        Position = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.SavedGateInstances", t => t.GateId)
-                .Index(t => t.GateId);
-            
-            CreateTable(
-                "dbo.SlotGates",
-                c => new
-                    {
-                        SlotId = c.Guid(nullable: false),
-                        GateId = c.Guid(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.SlotId, t.GateId })
-                .ForeignKey("dbo.SavedCircuitSlots", t => t.SlotId, cascadeDelete: true)
-                .ForeignKey("dbo.SavedGateInstances", t => t.GateId, cascadeDelete: true)
-                .Index(t => t.SlotId)
-                .Index(t => t.GateId);
+                .PrimaryKey(t => new { t.SavedGateInstance_Id, t.SavedCircuitSlot_Id })
+                .ForeignKey("dbo.SavedGateInstances", t => t.SavedGateInstance_Id, cascadeDelete: true)
+                .ForeignKey("dbo.SavedCircuitSlots", t => t.SavedCircuitSlot_Id, cascadeDelete: true)
+                .Index(t => t.SavedGateInstance_Id)
+                .Index(t => t.SavedCircuitSlot_Id);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.SlotGates", "GateId", "dbo.SavedGateInstances");
-            DropForeignKey("dbo.SlotGates", "SlotId", "dbo.SavedCircuitSlots");
-            DropForeignKey("dbo.SavedGateInstances", "GateId", "dbo.SavedGateInstances");
-            DropForeignKey("dbo.SavedCircuitSlots", "CircuitId", "dbo.SavedCircuits");
+            DropForeignKey("dbo.SavedGateInstanceSavedCircuitSlots", "SavedCircuitSlot_Id", "dbo.SavedCircuitSlots");
+            DropForeignKey("dbo.SavedGateInstanceSavedCircuitSlots", "SavedGateInstance_Id", "dbo.SavedGateInstances");
+            DropForeignKey("dbo.SavedGateInstances", "GateId", "dbo.SavedGates");
             DropForeignKey("dbo.SavedGates", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "User_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.SavedCircuits", "UserId", "dbo.AspNetUsers");
-            DropIndex("dbo.SlotGates", new[] { "GateId" });
-            DropIndex("dbo.SlotGates", new[] { "SlotId" });
+            DropForeignKey("dbo.SavedCircuitSlots", "CircuitId", "dbo.SavedCircuits");
+            DropIndex("dbo.SavedGateInstanceSavedCircuitSlots", new[] { "SavedCircuitSlot_Id" });
+            DropIndex("dbo.SavedGateInstanceSavedCircuitSlots", new[] { "SavedGateInstance_Id" });
             DropIndex("dbo.SavedGateInstances", new[] { "GateId" });
-            DropIndex("dbo.SavedCircuitSlots", new[] { "CircuitId" });
             DropIndex("dbo.SavedGates", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "User_Id" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.SavedCircuits", new[] { "UserId" });
-            DropTable("dbo.SlotGates");
-            DropTable("dbo.SavedGateInstances");
-            DropTable("dbo.SavedCircuitSlots");
-            DropTable("dbo.SavedGates");
+            DropIndex("dbo.SavedCircuitSlots", new[] { "CircuitId" });
+            DropTable("dbo.SavedGateInstanceSavedCircuitSlots");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
+            DropTable("dbo.SavedGates");
+            DropTable("dbo.SavedGateInstances");
+            DropTable("dbo.SavedCircuitSlots");
             DropTable("dbo.SavedCircuits");
         }
     }
