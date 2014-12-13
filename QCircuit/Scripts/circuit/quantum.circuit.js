@@ -51,7 +51,7 @@
 
   /* Constructor */
 
-  function Circuit(slotCount) {
+  function Circuit() {
     var self = this,
         vars;
 
@@ -71,7 +71,7 @@
     self.deleteClicked = $.proxy(deleteClicked, self, vars);
     self.scrolled = $.proxy(scrolled, self, vars);
 
-    self.render(slotCount);
+    self.render();
   }
 
 
@@ -198,33 +198,26 @@
   function save(vars) {
     var self = this,
         slots = vars.slots,
-        serialized;
+        i, len,
+        circuit;
 
-    serialized = {
+    circuit = {
       Name: 'My Circuit',
-      Slots: [
-        {
-          SlotNumber: 0,
-          Gates: [
-            {
-              GateId: '3ee38ad3-2280-e411-afd3-00249b0a1c56',
-              Position: 0.4
-            },
-            {
-              GateId: '44e38ad3-2280-e411-afd3-00249b0a1c56',
-              Position: 0.75
-            }
-          ]
-        },
-        {
-          SlotNumber: 1
-        }
-      ]
+      Slots: []
     };
 
-    $.post('api/circuits', serialized)
+    for (i = 0, len = slots.length; i < len; i++) {
+      if (!slots[i].isAddSlot()) {
+        circuit.Slots.push($.extend(slots[i].serialize(), {
+          SlotNumber: i
+        }));
+      }
+    }
+
+    $.post('api/circuits', circuit)
       .done(function () {
         debugger;
+        // TODO: Indicate successful save
       })
       .fail(function () {
         debugger;

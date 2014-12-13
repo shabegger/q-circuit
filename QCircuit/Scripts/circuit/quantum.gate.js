@@ -60,6 +60,10 @@
 	  }
 	};
 
+	Gate.prototype.getId = function getId() {
+	  return '00000000-0000-0000-0000-000000000000';
+	};
+
 	Gate.prototype.getDisplayContent = function getDisplayContent() {
 	  return '';
 	};
@@ -147,11 +151,17 @@
   /* Dynamic Class Creation */
 
 	Gate.fromSavedGate = function fromSavedGate(savedGate) {
+	  var id = savedGate.Id;
+
 	  function constructor() {
 	    Gate.call(this);
 	  }
 
 	  constructor.prototype = Object.create(Gate.prototype);
+
+	  constructor.prototype.getId = function getId() {
+	    return id;
+	  };
 
 	  constructor.prototype.getDisplayContent = function getDisplayContent() {
 	    return savedGate.Display || '';

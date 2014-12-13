@@ -39,6 +39,7 @@
 
     M.Events.mixinEvents(self);
 
+    self.serialize = $.proxy(serialize, self, vars);
     self.invalidateBounds = $.proxy(invalidateBounds, self, vars);
 
     self.gateDragged = $.proxy(gateDragged, self, vars);
@@ -90,7 +91,28 @@
 
   /* Instance Methods */
 
-  function invalidateBounds(vars, e) {
+  function serialize(vars) {
+    var self = this,
+        gates = vars.gates,
+        key,
+        position,
+        slot;
+
+    slot = {
+      Gates: []
+    };
+
+    for (key in gates) {
+      slot.Gates.push({
+        GateId: gates[key].getId(),
+        Position: parseFloat(key)
+      });
+    }
+
+    return slot;
+  }
+
+  function invalidateBounds(vars) {
     vars.bounds = null;
   }
 
@@ -206,10 +228,14 @@
   /* Private Helpers */
 
   function insertGate(gates, gate, position) {
-    var key = Math.floor(position * 100000000);
-
+    var n = 8,
+        m = Math.pow(10, n),
+        k = Math.floor(position * m) / m,
+        key = k.toFixed(n);
+    
     while (gates[key]) {
-      key++;
+      k = (Math.floor(key * m) + 1) / m;
+      key = k.toFixed(n);
     }
 
     gates[key] = gate;
