@@ -1,0 +1,47 @@
+﻿@import "../variables.less";
+
+
+/* Colors */
+
+@overlay:   #000;
+
+
+/* Sizes */
+
+@borderSize:    2px;
+@borderRadius:  6px;
+
+
+/* Variables */
+
+@overlayOpacity:    0.1;
+
+
+/* Dialog Styles */
+
+div.dialog-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    div.dialog-overlay {
+        background: @overlay;
+        opacity: @overlayOpacity;
+        width: 100%;
+        height: 100%;
+    }
+
+    div.dialog-window {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        background: @background;
+        border: @borderSize solid @darkBorder;
+        border-radius: @borderRadius;
+        -ms-transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+}

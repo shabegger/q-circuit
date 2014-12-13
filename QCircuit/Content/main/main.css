@@ -1686,6 +1686,9 @@
   -o-user-select: none;
   user-select: none;
 }
+body {
+  background: #ffffff;
+}
 header {
   position: fixed;
   top: 0;

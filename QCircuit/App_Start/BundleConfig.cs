@@ -9,6 +9,7 @@ namespace QCircuit
         {
             bundles.Add(new ScriptBundle("~/bundles/main").Include(
                         "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/dialog/dialog.js",
                         "~/Scripts/main.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -55,6 +56,7 @@ namespace QCircuit
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                         "~/Content/main/main.css",
+                        "~/Content/dialog/dialog.css",
                         "~/Content/validation.css"));
 
             bundles.Add(new StyleBundle("~/Content/quantum").Include(

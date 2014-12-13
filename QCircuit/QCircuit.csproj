@@ -204,6 +204,8 @@
     <Content Include="Content\bugfix\bugfix.css" />
     <Content Include="Content\circuit\quantum.css" />
     <Content Include="Content\circuit\quantum.min.css" />
+    <Content Include="Content\dialog\dialog.css" />
+    <Content Include="Content\dialog\dialog.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Fonts\fontawesome-webfont.svg" />
@@ -223,6 +225,7 @@
     <Content Include="Content\Fonts\FontAwesome.otf" />
     <Content Include="Content\main\main.less" />
     <Content Include="Content\variables.less" />
+    <Content Include="Content\dialog\dialog.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\circuit\quantum.slot.js" />
     <Content Include="Scripts\circuit\quantum.toolbar.js" />
@@ -230,6 +233,7 @@
     <Content Include="Scripts\circuit\quantum.factoryshowroom.js" />
     <Content Include="Scripts\circuit\quantum.gatefactory.js" />
     <Content Include="Scripts\circuit\quantum.js" />
+    <Content Include="Scripts\dialog\dialog.js" />
     <Content Include="Scripts\interaction\interaction.animation.js" />
     <Content Include="Scripts\interaction\interaction.drag.js" />
     <Content Include="Scripts\interaction\interaction.intersect.js" />
@@ -319,9 +323,11 @@
     <PreBuildEvent>if $(ConfigurationName) == Debug (
   lessc $(ProjectDir)Content\circuit\quantum.less &gt; $(ProjectDir)Content\circuit\quantum.css
   lessc $(ProjectDir)Content\main\main.less &gt; $(ProjectDir)Content\main\main.css
+  lessc $(ProjectDir)Content\dialog\dialog.less &gt; $(ProjectDir)Content\dialog\dialog.css
 ) else (
   lessc $(ProjectDir)Content\circuit\quantum.less -x &gt; $(ProjectDir)Content\circuit\quantum.min.css
   lessc $(ProjectDir)Content\main\main.less -x &gt; $(ProjectDir)Content\main\main.min.css
+  lessc $(ProjectDir)Content\dialog\dialog.less -x &gt; $(ProjectDir)Content\dialog\dialog.min.css
 )</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
