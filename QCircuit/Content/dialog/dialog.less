@@ -3,13 +3,15 @@
 
 /* Colors */
 
-@overlay:   #000;
+@overlay:           #000;
 
 
 /* Sizes */
 
 @borderSize:    2px;
 @borderRadius:  6px;
+@padding:       6px;
+@minWidth:      200px;
 
 
 /* Variables */
@@ -40,8 +42,33 @@ div.dialog-container {
         background: @background;
         border: @borderSize solid @darkBorder;
         border-radius: @borderRadius;
+        overflow: hidden;
         -ms-transform: translate(-50%, -50%);
         -webkit-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
+
+        header {
+            background: @dark;
+            color: @lightText;
+            cursor: default;
+            font-size: @headerFontSize;
+            padding: @padding;
+            min-width: @minWidth;
+        }
+
+        section {
+            padding: @padding;
+        }
+
+        footer {
+            background: @footerBackground;
+            padding: @padding;
+            overflow: hidden;
+            text-align: right;
+
+            input[type="button"]:not(:last-child) {
+                margin-right: @padding;
+            }
+        }
     }
 }

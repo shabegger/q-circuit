@@ -25,7 +25,28 @@ div.dialog-container div.dialog-window {
   background: #ffffff;
   border: 2px solid #888888;
   border-radius: 6px;
+  overflow: hidden;
   -ms-transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+}
+div.dialog-container div.dialog-window header {
+  background: #222222;
+  color: #ffffff;
+  cursor: default;
+  font-size: 16px;
+  padding: 6px;
+  min-width: 200px;
+}
+div.dialog-container div.dialog-window section {
+  padding: 6px;
+}
+div.dialog-container div.dialog-window footer {
+  background: #aaaaaa;
+  padding: 6px;
+  overflow: hidden;
+  text-align: right;
+}
+div.dialog-container div.dialog-window footer input[type="button"]:not(:last-child) {
+  margin-right: 6px;
 }

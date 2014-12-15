@@ -112,6 +112,7 @@
     maxSize = showroom.sizeForHeight(availableHeight + currentHeight);
 
     showroom.size(Math.min(maxSize, showroomRatio));
+    circuit.invalidateDropTargets();
   }
 
   function toolbarItemSelected(e) {

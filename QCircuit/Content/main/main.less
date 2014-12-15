@@ -18,80 +18,102 @@
 
 body {
     background: @background;
-}
 
-header {
-    position: fixed;
-    top: 0;
-    background: @headerBackground;
-    padding: 0 @mainPadding;
-    width: 100%;
-    height: @headerHeight;
-    line-height: @headerHeight;
+    & > header {
+        position: fixed;
+        top: 0;
+        background: @headerBackground;
+        padding: 0 @mainPadding;
+        width: 100%;
+        height: @headerHeight;
+        line-height: @headerHeight;
 
-    form#logoutForm {
-        display: inline-block;
-        float: right;
-    }
-
-    ul {
-        display: inline-block;
-        list-style: none;
-        white-space: nowrap;
-
-        &.main-login {
+        form#logoutForm {
+            display: inline-block;
             float: right;
         }
 
-        li {
-            display: inline;
+        ul {
+            display: inline-block;
+            list-style: none;
             white-space: nowrap;
 
-            &.header-link-home {
-                font-weight: @fontWeightHeavy;
+            &.main-login {
+                float: right;
             }
 
-            &:last-child {
-                a {
-                    margin-right: 0;
+            li {
+                display: inline;
+                white-space: nowrap;
+
+                &.header-link-home {
+                    font-weight: @fontWeightHeavy;
                 }
-            }
 
-            a {
-                color: @lightText;
-                cursor: pointer;
-                font-size: @menuFontSize;
-                margin: 0 @menuSpacing 0 0;
-                text-decoration: none;
+                &:last-child {
+                    a {
+                        margin-right: 0;
+                    }
+                }
 
-                &:active,
-                &:hover,
-                &:link,
-                &:visited {
+                a {
                     color: @lightText;
+                    cursor: pointer;
+                    font-size: @menuFontSize;
+                    margin: 0 @menuSpacing 0 0;
+                    text-decoration: none;
+
+                    &:active,
+                    &:hover,
+                    &:link,
+                    &:visited {
+                        color: @lightText;
+                    }
                 }
             }
         }
+
+        span.main-login-disclosure {
+            display: none;
+        }
     }
 
-    span.main-login-disclosure {
-        display: none;
+    & > footer {
+        position: fixed;
+        bottom: 0;
+        background: @footerBackground;
+        color: @lightText;
+        padding: 0 @mainPadding;
+        font-size: @footerFontSize;
+        width: 100%;
+        height: @footerHeight;
+        line-height: @footerHeight;
+
+        p {
+            float: right;
+        }
     }
-}
 
-footer {
-    position: fixed;
-    bottom: 0;
-    background: @footerBackground;
-    color: @lightText;
-    padding: 0 @mainPadding;
-    font-size: @footerFontSize;
-    width: 100%;
-    height: @footerHeight;
-    line-height: @footerHeight;
+    label {
+        font-size: @controlFontSize;
+        white-space: nowrap;
 
-    p {
-        float: right;
+        & + input {
+            margin-left: @controlSpacing;
+        }
+    }
+
+    input {
+        font-size: @controlFontSize;
+        padding: @controlPadding;
+        border: @controlBorder solid @dark;
+        border-radius: @controlPadding;
+
+        &[type="button"] {
+            cursor: pointer;
+            color: @lightText;
+            background: @semiDark;
+        }
     }
 }
 
@@ -100,52 +122,53 @@ footer {
 
 @media (max-width: 480px) {
 
-    header {
-        ul:last-child {
-            display: none;
-        }
-
-        span.main-login-disclosure {
-            .fa;
-
-            &:before {
-                content: '\f0da';
-            }
-
-            display: inline-block;
-            cursor: pointer;
-            color: @lightText;
-            float: right;
-            margin: ((@headerHeight - @disclosureSize) / 2) 0;
-            width: @disclosureSize;
-            height: @disclosureSize;
-            line-height: @disclosureSize;
-            text-align: center;
-            -webkit-transition: 0.2s;
-            transition: 0.2s;
-        }
-
-        &.main-login-show {
+    body {
+        & > header {
             ul:last-child {
-                position: fixed;
-                top: @headerHeight;
-                left: 0;
-                display: block;
-                background: @footerBackground;
-                width: 100%;
-
-                li {
-                    display: block;
-                    border-top: 1px solid @lightBorder;
-                    border-bottom: 1px solid @darkBorder;
-                    padding: 0 @mainPadding;
-                }
+                display: none;
             }
 
             span.main-login-disclosure {
-                transform: rotate(90deg);
+                .fa;
+
+                &:before {
+                    content: '\f0da';
+                }
+
+                display: inline-block;
+                cursor: pointer;
+                color: @lightText;
+                float: right;
+                margin: ((@headerHeight - @disclosureSize) / 2) 0;
+                width: @disclosureSize;
+                height: @disclosureSize;
+                line-height: @disclosureSize;
+                text-align: center;
+                -webkit-transition: 0.2s;
+                transition: 0.2s;
+            }
+
+            &.main-login-show {
+                ul:last-child {
+                    position: fixed;
+                    top: @headerHeight;
+                    left: 0;
+                    display: block;
+                    background: @footerBackground;
+                    width: 100%;
+
+                    li {
+                        display: block;
+                        border-top: 1px solid @lightBorder;
+                        border-bottom: 1px solid @darkBorder;
+                        padding: 0 @mainPadding;
+                    }
+                }
+
+                span.main-login-disclosure {
+                    transform: rotate(90deg);
+                }
             }
         }
     }
-
 }
