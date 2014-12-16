@@ -1686,7 +1686,10 @@
   -o-user-select: none;
   user-select: none;
 }
-header {
+body {
+  background: #ffffff;
+}
+body > header {
   position: fixed;
   top: 0;
   background: #000000;
@@ -1695,45 +1698,45 @@ header {
   height: 40px;
   line-height: 40px;
 }
-header form#logoutForm {
+body > header form#logoutForm {
   display: inline-block;
   float: right;
 }
-header ul {
+body > header ul {
   display: inline-block;
   list-style: none;
   white-space: nowrap;
 }
-header ul.main-login {
+body > header ul.main-login {
   float: right;
 }
-header ul li {
+body > header ul li {
   display: inline;
   white-space: nowrap;
 }
-header ul li.header-link-home {
+body > header ul li.header-link-home {
   font-weight: 800;
 }
-header ul li:last-child a {
+body > header ul li:last-child a {
   margin-right: 0;
 }
-header ul li a {
+body > header ul li a {
   color: #ffffff;
   cursor: pointer;
   font-size: 16px;
   margin: 0 20px 0 0;
   text-decoration: none;
 }
-header ul li a:active,
-header ul li a:hover,
-header ul li a:link,
-header ul li a:visited {
+body > header ul li a:active,
+body > header ul li a:hover,
+body > header ul li a:link,
+body > header ul li a:visited {
   color: #ffffff;
 }
-header span.main-login-disclosure {
+body > header span.main-login-disclosure {
   display: none;
 }
-footer {
+body > footer {
   position: fixed;
   bottom: 0;
   background: #aaaaaa;
@@ -1744,15 +1747,33 @@ footer {
   height: 30px;
   line-height: 30px;
 }
-footer p {
+body > footer p {
   float: right;
+}
+body label {
+  font-size: 14px;
+  white-space: nowrap;
+}
+body label + input {
+  margin-left: 6px;
+}
+body input {
+  font-size: 14px;
+  padding: 4px;
+  border: 1px solid #222222;
+  border-radius: 4px;
+}
+body input[type="button"] {
+  cursor: pointer;
+  color: #ffffff;
+  background: #666666;
 }
 /* Media Queries */
 @media (max-width: 480px) {
-  header ul:last-child {
+  body > header ul:last-child {
     display: none;
   }
-  header span.main-login-disclosure {
+  body > header span.main-login-disclosure {
     font: normal normal normal 14px/1 FontAwesome;
     font-size: inherit;
     text-rendering: auto;
@@ -1770,10 +1791,10 @@ footer p {
     -webkit-transition: 0.2s;
     transition: 0.2s;
   }
-  header span.main-login-disclosure:before {
+  body > header span.main-login-disclosure:before {
     content: '\f0da';
   }
-  header.main-login-show ul:last-child {
+  body > header.main-login-show ul:last-child {
     position: fixed;
     top: 40px;
     left: 0;
@@ -1781,13 +1802,13 @@ footer p {
     background: #aaaaaa;
     width: 100%;
   }
-  header.main-login-show ul:last-child li {
+  body > header.main-login-show ul:last-child li {
     display: block;
     border-top: 1px solid #cccccc;
     border-bottom: 1px solid #888888;
     padding: 0 20px;
   }
-  header.main-login-show span.main-login-disclosure {
+  body > header.main-login-show span.main-login-disclosure {
     transform: rotate(90deg);
   }
 }

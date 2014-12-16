@@ -1,4 +1,5 @@
-﻿/// <reference path="../interaction/interaction.js" />
+﻿/// <reference path="../dialog/dialog.js" />
+/// <reference path="../interaction/interaction.js" />
 /// <reference path="../interaction/interaction.intersect.js" />
 /// <reference path="../interaction/interaction.scroll.js" />
 /// <reference path="../mixins/mixins.js" />
@@ -61,10 +62,26 @@
       slots: []
     };
 
+    vars.saveDlg = new Dialog({
+      title: 'Save New Circuit As...',
+      content: '<label>Name</label><input type="text">',
+      tools: [
+        {
+          title: 'Cancel',
+          callback: $.proxy(saveDlgCancel, self, vars)
+        },
+        {
+          title: 'Save',
+          callback: $.proxy(saveDlgSave, self, vars)
+        }
+      ]
+    });
+
     self.addSlot = $.proxy(addSlot, self, vars);
     self.removeSlot = $.proxy(removeSlot, self, vars);
     self.calculateScrollMax = $.proxy(calculateScrollMax, self, vars);
     self.updateScrollButtons = $.proxy(updateScrollButtons, self, vars);
+    self.invalidateDropTargets = $.proxy(invalidateDropTargets, self, vars);
 
     self.save = $.proxy(save, self, vars);
     self.openNew = $.proxy(openNew, self, vars);
@@ -198,33 +215,7 @@
   }
 
   function save(vars) {
-    var self = this,
-        slots = vars.slots,
-        i, len,
-        circuit;
-
-    circuit = {
-      Name: 'My Circuit',
-      Slots: []
-    };
-
-    for (i = 0, len = slots.length; i < len; i++) {
-      if (!slots[i].isAddSlot()) {
-        circuit.Slots.push($.extend(slots[i].serialize(), {
-          SlotNumber: i
-        }));
-      }
-    }
-
-    $.post('api/circuits', circuit)
-      .done(function () {
-        debugger;
-        // TODO: Indicate successful save
-      })
-      .fail(function () {
-        debugger;
-        // TODO: Handle error
-      });
+    vars.saveDlg.show();
   }
 
   function openNew(vars) {
@@ -270,6 +261,15 @@
     }
   }
 
+  function invalidateDropTargets(vars) {
+    var slots = vars.slots,
+        i, len;
+
+    for (i = 0, len = slots.length; i < len; i++) {
+      slots[i].invalidateBounds();
+    }
+  }
+
 
   /* Event Handlers */
 
@@ -302,6 +302,43 @@
     }
 
     self.updateScrollButtons();
+  }
+
+  function saveDlgCancel(vars, e) {
+    var dialog = vars.saveDlg;
+
+    dialog.hide();
+  }
+
+  function saveDlgSave(vars, e) {
+    var dialog = vars.saveDlg,
+        slots = vars.slots,
+        i, len,
+        circuit;
+
+    circuit = {
+      Name: dialog.content().find('input').val(),
+      Slots: []
+    };
+
+    for (i = 0, len = slots.length; i < len; i++) {
+      if (!slots[i].isAddSlot()) {
+        circuit.Slots.push($.extend(slots[i].serialize(), {
+          SlotNumber: i
+        }));
+      }
+    }
+
+    $.post('api/circuits', circuit)
+      .done(function () {
+        debugger;
+        // TODO: Indicate successful save
+        dialog.hide();
+      })
+      .fail(function () {
+        debugger;
+        // TODO: Handle error
+      });
   }
 
 
