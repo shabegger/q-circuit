@@ -118,6 +118,9 @@
     var self = this;
 
     switch (e.action) {
+      case 'new':
+        self.circuit.openNew();
+        break;
       case 'save':
         self.circuit.save();
         break;

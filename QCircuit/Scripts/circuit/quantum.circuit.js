@@ -63,9 +63,11 @@
 
     self.addSlot = $.proxy(addSlot, self, vars);
     self.removeSlot = $.proxy(removeSlot, self, vars);
-    self.save = $.proxy(save, self, vars);
     self.calculateScrollMax = $.proxy(calculateScrollMax, self, vars);
     self.updateScrollButtons = $.proxy(updateScrollButtons, self, vars);
+
+    self.save = $.proxy(save, self, vars);
+    self.openNew = $.proxy(openNew, self, vars);
 
     self.slotAdded = $.proxy(slotAdded, self, vars);
     self.deleteClicked = $.proxy(deleteClicked, self, vars);
@@ -223,6 +225,15 @@
         debugger;
         // TODO: Handle error
       });
+  }
+
+  function openNew(vars) {
+    var self = this,
+        slots = vars.slots;
+
+    while (!slots[0].isAddSlot()) {
+      self.removeSlot(0);
+    }
   }
 
   function calculateScrollMax(vars) {
