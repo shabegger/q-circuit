@@ -4,6 +4,7 @@
 
 @section styles {
   @Styles.Render("~/Content/bugfix")
+  @Styles.Render("~/Content/dialog")
   @Styles.Render("~/Content/quantum")
   <style>
     div.q-factoryShowroom-content {
@@ -14,7 +15,9 @@
 }
 
 @section scripts {
+  @Scripts.Render("~/bundles/common")
   @Scripts.Render("~/bundles/bugfix")
+  @Scripts.Render("~/bundles/dialog")
   @Scripts.Render("~/bundles/mixins")
   @Scripts.Render("~/bundles/interaction")
   @Scripts.Render("~/bundles/utility")

@@ -1,5 +1,7 @@
 ﻿/// <reference path="../mixins/mixins.js" />
-/// <reference path="../mixins/mixins.events.js" />s
+/// <reference path="../mixins/mixins.events.js" />
+/// <reference path="../ux/ux.js" />
+/// <reference path="../ux/ux.spinner.js" />
 /// <reference path="quantum.js" />
 /// <reference path="quantum.circuit.js" />
 /// <reference path="quantum.factoryshowroom.js" />
@@ -7,7 +9,7 @@
 /// <reference path="quantum.toolbar.js" />
 /// <reference path="../jquery-1.10.2.intellisense.js" />
 
-; (function (window, Q, M, $, undefined) {
+; (function (window, Page, Q, M, X, $, undefined) {
 
   'use strict';
 
@@ -68,6 +70,8 @@
   Workspace.prototype.init = function init() {
     var self = this;
 
+    X.Spinner().show();
+
     $.get('/api/gates')
       .done(function (savedGates) {
         var gates = [],
@@ -82,9 +86,12 @@
         if (self.factoryShowroom.canResize()) {
           self.setShowroomSize();
         }
+
+        X.Spinner().hide();
       })
-      .fail(function () {
-        // TODO: Handle error
+      .fail(function (request, status, error) {
+        Page.showMessage(error);
+        X.Spinner().hide();
       });
   };
 
@@ -133,4 +140,4 @@
 
   Q.Workspace = Workspace;
 
-}(this, this.Quantum, this.Mixins, this.jQuery));
+}(this, this.MainPage, this.Quantum, this.Mixins, this.UX, this.jQuery));

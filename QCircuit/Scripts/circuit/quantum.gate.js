@@ -1,4 +1,5 @@
-﻿/// <reference path="../interaction/interaction.js" />
+﻿/// <reference path="../common/guid.js" />
+/// <reference path="../interaction/interaction.js" />
 /// <reference path="../interaction/interaction.intersect.js" />
 /// <reference path="../interaction/interaction.touch.js" />
 /// <reference path="../interaction/interaction.drag.js" />
@@ -28,6 +29,9 @@
         vars = {};
 
 	  M.Events.mixinEvents(self);
+
+	  self.serialize = $.proxy(serialize, self, vars);
+	  self.update = $.proxy(update, self, vars);
 
 	  self.drag = $.proxy(drag, self, vars);
 	  self.move = $.proxy(move, self, vars);
@@ -61,12 +65,28 @@
 	};
 
 	Gate.prototype.getId = function getId() {
-	  return '00000000-0000-0000-0000-000000000000';
+	  return Guid.Empty;
 	};
 
 	Gate.prototype.getDisplayContent = function getDisplayContent() {
 	  return '';
 	};
+
+
+  /* Instance Methods */
+
+	function serialize(vars) {
+	  var self = this;
+
+	  return {
+	    Id: vars.id || Guid.Empty,
+      GateId: self.getId()
+	  };
+	}
+
+	function update(vars, gate) {
+	  vars.id = gate.Id;
+	}
   
   
   /* Event Handlers */

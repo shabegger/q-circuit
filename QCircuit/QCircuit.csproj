@@ -211,6 +211,8 @@
     <Content Include="Content\Fonts\fontawesome-webfont.svg" />
     <Content Include="Content\main\main.css" />
     <Content Include="Content\main\main.min.css" />
+    <Content Include="Content\ux\ux.css" />
+    <Content Include="Content\ux\ux.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\validation.css" />
@@ -226,6 +228,7 @@
     <Content Include="Content\main\main.less" />
     <Content Include="Content\variables.less" />
     <Content Include="Content\dialog\dialog.less" />
+    <Content Include="Content\ux\ux.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\circuit\quantum.slot.js" />
     <Content Include="Scripts\circuit\quantum.toolbar.js" />
@@ -233,6 +236,7 @@
     <Content Include="Scripts\circuit\quantum.factoryshowroom.js" />
     <Content Include="Scripts\circuit\quantum.gatefactory.js" />
     <Content Include="Scripts\circuit\quantum.js" />
+    <Content Include="Scripts\common\guid.js" />
     <Content Include="Scripts\dialog\dialog.js" />
     <Content Include="Scripts\interaction\interaction.animation.js" />
     <Content Include="Scripts\interaction\interaction.drag.js" />
@@ -253,6 +257,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\utility\utility.fn.js" />
     <Content Include="Scripts\utility\utility.js" />
+    <Content Include="Scripts\ux\ux.js" />
+    <Content Include="Scripts\ux\ux.message.js" />
+    <Content Include="Scripts\ux\ux.spinner.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -324,10 +331,12 @@
   lessc $(ProjectDir)Content\circuit\quantum.less &gt; $(ProjectDir)Content\circuit\quantum.css
   lessc $(ProjectDir)Content\main\main.less &gt; $(ProjectDir)Content\main\main.css
   lessc $(ProjectDir)Content\dialog\dialog.less &gt; $(ProjectDir)Content\dialog\dialog.css
+  lessc $(ProjectDir)Content\ux\ux.less &gt; $(ProjectDir)Content\ux\ux.css
 ) else (
   lessc $(ProjectDir)Content\circuit\quantum.less -x &gt; $(ProjectDir)Content\circuit\quantum.min.css
   lessc $(ProjectDir)Content\main\main.less -x &gt; $(ProjectDir)Content\main\main.min.css
   lessc $(ProjectDir)Content\dialog\dialog.less -x &gt; $(ProjectDir)Content\dialog\dialog.min.css
+  lessc $(ProjectDir)Content\ux\ux.less -x &gt; $(ProjectDir)Content\ux\ux.min.css
 )</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

@@ -1674,142 +1674,72 @@
 .fa-meanpath:before {
   content: "\f20c";
 }
-* {
-  margin: 0;
-  padding: 0;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
-  user-select: none;
+/* Variables */
+/* Animation */
+@-webkit-keyframes ux-spin-frame {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
-body {
-  background: #ffffff;
+@keyframes ux-spin-frame {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
-body > header {
+/* UX Styles */
+div.ux-container {
   position: fixed;
   top: 0;
-  background: #000000;
-  padding: 0 20px;
-  width: 100%;
-  height: 40px;
-  line-height: 40px;
-}
-body > header form#logoutForm {
-  display: inline-block;
-  float: right;
-}
-body > header ul {
-  display: inline-block;
-  list-style: none;
-  white-space: nowrap;
-}
-body > header ul.main-login {
-  float: right;
-}
-body > header ul li {
-  display: inline;
-  white-space: nowrap;
-}
-body > header ul li.header-link-home {
-  font-weight: 800;
-}
-body > header ul li:last-child a {
-  margin-right: 0;
-}
-body > header ul li a {
-  color: #ffffff;
-  cursor: pointer;
-  font-size: 16px;
-  margin: 0 20px 0 0;
-  text-decoration: none;
-}
-body > header ul li a:active,
-body > header ul li a:hover,
-body > header ul li a:link,
-body > header ul li a:visited {
-  color: #ffffff;
-}
-body > header span.main-login-disclosure {
-  display: none;
-}
-body > footer {
-  position: fixed;
+  right: 0;
   bottom: 0;
-  background: #aaaaaa;
-  color: #ffffff;
-  padding: 0 20px;
-  font-size: 14px;
+  left: 0;
+  z-index: 20000;
+}
+div.ux-container div.ux-overlay {
+  background: #000000;
+  opacity: 0.1;
   width: 100%;
-  height: 30px;
-  line-height: 30px;
+  height: 100%;
 }
-body > footer p {
-  float: right;
+div.ux-container div.ux-spinner {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  cursor: default;
+  color: #6584b2;
+  font-size: 50px;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  transform: translate(-50%, -50%);
 }
-body label {
-  font-size: 14px;
-  white-space: nowrap;
+div.ux-container div.ux-spinner:before {
+  display: block;
+  content: '\f110';
+  width: 100%;
+  height: 100%;
+  -webkit-animation: ux-spin-frame 1.2s steps(8) infinite;
+  animation: ux-spin-frame 1.2s steps(8) infinite;
 }
-body label + input {
-  margin-left: 6px;
-}
-body input {
-  font-size: 14px;
-  padding: 4px;
-  border: 1px solid #222222;
-  border-radius: 4px;
-}
-body input[type="button"] {
-  cursor: pointer;
-  color: #ffffff;
-  background: #666666;
-}
-/* Media Queries */
-@media (max-width: 480px) {
-  body > header ul:last-child {
-    display: none;
-  }
-  body > header span.main-login-disclosure {
-    font: normal normal normal 14px/1 FontAwesome;
-    font-size: inherit;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    display: inline-block;
-    cursor: pointer;
-    color: #ffffff;
-    float: right;
-    margin: 10px 0;
-    width: 20px;
-    height: 20px;
-    line-height: 20px;
-    text-align: center;
-    -webkit-transition: 0.2s;
-    transition: 0.2s;
-  }
-  body > header span.main-login-disclosure:before {
-    content: '\f0da';
-  }
-  body > header.main-login-show ul:last-child {
-    position: fixed;
-    top: 40px;
-    left: 0;
-    display: block;
-    background: #aaaaaa;
-    width: 100%;
-  }
-  body > header.main-login-show ul:last-child li {
-    display: block;
-    border-top: 1px solid #cccccc;
-    border-bottom: 1px solid #888888;
-    padding: 0 20px;
-  }
-  body > header.main-login-show span.main-login-disclosure {
-    transform: rotate(90deg);
-  }
+span.ux-message.ux-hidden {
+  opacity: 0;
+  -webkit-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
 }

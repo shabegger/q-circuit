@@ -7,6 +7,7 @@
     <title>@ViewBag.Title - Qugorithm</title>
 
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/ux")
     @RenderSection("styles", required: false)
 
     @Scripts.Render("~/bundles/modernizr")
@@ -26,6 +27,8 @@
       <p>&copy; @DateTime.Now.Year - Qugorithm</p>
     </footer>
 
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/ux")
     @Scripts.Render("~/bundles/main")
     @RenderSection("scripts", required: false)
   </body>

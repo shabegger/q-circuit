@@ -1,4 +1,5 @@
-﻿/// <reference path="../interaction/interaction.js" />
+﻿/// <reference path="../common/guid.js" />
+/// <reference path="../interaction/interaction.js" />
 /// <reference path="../interaction/interaction.intersect.js" />
 /// <reference path="quantum.js" />
 /// <reference path="quantum.gate.js" />
@@ -41,6 +42,7 @@
 
     self.serialize = $.proxy(serialize, self, vars);
     self.invalidateBounds = $.proxy(invalidateBounds, self, vars);
+    self.update = $.proxy(update, self, vars);
 
     self.gateDragged = $.proxy(gateDragged, self, vars);
     self.gateDropped = $.proxy(gateDropped, self, vars);
@@ -99,14 +101,14 @@
         slot;
 
     slot = {
+      Id: vars.id || Guid.Empty,
       Gates: []
     };
 
     for (key in gates) {
-      slot.Gates.push({
-        GateId: gates[key].getId(),
+      slot.Gates.push($.extend(gates[key].serialize(), {
         Position: parseFloat(key)
-      });
+      }));
     }
 
     return slot;
@@ -114,6 +116,19 @@
 
   function invalidateBounds(vars) {
     vars.bounds = null;
+  }
+
+  function update(vars, slot) {
+    var gates = vars.gates,
+        i, len, gate;
+
+    vars.id = slot.Id;
+    vars.number = slot.SlotNumber;
+
+    for (i = 0, len = slot.Gates.length; i < len; i++) {
+      gate = slot.Gates[i];
+      gates[gate.Position.toFixed(8)].update(gate);
+    }
   }
 
 

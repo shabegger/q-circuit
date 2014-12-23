@@ -1,4 +1,5 @@
-﻿/// <reference path="../dialog/dialog.js" />
+﻿/// <reference path="../common/guid.js" />
+/// <reference path="../dialog/dialog.js" />
 /// <reference path="../interaction/interaction.js" />
 /// <reference path="../interaction/interaction.intersect.js" />
 /// <reference path="../interaction/interaction.scroll.js" />
@@ -10,7 +11,7 @@
 /// <reference path="quantum.workspace.js" />
 /// <reference path="../jquery-1.10.2.intellisense.js" />
 
-; (function (window, Q, M, $, undefined) {
+; (function (window, Page, Q, M, X, $, undefined) {
 
   'use strict';
 
@@ -82,6 +83,7 @@
     self.calculateScrollMax = $.proxy(calculateScrollMax, self, vars);
     self.updateScrollButtons = $.proxy(updateScrollButtons, self, vars);
     self.invalidateDropTargets = $.proxy(invalidateDropTargets, self, vars);
+    self.update = $.proxy(update, self, vars);
 
     self.save = $.proxy(save, self, vars);
     self.openNew = $.proxy(openNew, self, vars);
@@ -214,19 +216,6 @@
     }
   }
 
-  function save(vars) {
-    vars.saveDlg.show();
-  }
-
-  function openNew(vars) {
-    var self = this,
-        slots = vars.slots;
-
-    while (!slots[0].isAddSlot()) {
-      self.removeSlot(0);
-    }
-  }
-
   function calculateScrollMax(vars) {
     var self = this,
         scrollerHeight,
@@ -267,6 +256,29 @@
 
     for (i = 0, len = slots.length; i < len; i++) {
       slots[i].invalidateBounds();
+    }
+  }
+
+  function update(vars, circuit) {
+    var slots = vars.slots,
+        i, len;
+
+    vars.id = circuit.Id;
+    for (i = 0, len = circuit.Slots.length; i < len; i++) {
+      slots[i].update(circuit.Slots[i]);
+    }
+  }
+
+  function save(vars) {
+    vars.saveDlg.show();
+  }
+
+  function openNew(vars) {
+    var self = this,
+        slots = vars.slots;
+
+    while (!slots[0].isAddSlot()) {
+      self.removeSlot(0);
     }
   }
 
@@ -311,12 +323,14 @@
   }
 
   function saveDlgSave(vars, e) {
-    var dialog = vars.saveDlg,
+    var self = this,
+        dialog = vars.saveDlg,
         slots = vars.slots,
         i, len,
         circuit;
 
     circuit = {
+      Id: vars.id || Guid.Empty,
       Name: dialog.content().find('input').val(),
       Slots: []
     };
@@ -329,15 +343,25 @@
       }
     }
 
+    dialog.hide();
+    dialog.content().find('input').val('');
+
+    X.Spinner().show();
+
     $.post('api/circuits', circuit)
-      .done(function () {
-        debugger;
-        // TODO: Indicate successful save
-        dialog.hide();
+      .done(function (circuit) {
+        if (circuit.Message) {
+          Page.showMessage(circuit.Message);
+        } else {
+          self.update(circuit);
+          Page.showMessage('Save successful!');
+        }
+
+        X.Spinner().hide();
       })
-      .fail(function () {
-        debugger;
-        // TODO: Handle error
+      .fail(function (request, status, error) {
+        Page.showMessage(error);
+        X.Spinner().hide();
       });
   }
 
@@ -346,4 +370,4 @@
 
   Q.Circuit = Circuit;
 
-}(this, this.Quantum, this.Mixins, this.jQuery));
+}(this, this.MainPage, this.Quantum, this.Mixins, this.UX, this.jQuery));

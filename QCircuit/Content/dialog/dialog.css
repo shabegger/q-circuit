@@ -1,9 +1,8 @@
 /* Colors */
 /* Sizes */
 /* Fonts */
-/* Colors */
-/* Sizes */
 /* Variables */
+/* Sizes */
 /* Dialog Styles */
 div.dialog-container {
   position: fixed;
@@ -11,6 +10,7 @@ div.dialog-container {
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 20000;
 }
 div.dialog-container div.dialog-overlay {
   background: #000000;
