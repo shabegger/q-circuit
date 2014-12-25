@@ -92,6 +92,8 @@
     self.deleteClicked = $.proxy(deleteClicked, self, vars);
     self.scrolled = $.proxy(scrolled, self, vars);
 
+    vars.saveDone = $.proxy(saveDone, self, vars);
+
     self.render();
   }
 
@@ -270,7 +272,13 @@
   }
 
   function save(vars) {
-    vars.saveDlg.show();
+    var self = this;
+
+    if (!vars.id || vars.id === Guid.Empty) {
+      vars.saveDlg.show();
+    } else {
+      saveDlgSave.call(self, vars);
+    }
   }
 
   function openNew(vars) {
@@ -327,13 +335,23 @@
         dialog = vars.saveDlg,
         slots = vars.slots,
         i, len,
-        circuit;
+        circuit, name;
 
     circuit = {
       Id: vars.id || Guid.Empty,
-      Name: dialog.content().find('input').val(),
       Slots: []
     };
+
+    if (!vars.id || vars.id === Guid.Empty) {
+      name = dialog.content().find('input').val();
+
+      if (!name) {
+        Page.showMessage('Name is required.');
+        return;
+      }
+
+      circuit.Name = name;
+    }
 
     for (i = 0, len = slots.length; i < len; i++) {
       if (!slots[i].isAddSlot()) {
@@ -348,21 +366,36 @@
 
     X.Spinner().show();
 
-    $.post('api/circuits', circuit)
-      .done(function (circuit) {
-        if (circuit.Message) {
-          Page.showMessage(circuit.Message);
-        } else {
-          self.update(circuit);
-          Page.showMessage('Save successful!');
-        }
+    if (!vars.id || vars.id === Guid.Empty) {
+      $.post('api/circuits', circuit)
+        .done(vars.saveDone)
+        .fail(saveFail);
+    } else {
+      $.ajax('api/circuits/' + vars.id, { data: circuit, type: 'PUT' })
+        .done(vars.saveDone)
+        .fail(saveFail);
+    }
+  }
 
-        X.Spinner().hide();
-      })
-      .fail(function (request, status, error) {
-        Page.showMessage(error);
-        X.Spinner().hide();
-      });
+
+  /* AJAX Callbacks */
+
+  function saveDone(vars, circuit) {
+    var self = this;
+
+    if (circuit.Message) {
+      Page.showMessage(circuit.Message);
+    } else {
+      self.update(circuit);
+      Page.showMessage('Save successful!');
+    }
+
+    X.Spinner().hide();
+  }
+
+  function saveFail(request, status, error) {
+    Page.showMessage(error);
+    X.Spinner().hide();
   }
 
 
