@@ -263,11 +263,13 @@
 
   function update(vars, circuit) {
     var slots = vars.slots,
-        i, len;
+        i, len, slot;
 
     vars.id = circuit.Id;
+    vars.name = circuit.Name;
     for (i = 0, len = circuit.Slots.length; i < len; i++) {
-      slots[i].update(circuit.Slots[i]);
+      slot = circuit.Slots[i];
+      slots[slot.SlotNumber].update(slot);
     }
   }
 
@@ -351,6 +353,8 @@
       }
 
       circuit.Name = name;
+    } else {
+      circuit.Name = vars.name;
     }
 
     for (i = 0, len = slots.length; i < len; i++) {

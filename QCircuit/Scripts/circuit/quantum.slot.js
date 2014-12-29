@@ -123,8 +123,6 @@
         i, len, gate;
 
     vars.id = slot.Id;
-    vars.number = slot.SlotNumber;
-
     for (i = 0, len = slot.Gates.length; i < len; i++) {
       gate = slot.Gates[i];
       gates[gate.Position.toFixed(8)].update(gate);

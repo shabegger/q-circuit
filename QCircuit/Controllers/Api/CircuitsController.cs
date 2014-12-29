@@ -57,8 +57,67 @@ namespace QCircuit.Controllers.Api
             {
                 return Unauthorized();
             }
+            
+            if (savedCircuit.Name != existingCircuit.Name)
+            {
+                db.Entry(existingCircuit).CurrentValues.SetValues(new
+                {
+                    Name = savedCircuit.Name
+                });
+            }
 
-            db.Entry(savedCircuit).State = EntityState.Modified;
+            var existingGates = existingCircuit.Slots.SelectMany(s => s.Gates).ToList();
+            var savedGates = savedCircuit.Slots.SelectMany(s => s.Gates);
+
+            db.GateInstances.RemoveRange(existingGates.Where(e => !savedGates.Any(s => s.Id == e.Id)));
+            db.GateInstances.AddRange(savedGates.Where(s => !existingGates.Any(e => e.Id == s.Id)));
+            foreach (var savedGate in savedGates.Where(s => existingGates.Any(e => e.Id == s.Id)))
+            {
+                var existingGate = db.GateInstances.Find(savedGate.Id);
+
+                if (savedGate.Position != existingGate.Position)
+                {
+                    db.Entry(existingGate).CurrentValues.SetValues(new
+                    {
+                        Position = savedGate.Position
+                    });
+                }
+            }
+
+            var existingSlots = existingCircuit.Slots.ToList();
+            var savedSlots = savedCircuit.Slots;
+
+            foreach (var savedSlot in savedSlots)
+            {
+                savedSlot.CircuitId = id;
+            }
+
+            db.CircuitSlots.RemoveRange(existingSlots.Where(e => !savedSlots.Any(s => s.Id == e.Id)));
+            db.CircuitSlots.AddRange(savedSlots.Where(s => !existingSlots.Any(e => e.Id == s.Id)));
+            foreach (var savedSlot in savedSlots.Where(s => existingSlots.Any(e => e.Id == s.Id)))
+            {
+                var existingSlot = db.CircuitSlots.Find(savedSlot.Id);
+
+                if (savedSlot.SlotNumber != existingSlot.SlotNumber)
+                {
+                    db.Entry(existingSlot).CurrentValues.SetValues(new
+                    {
+                        SlotNumber = savedSlot.SlotNumber
+                    });
+                }
+
+                foreach (var existingGate in existingSlot.Gates.Where(e => !savedSlot.Gates.Any(s => s.Id == e.Id)))
+                {
+                    existingSlot.Gates.Remove(existingGate);
+                    db.Entry(existingSlot).State = EntityState.Modified;
+                }
+                foreach (var savedGate in savedSlot.Gates.Where(s => !existingSlot.Gates.Any(e => e.Id == s.Id)))
+                {
+                    var existingGate = existingGates.Single(e => e.Id == savedGate.Id);
+                    existingSlot.Gates.Add(existingGate);
+                    db.Entry(existingSlot).State = EntityState.Modified;
+                }
+            }
 
             try
             {
@@ -76,7 +135,8 @@ namespace QCircuit.Controllers.Api
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+
+            return Ok(existingCircuit);
         }
 
         // POST: api/Circuits
