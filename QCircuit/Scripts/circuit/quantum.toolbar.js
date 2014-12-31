@@ -28,7 +28,7 @@
         '<a class="', _classTool, ' q-toolbar-save" data-name="Save" ',
            _attrAction, '="save" title="Save the current algorithm"></a>',
         '<a class="', _classTool, ' q-toolbar-delete" data-name="Delete" ',
-           _attrAction, 'n="delete" title="Delete the current algorithm"></a>',
+           _attrAction, '="delete" title="Delete the current algorithm"></a>',
         '<a class="', _classTool, ' q-toolbar-execute" data-name="Execute" ',
            _attrAction, '="run" title="Run the current algorithm"></a>',
       '</div>'].join('');

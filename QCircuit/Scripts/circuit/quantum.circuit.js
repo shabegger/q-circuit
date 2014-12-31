@@ -86,13 +86,16 @@
     self.update = $.proxy(update, self, vars);
 
     self.save = $.proxy(save, self, vars);
+    self.copy = $.proxy(copy, self, vars);
     self.openNew = $.proxy(openNew, self, vars);
+    self.remove = $.proxy(remove, self, vars);
 
     self.slotAdded = $.proxy(slotAdded, self, vars);
     self.deleteClicked = $.proxy(deleteClicked, self, vars);
     self.scrolled = $.proxy(scrolled, self, vars);
 
     vars.saveDone = $.proxy(saveDone, self, vars);
+    vars.deleteDone = $.proxy(deleteDone, self, vars);
 
     self.render();
   }
@@ -283,12 +286,34 @@
     }
   }
 
+  function copy(vars) {
+    if (vars.id) {
+      $.post('api/circuits/' + vars.id)
+        .done(vars.saveDone)
+        .fail(saveFail);
+    }
+  }
+
   function openNew(vars) {
     var self = this,
         slots = vars.slots;
 
+    delete vars.id;
+    delete vars.name;
+
     while (!slots[0].isAddSlot()) {
       self.removeSlot(0);
+    }
+  }
+
+  function remove(vars) {
+    var self = this;
+
+    if (vars.id && vars.id !== Guid.Empty) {
+      X.Spinner().show();
+      $.ajax('api/circuits/' + vars.id, { type: 'DELETE' })
+        .done(vars.deleteDone)
+        .fail(saveFail);
     }
   }
 
@@ -394,6 +419,15 @@
       Page.showMessage('Save successful!');
     }
 
+    X.Spinner().hide();
+  }
+
+  function deleteDone() {
+    var self = this;
+
+    self.openNew();
+
+    Page.showMessage('Delete successful!');
     X.Spinner().hide();
   }
 

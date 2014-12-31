@@ -39,7 +39,7 @@ namespace QCircuit.Controllers.Api
         }
 
         // PUT: api/Circuits/5
-        [ResponseType(typeof(void))]
+        [ResponseType(typeof(SavedCircuit))]
         public IHttpActionResult PutSavedCircuit(Guid id, SavedCircuit savedCircuit)
         {
             if (!ModelState.IsValid)
@@ -141,11 +141,48 @@ namespace QCircuit.Controllers.Api
 
         // POST: api/Circuits
         [ResponseType(typeof(SavedCircuit))]
-        public IHttpActionResult PostSavedCircuit([FromBody] SavedCircuit savedCircuit)
+        public IHttpActionResult PostSavedCircuit(SavedCircuit savedCircuit)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            savedCircuit.UserId = db.User.Id;
+            db.Circuits.Add(savedCircuit);
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateException)
+            {
+                if (SavedCircuitExists(savedCircuit.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return CreatedAtRoute("DefaultApi", new { id = savedCircuit.Id }, savedCircuit);
+        }
+
+        // POST: api/Circuits/5
+        [ResponseType(typeof(SavedCircuit))]
+        public IHttpActionResult PostSavedCircuit(Guid id)
+        {
+            SavedCircuit savedCircuit = db.Circuits
+                .AsNoTracking()
+                .Include(c => c.Slots)
+                .Include(c => c.Slots.Select(s => s.Gates))
+                .FirstOrDefault(c => c.Id == id);
+
+            if (savedCircuit == null)
+            {
+                return NotFound();
             }
 
             savedCircuit.UserId = db.User.Id;
@@ -185,6 +222,7 @@ namespace QCircuit.Controllers.Api
                 return Unauthorized();
             }
 
+            db.GateInstances.RemoveRange(savedCircuit.Slots.SelectMany(s => s.Gates));
             db.Circuits.Remove(savedCircuit);
             db.SaveChanges();
 

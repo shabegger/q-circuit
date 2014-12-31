@@ -129,8 +129,14 @@
       case 'new':
         self.circuit.openNew();
         break;
+      case 'copy':
+        self.circuit.copy();
+        break;
       case 'save':
         self.circuit.save();
+        break;
+      case 'delete':
+        self.circuit.remove();
         break;
     }
   }
