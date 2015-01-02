@@ -2,6 +2,19 @@
 @import (less) "../font-awesome.css";
 
 
+/* Mixins */
+
+.mixin-control {
+    font-size: @controlFontSize;
+    padding: @controlPadding;
+    border: @controlBorder solid @dark;
+    border-radius: @controlPadding;
+}
+
+
+/* Styles */
+
+
 * {
     margin: 0;
     padding: 0;
@@ -98,22 +111,26 @@ body {
         font-size: @controlFontSize;
         white-space: nowrap;
 
-        & + input {
+        & + input,
+        & + select {
             margin-left: @controlSpacing;
         }
     }
 
     input {
-        font-size: @controlFontSize;
-        padding: @controlPadding;
-        border: @controlBorder solid @dark;
-        border-radius: @controlPadding;
+        .mixin-control;
 
         &[type="button"] {
             cursor: pointer;
             color: @lightText;
             background: @semiDark;
         }
+    }
+
+    select {
+        .mixin-control;
+
+        min-width: @selectWidth;
     }
 }
 

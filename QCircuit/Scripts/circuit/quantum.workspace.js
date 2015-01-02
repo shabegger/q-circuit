@@ -126,6 +126,9 @@
     var self = this;
 
     switch (e.action) {
+      case 'open':
+        self.circuit.open();
+        break;
       case 'new':
         self.circuit.openNew();
         break;

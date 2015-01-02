@@ -35,6 +35,7 @@ namespace QCircuit.Controllers.Api
                 return Unauthorized();
             }
 
+            savedCircuit.SerializeChildren = true;
             return Ok(savedCircuit);
         }
 
@@ -135,7 +136,7 @@ namespace QCircuit.Controllers.Api
                 }
             }
 
-
+            existingCircuit.SerializeChildren = true;
             return Ok(existingCircuit);
         }
 
@@ -167,6 +168,7 @@ namespace QCircuit.Controllers.Api
                 }
             }
 
+            savedCircuit.SerializeChildren = true;
             return CreatedAtRoute("DefaultApi", new { id = savedCircuit.Id }, savedCircuit);
         }
 
@@ -204,6 +206,7 @@ namespace QCircuit.Controllers.Api
                 }
             }
 
+            savedCircuit.SerializeChildren = true;
             return CreatedAtRoute("DefaultApi", new { id = savedCircuit.Id }, savedCircuit);
         }
 
@@ -226,6 +229,7 @@ namespace QCircuit.Controllers.Api
             db.Circuits.Remove(savedCircuit);
             db.SaveChanges();
 
+            savedCircuit.SerializeChildren = true;
             return Ok(savedCircuit);
         }
 

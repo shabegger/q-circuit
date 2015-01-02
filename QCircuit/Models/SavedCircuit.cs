@@ -34,5 +34,19 @@ namespace QCircuit.Models
         public string Name { get; set; }
 
         #endregion
+
+
+        #region ShouldSerialize
+
+        [JsonIgnore]
+        [NotMapped]
+        public bool SerializeChildren { get; set; }
+
+        public bool ShouldSerializeSlots()
+        {
+            return SerializeChildren;
+        }
+
+        #endregion
     }
 }

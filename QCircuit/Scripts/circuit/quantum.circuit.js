@@ -44,6 +44,14 @@
 		  '</div>'].join('');
   }
 
+  function _circuitListTmpl(circuit) {
+    return [
+      '<option value="', (circuit && circuit.Id) || '', '">',
+        (circuit && circuit.Name) || '',
+      '</option>'
+    ].join('');
+  }
+
   function _deleteTmpl() {
     return [
       '<span class="', _classDelete, '">',
@@ -78,6 +86,21 @@
       ]
     });
 
+    vars.openDlg = new Dialog({
+      title: 'Open Existing...',
+      content: '<label>Circuit</label><select></select>',
+      tools: [
+        {
+          title: 'Cancel',
+          callback: $.proxy(openDlgCancel, self, vars)
+        },
+        {
+          title: 'Open',
+          callback: $.proxy(openDlgOpen, self, vars)
+        }
+      ]
+    });
+
     self.addSlot = $.proxy(addSlot, self, vars);
     self.removeSlot = $.proxy(removeSlot, self, vars);
     self.calculateScrollMax = $.proxy(calculateScrollMax, self, vars);
@@ -87,6 +110,7 @@
 
     self.save = $.proxy(save, self, vars);
     self.copy = $.proxy(copy, self, vars);
+    self.open = $.proxy(open, self, vars);
     self.openNew = $.proxy(openNew, self, vars);
     self.remove = $.proxy(remove, self, vars);
 
@@ -290,8 +314,29 @@
     if (vars.id) {
       $.post('api/circuits/' + vars.id)
         .done(vars.saveDone)
-        .fail(saveFail);
+        .fail(ajaxFail);
     }
+  }
+
+  function open(vars) {
+    X.Spinner().show();
+
+    $.get('api/circuits')
+      .done(function (circuits) {
+        var i, len,
+            select = vars.openDlg.content().find('select');
+
+        select.empty();
+
+        select.append(_circuitListTmpl());
+        for (i = 0, len = circuits.length; i < len; i++) {
+          select.append(_circuitListTmpl(circuits[i]));
+        }
+
+        X.Spinner().hide();
+        vars.openDlg.show();
+      })
+      .fail(ajaxFail);
   }
 
   function openNew(vars) {
@@ -313,7 +358,7 @@
       X.Spinner().show();
       $.ajax('api/circuits/' + vars.id, { type: 'DELETE' })
         .done(vars.deleteDone)
-        .fail(saveFail);
+        .fail(ajaxFail);
     }
   }
 
@@ -398,12 +443,26 @@
     if (!vars.id || vars.id === Guid.Empty) {
       $.post('api/circuits', circuit)
         .done(vars.saveDone)
-        .fail(saveFail);
+        .fail(ajaxFail);
     } else {
       $.ajax('api/circuits/' + vars.id, { data: circuit, type: 'PUT' })
         .done(vars.saveDone)
-        .fail(saveFail);
+        .fail(ajaxFail);
     }
+  }
+
+  function openDlgCancel(vars, e) {
+    var dialog = vars.openDlg;
+
+    dialog.hide();
+  }
+
+  function openDlgOpen(vars, e) {
+    var self = this,
+        dialog = vars.openDlg;
+
+    dialog.hide();
+    dialog.content().find('select').val('');
   }
 
 
@@ -431,7 +490,7 @@
     X.Spinner().hide();
   }
 
-  function saveFail(request, status, error) {
+  function ajaxFail(request, status, error) {
     Page.showMessage(error);
     X.Spinner().hide();
   }

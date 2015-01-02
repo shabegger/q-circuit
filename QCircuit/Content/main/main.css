@@ -1674,6 +1674,14 @@
 .fa-meanpath:before {
   content: "\f20c";
 }
+/* Mixins */
+.mixin-control {
+  font-size: 14px;
+  padding: 4px;
+  border: 1px solid #222222;
+  border-radius: 4px;
+}
+/* Styles */
 * {
   margin: 0;
   padding: 0;
@@ -1755,7 +1763,8 @@ body label {
   font-size: 14px;
   white-space: nowrap;
 }
-body label + input {
+body label + input,
+body label + select {
   margin-left: 6px;
 }
 body input {
@@ -1768,6 +1777,13 @@ body input[type="button"] {
   cursor: pointer;
   color: #ffffff;
   background: #666666;
+}
+body select {
+  font-size: 14px;
+  padding: 4px;
+  border: 1px solid #222222;
+  border-radius: 4px;
+  min-width: 120px;
 }
 /* Media Queries */
 @media (max-width: 480px) {
