@@ -3,7 +3,6 @@ using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -71,7 +70,6 @@ namespace QCircuit.Controllers.Api
             var savedGates = savedCircuit.Slots.SelectMany(s => s.Gates);
 
             db.GateInstances.RemoveRange(existingGates.Where(e => !savedGates.Any(s => s.Id == e.Id)));
-            db.GateInstances.AddRange(savedGates.Where(s => !existingGates.Any(e => e.Id == s.Id)));
             foreach (var savedGate in savedGates.Where(s => existingGates.Any(e => e.Id == s.Id)))
             {
                 var existingGate = db.GateInstances.Find(savedGate.Id);
@@ -107,15 +105,18 @@ namespace QCircuit.Controllers.Api
                     });
                 }
 
-                foreach (var existingGate in existingSlot.Gates.Where(e => !savedSlot.Gates.Any(s => s.Id == e.Id)))
+                foreach (var existingGate in existingSlot.Gates.Where(e => !savedSlot.Gates.Any(s => s.Id == e.Id)).ToList())
                 {
                     existingSlot.Gates.Remove(existingGate);
                     db.Entry(existingSlot).State = EntityState.Modified;
                 }
                 foreach (var savedGate in savedSlot.Gates.Where(s => !existingSlot.Gates.Any(e => e.Id == s.Id)))
                 {
-                    var existingGate = existingGates.Single(e => e.Id == savedGate.Id);
-                    existingSlot.Gates.Add(existingGate);
+                    var existingGate = existingGates.SingleOrDefault(e => e.Id == savedGate.Id);
+
+                    if (existingGate == null) existingSlot.Gates.Add(savedGate);
+                    else existingSlot.Gates.Add(existingGate);
+
                     db.Entry(existingSlot).State = EntityState.Modified;
                 }
             }

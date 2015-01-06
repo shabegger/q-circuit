@@ -43,6 +43,7 @@
     self.serialize = $.proxy(serialize, self, vars);
     self.invalidateBounds = $.proxy(invalidateBounds, self, vars);
     self.update = $.proxy(update, self, vars);
+    self.open = $.proxy(open, self, vars);
 
     self.gateDragged = $.proxy(gateDragged, self, vars);
     self.gateDropped = $.proxy(gateDropped, self, vars);
@@ -126,6 +127,30 @@
     for (i = 0, len = slot.Gates.length; i < len; i++) {
       gate = slot.Gates[i];
       gates[gate.Position.toFixed(8)].update(gate);
+    }
+  }
+
+  function open(vars, slot) {
+    var self = this,
+        element = self.element.find(['.', _classContent].join('')),
+        i, len, gate,
+        slotGate;
+
+    vars.id = slot.Id;
+    for (i = 0, len = slot.Gates.length; i < len; i++) {
+      gate = slot.Gates[i];
+      slotGate = Q.Gate.get(gate.GateId);
+
+      slotGate.update(gate);
+      slotGate.element
+        .css({
+          'position': 'absolute',
+          'left': (100 * gate.Position) + '%'
+        })
+        .appendTo(element);
+      slotGate.addEventListener('drag', self.slotGateDragged);
+
+      vars.gates[gate.Position.toFixed(8)] = slotGate;
     }
   }
 

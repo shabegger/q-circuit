@@ -119,6 +119,7 @@
     self.scrolled = $.proxy(scrolled, self, vars);
 
     vars.saveDone = $.proxy(saveDone, self, vars);
+    vars.openDone = $.proxy(openDone, self, vars);
     vars.deleteDone = $.proxy(deleteDone, self, vars);
 
     self.render();
@@ -217,6 +218,7 @@
         slot,
         deletesElem,
         slotsElem,
+        needsNew,
         j, len;
 
     if (i >= 0 && i < slots.length) {
@@ -226,6 +228,8 @@
       slot = slots[i];
       slots.splice(i, 1);
 
+      needsNew = !slot.isAddSlot();
+
       slot.dispose();
       deletesElem.children(':last-child').remove();
 
@@ -234,10 +238,12 @@
       }
 
       // If previously at the max slot count, we now need an add slot
-      self.addSlot(true);
+      if (needsNew) {
+        self.addSlot(true);
+      }
 
       // If there's an add slot, make sure it's delete is hidden
-      if (slots[slots.length - 1].isAddSlot()) {
+      if (slots.length && slots[slots.length - 1].isAddSlot()) {
         self.element.find(['.', _classDelete, ':last'].join('')).css({
           'visibility': 'hidden'
         });
@@ -459,10 +465,21 @@
 
   function openDlgOpen(vars, e) {
     var self = this,
-        dialog = vars.openDlg;
+        dialog = vars.openDlg,
+        id = dialog.content().find('option:selected').val();
+
+    if (!id) {
+      Page.showMessage('Select a circuit to open.');
+      return;
+    }
 
     dialog.hide();
-    dialog.content().find('select').val('');
+
+    X.Spinner().show();
+
+    $.get('api/circuits/' + id)
+      .done(vars.openDone)
+      .fail(ajaxFail);
   }
 
 
@@ -477,6 +494,28 @@
       self.update(circuit);
       Page.showMessage('Save successful!');
     }
+
+    X.Spinner().hide();
+  }
+
+  function openDone(vars, circuit) {
+    var self = this,
+        slots = vars.slots,
+        i, len;
+
+    while (slots.length) {
+      self.removeSlot(0);
+    }
+
+    vars.id = circuit.Id;
+    vars.name = circuit.Name;
+
+    for (i = 0, len = circuit.Slots.length; i < len; i++) {
+      self.addSlot();
+      slots[i].open(circuit.Slots[i]);
+    }
+
+    self.addSlot(true);
 
     X.Spinner().hide();
   }

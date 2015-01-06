@@ -10,7 +10,12 @@
 
 ; (function (window, Q, M, $, undefined) {
 
-	'use strict';
+  'use strict';
+
+
+  /* Private Variables */
+
+  var _constructors = {};
 
 
 	/* Templates */
@@ -173,6 +178,10 @@
 	Gate.fromSavedGate = function fromSavedGate(savedGate) {
 	  var id = savedGate.Id;
 
+	  if (_constructors[id]) {
+	    return _constructors[id];
+	  }
+
 	  function constructor() {
 	    Gate.call(this);
 	  }
@@ -187,7 +196,15 @@
 	    return savedGate.Display || '';
 	  };
 
+	  _constructors[id] = constructor;
+
 	  return constructor;
+	};
+
+	Gate.get = function get(id) {
+	  var constructor = _constructors[id];
+
+	  return (constructor && new constructor()) || null;
 	};
 
 
