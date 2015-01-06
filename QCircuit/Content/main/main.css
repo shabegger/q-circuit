@@ -1697,10 +1697,12 @@
 }
 body {
   background: #ffffff;
+  padding: 60px 20px 50px 20px;
 }
 body > header {
   position: fixed;
   top: 0;
+  left: 0;
   background: #000000;
   padding: 0 20px;
   width: 100%;
@@ -1748,6 +1750,7 @@ body > header span.main-login-disclosure {
 body > footer {
   position: fixed;
   bottom: 0;
+  left: 0;
   background: #aaaaaa;
   color: #ffffff;
   padding: 0 20px;
