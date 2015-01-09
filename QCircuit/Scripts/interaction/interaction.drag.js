@@ -17,6 +17,9 @@
       _moveHandler = null,
       _dropHandler = null,
       _cancelHandler = null,
+      _contextHandler = null,
+      _contextDelay = null,
+      _contextTimeout = null,
       _dragData = null;
 
 
@@ -25,6 +28,10 @@
   function onDown(e) {
     var offset, top, left, transform;
 
+    if (_currentDraggable) {
+      return;
+    }
+
     _currentDraggable = $(this);
 
     _options = _currentDraggable.dragOptions();
@@ -32,43 +39,116 @@
     _moveHandler = $.isFunction(_options.move) ? _options.move : null;
     _dropHandler = $.isFunction(_options.drop) ? _options.drop : null;
     _cancelHandler = $.isFunction(_options.cancel) ? _options.cancel : null;
+    _contextHandler = $.isFunction(_options.context) ? _options.context : null;
+    _contextDelay = _contextHandler ? (_options.contextDelay || 2000) : null;
 
     offset = _currentDraggable.offset();
     top = offset.top;
     left = offset.left;
-    transform = ['translate(', left, 'px, ', top, 'px)'].join('');
 
     _dragData = {
       deltaX: left - e.x,
       deltaY: top - e.y,
+      oTop: top,
+      oLeft: left,
       position: _currentDraggable.css('position'),
       top: _currentDraggable.css('top'),
       left: _currentDraggable.css('left'),
       parent: _currentDraggable.parent()
     };
 
+    _currentDraggable.offInteractionDown(_namespace);
+
+    if (_contextHandler) {
+      _body
+        .onInteractionUp(beforeFirstMove, _namespace)
+        .onInteractionCancel(beforeFirstMove, _namespace)
+        .onInteractionMove(firstMove, _namespace);
+
+      _currentDraggable
+        .on(['contextmenu.', _namespace].join(''), contextHandler);
+
+      _contextTimeout = window.setTimeout(contextHandler, _contextDelay);
+    } else {
+      firstMove.call(this);
+    }
+  }
+
+  function contextHandler() {
+    beforeFirstMove.call(this);
+
+    _contextHandler && _contextHandler.call(_currentDraggable);
+  }
+
+  function beforeFirstMove(e) {
+    _contextTimeout && window.clearTimeout(_contextTimeout);
+    _contextTimeout = null;
+
+    _body
+      .offInteractionMove(_namespace)
+      .offInteractionUp(_namespace)
+      .offInteractionCancel(_namespace);
+
     _currentDraggable
-      .offInteractionDown(_namespace)
+      .off(['contextmenu.', _namespace].join(''))
+      .onInteractionDown(onDown, _namespace);
+
+    _currentDraggable = null;
+    _dragData = null;
+
+    _options = null;
+    _contextDelay = null;
+    _dragHandler = null;
+    _moveHandler = null;
+    _dropHandler = null;
+    _cancelHandler = null;
+    _contextHandler = null;
+  }
+
+  function firstMove(e) {
+    var transform;
+
+    _contextTimeout && window.clearTimeout(_contextTimeout);
+    _contextTimeout = null;
+
+    _currentDraggable
       .remove()
       .css({
-        '-ms-transform': transform,
-        '-webkit-transform': transform,
-        'transform': transform,
         'position': 'absolute',
         'top': 0,
         'left': 0
       });
 
     _body
+      .offInteractionMove(_namespace)
+      .offInteractionUp(_namespace)
+      .offInteractionCancel(_namespace)
       .onInteractionMove(onMove, _namespace)
       .onInteractionUp(onUp, _namespace)
       .onInteractionCancel(onCancel, _namespace)
       .append(_currentDraggable);
 
     _dragHandler && _dragHandler.call(_currentDraggable, {
-      top: top,
-      left: left
+      top: _dragData.oTop,
+      left: _dragData.oLeft
     });
+
+    if (e) {
+      onMove.call(this, e);
+    } else {
+      transform = [
+        'translate(',
+        _dragData.oLeft, 'px, ',
+        _dragData.oTop, 'px)'
+      ].join('');
+
+      _currentDraggable
+        .css({
+          '-ms-transform': transform,
+          '-webkit-transform': transform,
+          'transform': transform
+        });
+    }
   }
 
   function onMove(e) {
@@ -115,10 +195,12 @@
     _dragData = null;
 
     _options = null;
+    _contextDelay = null;
     _dragHandler = null;
     _moveHandler = null;
     _dropHandler = null;
     _cancelHandler = null;
+    _contextHandler = null;
   }
 
   function onCancel(e) {
@@ -174,10 +256,12 @@
     _dragData = null;
 
     _options = null;
+    _contextDelay = null;
     _dragHandler = null;
     _moveHandler = null;
     _dropHandler = null;
     _cancelHandler = null;
+    _contextHandler = null;
   }
 
 
@@ -200,6 +284,8 @@
   //    move: callback function called when moved
   //    drop: callback function called when dropped
   //    cancel: callback function called when drag cancelled
+  //    context: callback function called after context delay
+  //    contextDelay: delay before firing context callback (default 2000ms)
   $.fn.draggable = function draggable(options) {
     var self = this;
 

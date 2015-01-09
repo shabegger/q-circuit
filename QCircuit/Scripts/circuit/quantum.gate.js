@@ -42,6 +42,7 @@
 	  self.move = $.proxy(move, self, vars);
 	  self.drop = $.proxy(drop, self, vars);
 	  self.cancel = $.proxy(cancel, self, vars);
+	  self.context = $.proxy(context, self, vars);
     
     self.render();
 	}
@@ -52,7 +53,7 @@
 	M.Events.mixinEvents(Gate);
 
 
-	/* Prototype Methods */
+  /* Prototype Methods */
 
 	Gate.prototype.render = function render() {
 	  var self = this;
@@ -64,7 +65,8 @@
 	        drag: self.drag,
 	        move: self.move,
 	        drop: self.drop,
-          cancel: self.cancel
+	        cancel: self.cancel,
+          context: self.context
 	      });
 	  }
 	};
@@ -170,6 +172,10 @@
       });
 
 	  e.preventDefault();
+	}
+
+	function context(vars, e) {
+	  var self = this;
 	}
 
 
