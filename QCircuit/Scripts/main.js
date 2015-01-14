@@ -26,20 +26,11 @@
   }
 
 
-  /* Context Menus */
-
-  function disableContext(e) {
-    e.preventDefault();
-    return false;
-  }
-
-
   /* Initialization */
 
   function attachEvents() {
     $(document).on('click', hideNavigation);
     $(window).on('resize', hideNavigation);
-    $(window).on('contextmenu', disableContext);
     $(['.', _disclosureNavClass].join('')).on('click', toggleNavigation);
   }
 

@@ -17,7 +17,6 @@
       _moveHandler = null,
       _dropHandler = null,
       _cancelHandler = null,
-      _contextHandler = null,
       _contextDelay = null,
       _contextTimeout = null,
       _dragData = null;
@@ -33,14 +32,19 @@
     }
 
     _currentDraggable = $(this);
-
     _options = _currentDraggable.dragOptions();
+
+    if (_options.contextDelay === undefined) {
+      _contextDelay = null;
+    } else {
+      _contextDelay = _options.contextDelay === true ?
+        2000 : _options.contextDelay;
+    }
+
     _dragHandler = $.isFunction(_options.drag) ? _options.drag : null;
     _moveHandler = $.isFunction(_options.move) ? _options.move : null;
     _dropHandler = $.isFunction(_options.drop) ? _options.drop : null;
     _cancelHandler = $.isFunction(_options.cancel) ? _options.cancel : null;
-    _contextHandler = $.isFunction(_options.context) ? _options.context : null;
-    _contextDelay = _contextHandler ? (_options.contextDelay || 2000) : null;
 
     offset = _currentDraggable.offset();
     top = offset.top;
@@ -59,14 +63,11 @@
 
     _currentDraggable.offInteractionDown(_namespace);
 
-    if (_contextHandler) {
+    if (_contextDelay) {
       _body
         .onInteractionUp(beforeFirstMove, _namespace)
         .onInteractionCancel(beforeFirstMove, _namespace)
         .onInteractionMove(firstMove, _namespace);
-
-      _currentDraggable
-        .on(['contextmenu.', _namespace].join(''), contextHandler);
 
       _contextTimeout = window.setTimeout(contextHandler, _contextDelay);
     } else {
@@ -75,9 +76,8 @@
   }
 
   function contextHandler() {
+    _currentDraggable.trigger('contextmenu');
     beforeFirstMove.call(this);
-
-    _contextHandler && _contextHandler.call(_currentDraggable);
   }
 
   function beforeFirstMove(e) {
@@ -90,7 +90,6 @@
       .offInteractionCancel(_namespace);
 
     _currentDraggable
-      .off(['contextmenu.', _namespace].join(''))
       .onInteractionDown(onDown, _namespace);
 
     _currentDraggable = null;
@@ -102,11 +101,21 @@
     _moveHandler = null;
     _dropHandler = null;
     _cancelHandler = null;
-    _contextHandler = null;
   }
 
   function firstMove(e) {
-    var transform;
+    var transform,
+        top, left;
+
+    if (e) {
+      // IE calls this after a given period of time, even if no move occurred
+      top = e.y + _dragData.deltaY;
+      left = e.x + _dragData.deltaX;
+
+      if (_dragData.oLeft === left && _dragData.oTop === top) {
+        return;
+      }
+    }
 
     _contextTimeout && window.clearTimeout(_contextTimeout);
     _contextTimeout = null;
@@ -200,7 +209,6 @@
     _moveHandler = null;
     _dropHandler = null;
     _cancelHandler = null;
-    _contextHandler = null;
   }
 
   function onCancel(e) {
@@ -261,7 +269,6 @@
     _moveHandler = null;
     _dropHandler = null;
     _cancelHandler = null;
-    _contextHandler = null;
   }
 
 
@@ -284,7 +291,6 @@
   //    move: callback function called when moved
   //    drop: callback function called when dropped
   //    cancel: callback function called when drag cancelled
-  //    context: callback function called after context delay
   //    contextDelay: delay before firing context callback (default 2000ms)
   $.fn.draggable = function draggable(options) {
     var self = this;

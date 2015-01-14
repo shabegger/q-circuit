@@ -257,6 +257,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\utility\utility.fn.js" />
     <Content Include="Scripts\utility\utility.js" />
+    <Content Include="Scripts\ux\ux.context.js" />
     <Content Include="Scripts\ux\ux.js" />
     <Content Include="Scripts\ux\ux.message.js" />
     <Content Include="Scripts\ux\ux.spinner.js" />

@@ -3,9 +3,6 @@
 
 /* Sizes */
 
-@borderSize:    2px;
-@borderRadius:  6px;
-@padding:       6px;
 @minWidth:      200px;
 
 
@@ -43,22 +40,22 @@ div.dialog-container {
             color: @lightText;
             cursor: default;
             font-size: @headerFontSize;
-            padding: @padding;
+            padding: @innerPadding;
             min-width: @minWidth;
         }
 
         section {
-            padding: @padding;
+            padding: @innerPadding;
         }
 
         footer {
             background: @footerBackground;
-            padding: @padding;
+            padding: @innerPadding;
             overflow: hidden;
             text-align: right;
 
             input[type="button"]:not(:last-child) {
-                margin-right: @padding;
+                margin-right: @innerPadding;
             }
         }
     }

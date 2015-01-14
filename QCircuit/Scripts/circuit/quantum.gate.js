@@ -43,6 +43,13 @@
 	  self.drop = $.proxy(drop, self, vars);
 	  self.cancel = $.proxy(cancel, self, vars);
 	  self.context = $.proxy(context, self, vars);
+
+	  vars.items = [
+      {
+        title: 'Add Control Gate',
+        callback: function () { alert('Hi!') }
+      }
+	  ];
     
     self.render();
 	}
@@ -66,8 +73,9 @@
 	        move: self.move,
 	        drop: self.drop,
 	        cancel: self.cancel,
-          context: self.context
-	      });
+          contextDelay: true
+        })
+	      .on('beforecontext', self.context);
 	  }
 	};
 
@@ -175,7 +183,10 @@
 	}
 
 	function context(vars, e) {
-	  var self = this;
+	  var self = this,
+        menu = e.menu;
+
+	  menu.setContextMenu(vars.items);
 	}
 
 

@@ -33,6 +33,7 @@ namespace QCircuit
 
             bundles.Add(new ScriptBundle("~/bundles/ux").Include(
                         "~/Scripts/ux/ux.js",
+                        "~/Scripts/ux/ux.context.js",
                         "~/Scripts/ux/ux.message.js",
                         "~/Scripts/ux/ux.spinner.js"));
 

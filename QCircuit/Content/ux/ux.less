@@ -76,6 +76,26 @@ div.ux-container {
     }
 }
 
+div.ux-context {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: @innerPadding;
+    background: @background;
+    border: @borderSize solid @darkBorder;
+    border-radius: @borderRadius;
+    overflow: hidden;
+    z-index: 30000;
+
+    ul {
+        list-style: none;
+
+        li {
+            cursor: pointer;
+        }
+    }
+}
+
 span.ux-message {
     &.ux-hidden {
         opacity: 0;

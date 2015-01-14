@@ -1738,6 +1738,23 @@ div.ux-container div.ux-spinner:before {
   -webkit-animation: ux-spin-frame 1.2s steps(8) infinite;
   animation: ux-spin-frame 1.2s steps(8) infinite;
 }
+div.ux-context {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 6px;
+  background: #ffffff;
+  border: 2px solid #888888;
+  border-radius: 6px;
+  overflow: hidden;
+  z-index: 30000;
+}
+div.ux-context ul {
+  list-style: none;
+}
+div.ux-context ul li {
+  cursor: pointer;
+}
 span.ux-message.ux-hidden {
   opacity: 0;
   -webkit-transition: opacity 1s ease-in-out;
