@@ -57,6 +57,7 @@ namespace QCircuit
                         "~/Scripts/circuit/quantum.js",
                         "~/Scripts/circuit/quantum.workspace.js",
                         "~/Scripts/circuit/quantum.toolbar.js",
+                        "~/Scripts/circuit/quantum.gatemod.js",
                         "~/Scripts/circuit/quantum.gate.js",
                         "~/Scripts/circuit/quantum.gatefactory.js",
                         "~/Scripts/circuit/quantum.factoryshowroom.js",

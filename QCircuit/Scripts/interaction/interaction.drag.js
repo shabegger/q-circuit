@@ -38,7 +38,7 @@
       _contextDelay = null;
     } else {
       _contextDelay = _options.contextDelay === true ?
-        2000 : _options.contextDelay;
+        1000 : _options.contextDelay;
     }
 
     _dragHandler = $.isFunction(_options.drag) ? _options.drag : null;
@@ -58,7 +58,9 @@
       position: _currentDraggable.css('position'),
       top: _currentDraggable.css('top'),
       left: _currentDraggable.css('left'),
-      parent: _currentDraggable.parent()
+      parent: _currentDraggable.parent(),
+      constrainX: _options.constrain === 'x',
+      constrainY: _options.constrain === 'y'
     };
 
     _currentDraggable.offInteractionDown(_namespace);
@@ -76,7 +78,12 @@
   }
 
   function contextHandler() {
-    _currentDraggable.trigger('contextmenu');
+    var event = $.Event('contextmenu');
+
+    event.clientX = _dragData.oLeft - _dragData.deltaX;
+    event.clientY = _dragData.oTop - _dragData.deltaY;
+
+    _currentDraggable.trigger(event);
     beforeFirstMove.call(this);
   }
 
@@ -161,8 +168,8 @@
   }
 
   function onMove(e) {
-    var top = e.y + _dragData.deltaY,
-        left = e.x + _dragData.deltaX,
+    var top = _dragData.constrainX ? _dragData.oTop : e.y + _dragData.deltaY,
+        left = _dragData.constrainY ? _dragData.oLeft : e.x + _dragData.deltaX,
         transform = ['translate(', left, 'px, ', top, 'px)'].join('');
 
     _currentDraggable
@@ -292,6 +299,7 @@
   //    drop: callback function called when dropped
   //    cancel: callback function called when drag cancelled
   //    contextDelay: delay before firing context callback (default 2000ms)
+  //    constrain: "x" or "y" to allow drag only horizontally or vertically
   $.fn.draggable = function draggable(options) {
     var self = this;
 

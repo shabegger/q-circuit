@@ -2027,3 +2027,21 @@ div.q-slot div.q-slot-content {
 div.q-slot div.q-slot-content div.q-gate {
   top: -25px;
 }
+div.q-slot div.q-slot-content div.q-gate.q-gate-control {
+  position: absolute;
+  top: -20px;
+  height: 40px;
+  width: 40px;
+  transform: translate(5px, 0px);
+}
+div.q-slot div.q-slot-content div.q-gate.q-mod-add {
+  opacity: 0.5;
+}
+div.q-slot div.q-slot-content div.q-gate-connector {
+  position: absolute;
+  top: 0;
+  background: #6584b2;
+  width: 10px;
+  z-index: 5000;
+  transform: translate(20px, 0px);
+}

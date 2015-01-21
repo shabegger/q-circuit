@@ -37,7 +37,7 @@
     vars.element = $(_contextTmpl()).appendTo('body')
       .on('click', $.proxy(click, self, vars));
 
-    $(document)
+    $(window.document)
       .on('contextmenu', $.proxy(show, self, vars))
       .on('click blur', $.proxy(hide, self, vars));
   }
@@ -110,6 +110,9 @@
         listItem = $(e.target),
         item;
 
+    e.preventDefault();
+    e.stopPropagation();
+
     vars.element.hide();
     
     if (!listItem.is('li')) {
@@ -117,11 +120,13 @@
     }
 
     if (!listItem.length) {
-      return;
+      return false;
     }
 
     item = vars.items[listItem.index()];
-    item && $.isFunction(item.callback) && item.callback.call(self);
+    item && $.isFunction(item.callback) && item.callback.call(self, e);
+
+    return false;
   }
 
 

@@ -18,7 +18,8 @@
 
   /* Private Variables */
 
-  var _maxSlots = 6,
+  var _instance = null,
+      _maxSlots = 6,
       _classUp = 'q-circuit-up',
       _classDown = 'q-circuit-down',
       _classScroller = 'q-circuit-scroller',
@@ -101,6 +102,7 @@
       ]
     });
 
+    self.slots = $.proxy(slots, self, vars);
     self.addSlot = $.proxy(addSlot, self, vars);
     self.removeSlot = $.proxy(removeSlot, self, vars);
     self.calculateScrollMax = $.proxy(calculateScrollMax, self, vars);
@@ -176,6 +178,10 @@
 
 
   /* Instance Methods */
+
+  function slots(vars) {
+    return vars.slots.slice();
+  }
 
   function addSlot(vars, addSlot) {
     var self = this,
@@ -535,8 +541,16 @@
   }
 
 
+  /* Singleton */
+
+  function getInstance() {
+    _instance = _instance || new Circuit();
+    return _instance;
+  }
+
+
   /* Expose */
 
-  Q.Circuit = Circuit;
+  Q.Circuit = getInstance;
 
 }(this, this.MainPage, this.Quantum, this.Mixins, this.UX, this.jQuery));

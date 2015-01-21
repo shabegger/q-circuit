@@ -14,6 +14,11 @@
   'use strict';
 
 
+  /* Private Variables */
+
+  var _instance = null;
+
+
   /* Templates */
 
   function _workspaceTmpl() {
@@ -55,7 +60,7 @@
     self.element.append(self.factoryShowroom.element);
     self.factoryShowroom.calculateScrollMax();
 
-    self.circuit = new Q.Circuit();
+    self.circuit = Q.Circuit();
     self.element.append(self.circuit.element);
     self.circuit.calculateScrollMax();
 
@@ -145,8 +150,16 @@
   }
 
 
+  /* Singleton */
+
+  function getInstance(container) {
+    _instance = _instance || new Workspace(container)
+    return _instance;
+  }
+
+
   /* Expose */
 
-  Q.Workspace = Workspace;
+  Q.Workspace = getInstance;
 
 }(this, this.MainPage, this.Quantum, this.Mixins, this.UX, this.jQuery));

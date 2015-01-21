@@ -80,7 +80,6 @@ div.ux-context {
     position: absolute;
     top: 0;
     left: 0;
-    padding: @innerPadding;
     background: @background;
     border: @borderSize solid @darkBorder;
     border-radius: @borderRadius;
@@ -92,6 +91,15 @@ div.ux-context {
 
         li {
             cursor: pointer;
+            padding: @innerPadding;
+
+            &:not(:last-child) {
+                border-bottom: @thinBorderSize solid @darkBorder;
+            }
+
+            &:hover {
+                background: @backgroundHighlight;
+            }
         }
     }
 }

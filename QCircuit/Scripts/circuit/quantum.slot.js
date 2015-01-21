@@ -44,6 +44,8 @@
     self.invalidateBounds = $.proxy(invalidateBounds, self, vars);
     self.update = $.proxy(update, self, vars);
     self.open = $.proxy(open, self, vars);
+    self.append = $.proxy(append, self, vars);
+    self.add = $.proxy(add, self, vars);
 
     self.gateDragged = $.proxy(gateDragged, self, vars);
     self.gateDropped = $.proxy(gateDropped, self, vars);
@@ -154,6 +156,23 @@
     }
   }
 
+  function append(vars, element) {
+    var self = this,
+        content = self.element.find(['.', _classContent].join(''));
+
+    content.append(element);
+  }
+
+  function add(vars) {
+    var self = this;
+
+    if (vars.isAddSlot) {
+      vars.isAddSlot = false;
+      self.element.removeClass(_classModAdd);
+      self.dispatchEvent('added');
+    }
+  }
+
 
   /* Event Handlers */
 
@@ -244,13 +263,8 @@
     insertGate(vars.gates, gate, position);
     gate.addEventListener('drag', self.slotGateDragged);
 
-    e.handled = true;
-
-    if (vars.isAddSlot) {
-      vars.isAddSlot = false;
-      self.element.removeClass(_classModAdd);
-      self.dispatchEvent('added');
-    }
+    e.slot = self;
+    self.add();
   }
 
   function gateCanceled(vars, e) {

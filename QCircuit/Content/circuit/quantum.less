@@ -18,6 +18,8 @@
 /* Size Variables */
 
 @gateSize:          50px;
+@gateControlSize:   40px;
+@connectorSize:     10px;
 @toolbarSize:       30px;
 @toolbarPadding:    5px;
 @highlightSize:     5px;
@@ -410,6 +412,27 @@ div.q-slot {
 
         div.q-gate {
             top: 0 - (@gateSize / 2);
+
+            &.q-gate-control {
+                position: absolute;
+                top: 0 - (@gateControlSize / 2);
+                height: @gateControlSize;
+                width: @gateControlSize;
+                transform: translate((@gateSize - @gateControlSize) / 2, 0px);
+            }
+
+            &.q-mod-add {
+                opacity: 0.5;
+            }
+        }
+
+        div.q-gate-connector {
+            position: absolute;
+            top: 0;
+            background: @foreground1;
+            width: @connectorSize;
+            z-index: 5000;
+            transform: translate((@gateSize - @connectorSize) / 2, 0px);
         }
     }
 }
