@@ -13,10 +13,16 @@
 }
 
     div.bugfix-flex-container.bugfix-mod-height {
-        height: 1px;
+        height: 2px;
     }
 
 div.bugfix-flex-item {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+div.bugfix-flex-item-content {
     display: inline-block;
     margin: 0;
     padding: 0;

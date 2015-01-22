@@ -66,8 +66,12 @@
     
     testHTML = [
       '<div class="bugfix-flex-container">',
-        '<div class="bugfix-flex-item"></div>',
-        '<div class="bugfix-flex-item"></div>',
+        '<div class="bugfix-flex-item">',
+          '<div class="bugfix-flex-item-content"></div>',
+        '</div>',
+        '<div class="bugfix-flex-item">',
+          '<div class="bugfix-flex-item-content"></div>',
+        '</div>',
       '</div>'
     ].join('');
 
@@ -87,8 +91,12 @@
 
     testHTML = [
       '<div class="bugfix-flex-container">',
-        '<div class="bugfix-flex-item"></div>',
-        '<div class="bugfix-flex-item"></div>',
+        '<div class="bugfix-flex-item">',
+          '<div class="bugfix-flex-item-content"></div>',
+        '</div>',
+        '<div class="bugfix-flex-item">',
+          '<div class="bugfix-flex-item-content"></div>',
+        '</div>',
       '</div>'
     ].join('');
 
