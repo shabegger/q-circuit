@@ -2,11 +2,13 @@
 /// <reference path="../interaction/interaction.js" />
 /// <reference path="../interaction/interaction.intersect.js" />
 /// <reference path="../interaction/interaction.touch.js" />
+/// <reference path="../interaction/interaction.context.js" />
 /// <reference path="../interaction/interaction.drag.js" />
 /// <reference path="../mixins/mixins.js" />
 /// <reference path="../mixins/mixins.events.js" />
 /// <reference path="quantum.js" />
 /// <reference path="quantum.circuit.js" />
+/// <reference path="quantum.slot.js" />
 /// <reference path="../jquery-1.10.2.intellisense.js" />
 
 ; (function (window, Q, M, $, undefined) {
@@ -73,6 +75,8 @@
 	  self.drop = $.proxy(drop, self, vars);
 	  self.cancel = $.proxy(cancel, self, vars);
 	  self.context = $.proxy(context, self, vars);
+
+	  vars.setConnector = $.proxy(setConnector, self, vars);
 
 	  vars.items = [
       {
@@ -146,6 +150,56 @@
 	  var self = this;
 
 	  return vars.height = vars.height || self.element.outerHeight();
+	}
+
+
+  /* Private Methods */
+
+	function setConnector(vars) {
+	  var self = this,
+	      parts = vars.parts,
+        connector, part,
+        minY, maxY,
+        minPart, maxPart,
+        i, len,
+        x, y;
+
+	  if (parts.length < 2) {
+	    vars.connector && vars.connector.remove();
+	    vars.connector = null;
+	  } else {
+	    if (!vars.connector) {
+	      vars.connector = $(_connectorTmpl());
+	    }
+
+	    connector = vars.connector;
+
+	    part = parts[0];
+	    x = part.element.get(0).style.left;
+	    y = part.element.offset().top;
+	    minY = maxY = y;
+	    minPart = maxPart = part;
+
+	    for (i = 1, len = parts.length; i < len; i++) {
+	      part = parts[i];
+	      y = part.element.offset().top;
+
+	      if (y < minY) {
+	        minY = y;
+	        minPart = part;
+	      } else if (y > maxY) {
+	        maxY = y;
+	        maxPart = part;
+	      }
+	    }
+
+	    connector.remove().css({
+	      'left': x,
+	      'height': maxY - minY
+	    });
+
+	    minPart.slot.append(connector);
+	  }
 	}
   
   
@@ -252,8 +306,7 @@
 	function removeAllControls(vars, e) {
 	  var self = this;
 
-	  vars.connector && vars.connector.remove();
-	  vars.connector = null;
+	  vars.setConnector();
 
 	  vars.parts = $.grep(vars.parts, function (part) {
 	    if (part.part === PART_TYPE.CONTROL) {
@@ -274,8 +327,24 @@
       });
 	}
 
-	function removeControl() {
+	function controlMenu(vars, gatePart, e) {
+	  var self = this,
+        menu = e.menu;
 
+	  menu.setContextMenu([{
+	    title: 'Remove Control Bit',
+      callback: $.proxy(removeControl, self, vars, gatePart)
+	  }]);
+	}
+
+	function removeControl(vars, gatePart, e) {
+	  var parts = vars.parts,
+        index = parts.indexOf(gatePart);
+
+	  gatePart.element.remove();
+	  parts.splice(index, 1);
+
+	  vars.setConnector();
 	}
 
 	function addControl(vars, e) {
@@ -308,10 +377,7 @@
 	      slot.append(element);
 	      partsAdded = true;
 
-	      element.on('click', $.proxy(finalizeAddPart, self, {
-	        vars: vars,
-	        gatePart: gatePart
-	      }));
+	      element.on('click', $.proxy(finalizeAddPart, self, vars, gatePart));
 	    }
 	  }
 
@@ -325,17 +391,10 @@
 	  $(window.document).off('click', removeAddParts);
 	}
 
-	function finalizeAddPart(options, e) {
+	function finalizeAddPart(vars, gatePart, e) {
 	  var self = this,
-        gatePart = options.gatePart,
-        vars = options.vars,
         element = gatePart.element,
-        left = element.get(0).style.left,
-	      parts = vars.parts,
-        connector, part,
-        y, minY, maxY,
-        minPart, maxPart,
-        i, len;
+	      parts = vars.parts;
 
 	  $.each(parts, function (index, part) {
 	    if (part.part === PART_TYPE.MAIN) {
@@ -348,38 +407,11 @@
 	  gatePart.slot.add();
 
 	  element.off('click')
-      .removeClass(_classAdd);
+      .removeClass(_classAdd)
+      .touchContext()
+      .on('beforecontext', $.proxy(controlMenu, self, vars, gatePart));
 
-	  if (!vars.connector) {
-	    vars.connector = $(_connectorTmpl());
-	  }
-
-	  connector = vars.connector;
-
-	  part = parts[0];
-	  y = part.element.offset().top;
-	  minY = maxY = y;
-	  minPart = maxPart = part;
-
-	  for (i = 1, len = parts.length; i < len; i++) {
-	    part = parts[i];
-	    y = part.element.offset().top;
-
-	    if (y < minY) {
-	      minY = y;
-	      minPart = part;
-	    } else if (y > maxY) {
-	      maxY = y;
-	      maxPart = part;
-	    }
-	  }
-
-	  connector.remove().css({
-	    'left': left,
-      'height': maxY - minY
-	  });
-
-	  minPart.slot.append(connector);
+	  vars.setConnector();
 	}
 
 

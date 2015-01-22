@@ -46,6 +46,7 @@ namespace QCircuit
                         "~/Scripts/interaction/interaction.animation.js",
                         "~/Scripts/interaction/interaction.intersect.js",
                         "~/Scripts/interaction/interaction.touch.js",
+                        "~/Scripts/interaction/interaction.context.js",
                         "~/Scripts/interaction/interaction.drag.js",
                         "~/Scripts/interaction/interaction.scroll.js"));
 
@@ -57,7 +58,6 @@ namespace QCircuit
                         "~/Scripts/circuit/quantum.js",
                         "~/Scripts/circuit/quantum.workspace.js",
                         "~/Scripts/circuit/quantum.toolbar.js",
-                        "~/Scripts/circuit/quantum.gatemod.js",
                         "~/Scripts/circuit/quantum.gate.js",
                         "~/Scripts/circuit/quantum.gatefactory.js",
                         "~/Scripts/circuit/quantum.factoryshowroom.js",

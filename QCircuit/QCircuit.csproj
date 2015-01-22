@@ -230,7 +230,6 @@
     <Content Include="Content\dialog\dialog.less" />
     <Content Include="Content\ux\ux.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\circuit\quantum.gatemod.js" />
     <Content Include="Scripts\circuit\quantum.slot.js" />
     <Content Include="Scripts\circuit\quantum.toolbar.js" />
     <Content Include="Scripts\circuit\quantum.workspace.js" />
@@ -240,6 +239,7 @@
     <Content Include="Scripts\common\guid.js" />
     <Content Include="Scripts\dialog\dialog.js" />
     <Content Include="Scripts\interaction\interaction.animation.js" />
+    <Content Include="Scripts\interaction\interaction.context.js" />
     <Content Include="Scripts\interaction\interaction.drag.js" />
     <Content Include="Scripts\interaction\interaction.intersect.js" />
     <Content Include="Scripts\interaction\interaction.js" />

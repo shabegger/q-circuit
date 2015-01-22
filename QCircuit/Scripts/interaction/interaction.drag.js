@@ -1,4 +1,5 @@
 ﻿/// <reference path="interaction.js" />
+/// <reference path="interaction.context.js" />
 /// <reference path="interaction.touch.js" />
 /// <reference path="../jquery-1.10.2.intellisense.js" />
 
