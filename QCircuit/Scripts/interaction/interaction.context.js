@@ -11,6 +11,7 @@
 
   var _namespace = 'interaction-context',
       _body = $('body'),
+      _isPassingEvent = false,
       _current = null,
       _originalEvent = null,
       _contextTimeout = null;
@@ -20,9 +21,13 @@
 
   function onDown(e) {
     var delay;
-    
+
+    if (_isPassingEvent) {
+      return;
+    }
+
+    _current = $(this);
     _originalEvent = e.originalEvent;
-    _current = $(this).offInteractionDown(_namespace);
     
     delay = _current.touchDelay();
 
@@ -31,6 +36,7 @@
       .onInteractionCancel(onCancel, _namespace)
       .onInteractionMove(onMove, _namespace);
 
+    _contextTimeout && window.clearTimeout(_contextTimeout);
     _contextTimeout = window.setTimeout(contextHandler, delay);
 
     e.preventDefault();
@@ -42,15 +48,13 @@
     onCancel();
   }
 
-  function onMove() {
-    var params = {
-      originalEvent: _originalEvent
-    };
+  function onMove(e) {
+    var event = $.Event(_originalEvent.type);
+    event.originalEvent = _originalEvent;
 
-    _current
-      .trigger('pointerdown', params)
-      .trigger('MSPointerDown', params)
-      .trigger('touchstart', params);
+    _isPassingEvent = true;
+    _current.trigger(event);
+    _isPassingEvent = false;
 
     onCancel();
   }
@@ -60,9 +64,6 @@
       .offInteractionMove(_namespace)
       .offInteractionUp(_namespace)
       .offInteractionCancel(_namespace);
-
-    _current
-      .onInteractionDown(onDown, _namespace);
 
     _contextTimeout && window.clearTimeout(_contextTimeout);
 
@@ -95,7 +96,7 @@
         .offInteractionDown(_namespace);
     } else {
       return self
-        .touchDelay(delay || 1000)
+        .touchDelay((delay !== true && delay) || 1000)
         .onInteractionDown(onDown, _namespace);
     }
   };

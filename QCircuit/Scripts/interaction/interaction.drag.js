@@ -18,8 +18,6 @@
       _moveHandler = null,
       _dropHandler = null,
       _cancelHandler = null,
-      _contextDelay = null,
-      _contextTimeout = null,
       _dragData = null;
 
 
@@ -35,13 +33,6 @@
     _currentDraggable = $(this);
     _options = _currentDraggable.dragOptions();
 
-    if (_options.contextDelay === undefined) {
-      _contextDelay = null;
-    } else {
-      _contextDelay = _options.contextDelay === true ?
-        1000 : _options.contextDelay;
-    }
-
     _dragHandler = $.isFunction(_options.drag) ? _options.drag : null;
     _moveHandler = $.isFunction(_options.move) ? _options.move : null;
     _dropHandler = $.isFunction(_options.drop) ? _options.drop : null;
@@ -50,12 +41,11 @@
     offset = _currentDraggable.offset();
     top = offset.top;
     left = offset.left;
+    transform = ['translate(', left, 'px, ', top, 'px)'].join('');
 
     _dragData = {
       deltaX: left - e.x,
       deltaY: top - e.y,
-      oTop: top,
-      oLeft: left,
       position: _currentDraggable.css('position'),
       top: _currentDraggable.css('top'),
       left: _currentDraggable.css('left'),
@@ -64,113 +54,34 @@
       constrainY: _options.constrain === 'y'
     };
 
-    _currentDraggable.offInteractionDown(_namespace);
-
-    if (_contextDelay) {
-      _body
-        .onInteractionUp(beforeFirstMove, _namespace)
-        .onInteractionCancel(beforeFirstMove, _namespace)
-        .onInteractionMove(firstMove, _namespace);
-
-      _contextTimeout = window.setTimeout(contextHandler, _contextDelay);
-    } else {
-      firstMove.call(this);
-    }
-  }
-
-  function contextHandler() {
-    var event = $.Event('contextmenu');
-
-    event.clientX = _dragData.oLeft - _dragData.deltaX;
-    event.clientY = _dragData.oTop - _dragData.deltaY;
-
-    _currentDraggable.trigger(event);
-    beforeFirstMove.call(this);
-  }
-
-  function beforeFirstMove(e) {
-    _contextTimeout && window.clearTimeout(_contextTimeout);
-    _contextTimeout = null;
-
-    _body
-      .offInteractionMove(_namespace)
-      .offInteractionUp(_namespace)
-      .offInteractionCancel(_namespace);
-
     _currentDraggable
-      .onInteractionDown(onDown, _namespace);
-
-    _currentDraggable = null;
-    _dragData = null;
-
-    _options = null;
-    _contextDelay = null;
-    _dragHandler = null;
-    _moveHandler = null;
-    _dropHandler = null;
-    _cancelHandler = null;
-  }
-
-  function firstMove(e) {
-    var transform,
-        top, left;
-
-    if (e) {
-      // IE calls this after a given period of time, even if no move occurred
-      top = e.y + _dragData.deltaY;
-      left = e.x + _dragData.deltaX;
-
-      if (_dragData.oLeft === left && _dragData.oTop === top) {
-        return;
-      }
-    }
-
-    _contextTimeout && window.clearTimeout(_contextTimeout);
-    _contextTimeout = null;
-
-    _currentDraggable
+      .touchContext(false)
+      .offInteractionDown(_namespace)
       .remove()
       .css({
+        '-ms-transform': transform,
+        '-webkit-transform': transform,
+        'transform': transform,
         'position': 'absolute',
         'top': 0,
         'left': 0
       });
 
     _body
-      .offInteractionMove(_namespace)
-      .offInteractionUp(_namespace)
-      .offInteractionCancel(_namespace)
       .onInteractionMove(onMove, _namespace)
       .onInteractionUp(onUp, _namespace)
       .onInteractionCancel(onCancel, _namespace)
       .append(_currentDraggable);
 
     _dragHandler && _dragHandler.call(_currentDraggable, {
-      top: _dragData.oTop,
-      left: _dragData.oLeft
+      top: top,
+      left: left
     });
-
-    if (e) {
-      onMove.call(this, e);
-    } else {
-      transform = [
-        'translate(',
-        _dragData.oLeft, 'px, ',
-        _dragData.oTop, 'px)'
-      ].join('');
-
-      _currentDraggable
-        .css({
-          '-ms-transform': transform,
-          '-webkit-transform': transform,
-          'transform': transform
-        });
-    }
   }
 
   function onMove(e) {
-    var top = _dragData.constrainX ? _dragData.oTop : e.y + _dragData.deltaY,
-        left = _dragData.constrainY ? _dragData.oLeft : e.x + _dragData.deltaX,
+    var top = e.y + _dragData.deltaY,
+        left = e.x + _dragData.deltaX,
         transform = ['translate(', left, 'px, ', top, 'px)'].join('');
 
     _currentDraggable
@@ -187,7 +98,8 @@
   }
 
   function onUp(e) {
-    var offset = _currentDraggable.offset();
+    var offset = _currentDraggable.offset(),
+        delay = _options.contextDelay;
 
     _currentDraggable
       .css({
@@ -206,13 +118,13 @@
     _dropHandler && _dropHandler.call(_currentDraggable);
 
     _currentDraggable
+      .touchContext(delay !== undefined && delay)
       .onInteractionDown(onDown, _namespace);
 
     _currentDraggable = null;
     _dragData = null;
 
     _options = null;
-    _contextDelay = null;
     _dragHandler = null;
     _moveHandler = null;
     _dropHandler = null;
@@ -222,6 +134,7 @@
   function onCancel(e) {
     var relatedTarget = e.originalEvent.relatedTarget,
         isDefaultPrevented = false,
+        delay = _options.contextDelay,
         offset,
         event;
 
@@ -255,6 +168,7 @@
 
     if (isDefaultPrevented) {
       _currentDraggable
+        .touchContext(delay !== undefined && delay)
         .onInteractionDown(onDown, _namespace);
     } else {
       _currentDraggable
@@ -265,6 +179,7 @@
           'left': _dragData.left
         })
         .appendTo(_dragData.parent)
+        .touchContext(delay !== undefined && delay)
         .onInteractionDown(onDown, _namespace);
     }
 
@@ -272,7 +187,6 @@
     _dragData = null;
 
     _options = null;
-    _contextDelay = null;
     _dragHandler = null;
     _moveHandler = null;
     _dropHandler = null;
@@ -299,17 +213,20 @@
   //    move: callback function called when moved
   //    drop: callback function called when dropped
   //    cancel: callback function called when drag cancelled
-  //    contextDelay: delay before firing context callback (default 2000ms)
+  //    contextDelay: delay before firing context callback
   //    constrain: "x" or "y" to allow drag only horizontally or vertically
   $.fn.draggable = function draggable(options) {
-    var self = this;
+    var self = this,
+        delay = options.contextDelay;
 
     if (options === false) {
       return self
+        .touchContext(false)
         .offInteractionDown(_namespace);
     } else {
       return self
         .dragOptions(options || {})
+        .touchContext(delay !== undefined && delay)
         .onInteractionDown(onDown, _namespace);
     }
   };

@@ -306,8 +306,6 @@
 	function removeAllControls(vars, e) {
 	  var self = this;
 
-	  vars.setConnector();
-
 	  vars.parts = $.grep(vars.parts, function (part) {
 	    if (part.part === PART_TYPE.CONTROL) {
 	      part.element.remove();
@@ -315,7 +313,9 @@
 	    }
 
 	    return true;
-	  })
+	  });
+
+	  vars.setConnector();
 
 	  self.element
       .draggable({
